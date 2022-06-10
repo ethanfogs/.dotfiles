@@ -9,6 +9,5 @@ alias gs="git status"
 alias ga="git add"
 alias gcmt="git commit"
 alias grsv="git revert"
-
 #-----------------------------------------------------------------------------
 #vim: filetype=bash:
