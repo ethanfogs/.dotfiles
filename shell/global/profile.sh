@@ -1,5 +1,3 @@
-export ZDOTDIR=$HOME/.config/shell/zsh
-
 unix_bin_dirs=( {/{,usr{,/local}/},$HOME/.local/}{,s}bin )
 opt_bin_dirs=$(find /opt -name "*bin" -type d -maxdepth 2 2> /dev/null)
 lua_default_version=/opt/homebrew/opt/lua@5.3/bin
