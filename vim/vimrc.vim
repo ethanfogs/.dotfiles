@@ -7,4 +7,3 @@ source ~/.config/vim/rc/plugin.vim
 if v:progname == 'nvim'
     colorscheme atom
 endif
-

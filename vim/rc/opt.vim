@@ -14,18 +14,18 @@ let &shiftwidth      = 4         "1 indent = 4 spaces
 let &autoread        = v:true    "changes to a file are shown in real-time
 let &clipboard       = 'unnamed'
 let &hidden          = v:false
-let &undodir         = $HOME .'/.local/share/'. v:progname .'/undo'
+let &undodir         = $XDG_DATA_HOME . '/' . v:progname .'/undo'
 let &undofile        = v:true
 let &updatetime      = 2000
 let &timeoutlen      = 2000
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
-let &path            .= '**'
+let &path            .= '**,'
 let &suffixes        = '/'
 let &ignorecase      = v:true
 let &fileignorecase  = v:true
-let &wildignore      = '*sh_history*,*sh_sessions*,node_modules,' .
-                    \  'package-lock.json,' .
+let &wildignore      = '*sh_history*,*sh_sessions*,' .
+                    \  'node_modules/,package-lock.json,' .
                     \  '.CFUserTextEncoding,.DS_Store,.git/,Public/,Music/'
 let &smartcase       = v:true
 let &smartindent     = v:true
@@ -52,10 +52,9 @@ let &splitright      = v:true
 let NERDTreeShowHidden = 1
 let NERDTreeCaseSensitiveSort = 1
 
-let NERDTreeIgnore=[ 'LICENSE', 'cargo', 'iterm2', 'luarocks', 'neofetch',
-    \ 'rustup', 'gtk-*', 'kitty', 'alacrity' ]
+"let NERDTreeIgnore=[]
 
-let g:netrw_menu = 0
+"let g:netrw_menu = 0
 
 "{ NEOVIM SPECIFIC GLOBAL OPTS }----------------------------------------------
 
