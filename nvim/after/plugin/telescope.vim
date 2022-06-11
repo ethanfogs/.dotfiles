@@ -4,9 +4,9 @@ if not (status_ok) then
     return
 end
     
-local builtin = require('telescope.builtin')
-local actions = require('telescope.actions')
-local themes  = require('telescope.themes')
+builtin = require('telescope.builtin')
+actions = require('telescope.actions')
+themes  = require('telescope.themes')
 
 ------------------------------------------------------------------------------
 
@@ -15,11 +15,7 @@ telescope.setup({
         ['sorting_strategy'] = 'ascending',
         ['selection_strategy'] = 'follow',
         ['dynamic_preview_title'] = true, 
-        ['file_ignore_patterns'] = {
-            '.cargo/', '.rustup/', 'node_modules/', '.git/',
-            '.*.session','.*.history','.cache/', '.DS_Store',
-            '*.log', '*.jar', '*.spec/*', '*.app/*'
-        }, 
+        ['file_ignore_patterns'] = vim.fn['split'](vim.o['wildignore'], ','),
         ['mappings'] = {
             ['n'] = {
                 ['<Tab>'] = actions.toggle_selection,
@@ -36,60 +32,29 @@ telescope.setup({
             }
         }
     }
-}) --{ UTIL FUNCTIONS }-----------------------------------------------------------
+}) 
 
-function tele_find_files()
-    local find_files_opts = {
-        hidden = true, follow = true,
-        layout_config = { prompt_position = "bottom" },
-    }
-
-    local is_in_config_dir = not (string.match(vim.fn['getcwd'](), 'config') == nil)
-
-    if (is_in_config_dir) then
-        find_files_opts['search_dirs'] = { "~/.config" }
-    end
-    builtin.find_files(opts)
-end
-
-function tele_current_buffer_fuzzy_find()
-    builtin.current_buffer_fuzzy_find({ skip_empty_lines = true })
-end
-
-function tele_colorscheme()
-    builtin.colorscheme({ enable_preview = true })
-end
-
-tele_live_grep    = builtin.live_grep
-tele_buffers      = builtin.buffers
-tele_quickfix     = builtin.quickfix
-tele_oldfiles     = builtin.oldfiles
-tele_man_pages    = builtin.man_pages
-tele_vim_opts     = builtin.vim_options
-tele_help_tags    = builtin.help_tags
-tele_commands     = builtin.commands
-tele_command_hist = builtin.command_history
-tele_search_hist  = builtin.search_history
-tele_registers    = builtin.registers
-
-------------------------------------------------------------------------------
+--{ UTIL FUNCTIONS }-----------------------------------------------------------
 
 set_keymap = vim.api.nvim_set_keymap
 keymap_opts = { ['noremap'] = true, ['silent'] = true }
 
-set_keymap('n', "<C-f>", '<Cmd>lua tele_find_files()<CR>', keymap_opts)
-set_keymap('n', ",f", '<Cmd>lua tele_find_files()<CR>', keymap_opts)
-set_keymap('n', ",l", '<Cmd>lua tele_live_grep()<CR>', keymap_opts)
-set_keymap('n', ",q", '<Cmd>lua tele_quickfix()<CR>', keymap_opts)
-set_keymap('n', ",c", '<Cmd>lua tele_colorscheme()<CR>', keymap_opts)
-set_keymap('n', ",b", '<Cmd>lua tele_buffers()<CR>', keymap_opts)
-set_keymap('n', ",o", '<Cmd>lua tele_vim_opts()<CR>', keymap_opts)
-set_keymap('n', ",h", '<Cmd>lua tele_help_tags()<CR>', keymap_opts)
-set_keymap('n', ",m", '<Cmd>lua tele_man_pages()<CR>', keymap_opts)
-set_keymap('n', ",v", '<Cmd>lua tele_commands()<CR>', keymap_opts)
-set_keymap('n', ",/", '<Cmd>lua tele_current_buffer_fuzzy_find()<CR>', keymap_opts)
-set_keymap('n', ",;", '<Cmd>lua tele_command_hist()<CR>', keymap_opts)
-set_keymap('n', ",?", '<Cmd>lua tele_search_hist()<CR>', keymap_opts)
-set_keymap('n', ",r", '<Cmd>lua tele_registers()<CR>', keymap_opts)
-set_keymap('n', ",'", '<Cmd>lua tele_oldfiles()<CR>', keymap_opts)
+set_keymap('n', "sb", '<Cmd>lua builtin.buffers()<CR>', keymap_opts)
+set_keymap('n', "sc", '<Cmd>lua builtin.colorscheme()<CR>', keymap_opts)
+set_keymap('n', "sf", '<Cmd>lua builtin.find_files()<CR>', keymap_opts)
+set_keymap('n', "sh", '<Cmd>lua builtin.help_tags()<CR>', keymap_opts)
+set_keymap('n', "sl", '<Cmd>lua builtin.live_grep()<CR>', keymap_opts)
+set_keymap('n', "sm", '<Cmd>lua builtin.man_pages()<CR>', keymap_opts)
+set_keymap('n', "so", '<Cmd>lua builtin.vim_opts()<CR>', keymap_opts)
+set_keymap('n', "sq", '<Cmd>lua builtin.quickfix()<CR>', keymap_opts)
+set_keymap('n', "sr", '<Cmd>lua builtin.registers()<CR>', keymap_opts)
+set_keymap('n', "sv", '<Cmd>lua builtin.commands()<CR>', keymap_opts)
+set_keymap('n', "s,", '<Cmd>lua builtin.oldfiles()<CR>', keymap_opts)
+set_keymap('n', "s/", '<Cmd>lua builtin.current_buffer_fuzzy_find()<CR>', keymap_opts)
+set_keymap('n', "s;", '<Cmd>lua builtin.command_hist()<CR>', keymap_opts)
+set_keymap('n', "s?", '<Cmd>lua builtin.search_hist()<CR>', keymap_opts)
+
+set_keymap('n', 'gb', '<Cmd>lua builtin.git_branches()<CR>', keymap_opts)
+set_keymap('n', 'gc', '<Cmd>lua builtin.git_commits()<CR>', keymap_opts)
+set_keymap('n', 'gs', '<Cmd>lua builtin.git_status()<CR>', keymap_opts)
 EOF
