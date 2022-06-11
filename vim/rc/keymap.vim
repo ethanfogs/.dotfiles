@@ -38,8 +38,9 @@ nnoremap <C-l> <C-w>l
 "NORMAL-MODE:LEADER-KEY::<Space>    //(buf nav)
 noremap <Space> <C-w>
 noremap <Space>t <Cmd>vsplit\|terminal<CR>i
-noremap <Space>w <Cmd>write<CR>
+noremap <Space>w <Cmd>silent write<CR>
 noremap <Space>; @:
+noremap <Space>/ <Cmd>let @/=''<CR>
 noremap <Space>, zA
 "NORMAL-MODE:LEADER-KEY::<Tab>      //(tab nav)
 noremap <Tab>n <Cmd>tabnew<CR>
@@ -74,3 +75,8 @@ inoremap <C-p> <C-x><C-p>
 tnoremap <Esc> <C-BSlash><C-n>
 tnoremap jj <C-BSlash><C-n>
 tnoremap <C-x> <C-BSlash><C-n>i<C-c><C-d><>:bd!<CR>
+
+"GIT-FUGITIVE KEYMAPS
+noremap <CR><CR> <Cmd>Git<CR>
+noremap <CR>s <Cmd>Git status<CR>
+noremap <CR>b <Cmd>Git branch<CR>
