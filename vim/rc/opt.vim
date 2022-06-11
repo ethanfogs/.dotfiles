@@ -53,7 +53,8 @@ let NERDTreeShowHidden = 1
 let NERDTreeCaseSensitiveSort = 1
 let NERDTreeHijackNetrw = 1
 
-"let NERDTreeIgnore=[]
+let NERDTreeIgnore = readfile($HOME . '/.gitignore')
+                        \ ->filter('v:val !~ "#.*" && !empty(v:val)')
 
 "{ NEOVIM SPECIFIC GLOBAL OPTS }----------------------------------------------
 
