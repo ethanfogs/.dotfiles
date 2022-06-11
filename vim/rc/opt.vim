@@ -24,9 +24,9 @@ let &path            .= '**,'
 let &suffixes        = '/'
 let &ignorecase      = v:true
 let &fileignorecase  = v:true
-let &wildignore      = '*sh_history*,*sh_sessions*,' .
-                    \  'node_modules/,package-lock.json,' .
-                    \  '.CFUserTextEncoding,.DS_Store,.git/,Public/,Music/'
+let &wildignore      = '*sh_history*,*sh_sessions*,.zcompdump,' .
+                    \ 'node_modules/,package-lock.json,' .
+                    \ '.CFUserTextEncoding,.DS_Store,.git/,Public/,Music/'
 let &smartcase       = v:true
 let &smartindent     = v:true
 let &smarttab        = v:false
@@ -51,10 +51,9 @@ let &splitright      = v:true
 
 let NERDTreeShowHidden = 1
 let NERDTreeCaseSensitiveSort = 1
+let NERDTreeHijackNetrw = 1
 
 "let NERDTreeIgnore=[]
-
-"let g:netrw_menu = 0
 
 "{ NEOVIM SPECIFIC GLOBAL OPTS }----------------------------------------------
 
