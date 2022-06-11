@@ -29,12 +29,12 @@ call plug#begin()
 
         "File Manager
         Plug 'preservim/nerdtree'
-        Plug 'Xuyuanp/nerdtree-git-plugin'
-        Plug 'ryanoasis/vim-devicons'
-        Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+        "Plug 'Xuyuanp/nerdtree-git-plugin'
+        "Plug 'ryanoasis/vim-devicons'
+        "Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
         "Plug 'scrooloose/nerdtree-project-plugin'
-        Plug 'PhilRunninger/nerdtree-buffer-ops'
-        Plug 'PhilRunninger/nerdtree-visual-selection'
+        "Plug 'PhilRunninger/nerdtree-buffer-ops'
+        "Plug 'PhilRunninger/nerdtree-visual-selection'
 
         "MENUS\POPUPS\SIDEBARS
         Plug 'hrsh7th/nvim-cmp'
