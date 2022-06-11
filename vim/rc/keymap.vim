@@ -77,6 +77,7 @@ tnoremap jj <C-BSlash><C-n>
 tnoremap <C-x> <C-BSlash><C-n>i<C-c><C-d><>:bd!<CR>
 
 "GIT-FUGITIVE KEYMAPS
+noremap <Space>g <Cmd>Git<CR>
 noremap <CR><CR> <Cmd>Git<CR>
 noremap <CR>s <Cmd>Git status<CR>
 noremap <CR>b <Cmd>Git branch<CR>
