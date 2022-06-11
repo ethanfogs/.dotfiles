@@ -31,8 +31,9 @@ alias ds='dirs'
 #------------------------------------------------------------------------------
 
 if [[ $(command -v tree) ]]; then
-    alias tree='tree -C'
-    alias t='tree -C'
+    TREE_DEFAULT_COMMAND='tree -C --gitignore --dirsfirst'
+    alias tree=$TREE_DEFAULT_COMMAND
+    alias t=$TREE_DEFAULT_COMMAND
 fi
 
 #------------------------------------------------------------------------------
