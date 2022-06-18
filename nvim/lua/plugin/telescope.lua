@@ -1,4 +1,3 @@
-lua << EOF
 local status_ok, telescope = pcall(require, 'telescope')
 if not (status_ok) then
     return
@@ -53,4 +52,3 @@ set_keymap('n', "s,", '<Cmd>lua builtin.oldfiles()<CR>', keymap_opts)
 set_keymap('n', "s/", '<Cmd>lua builtin.current_buffer_fuzzy_find()<CR>', keymap_opts)
 set_keymap('n', "s;", '<Cmd>lua builtin.command_hist()<CR>', keymap_opts)
 set_keymap('n', "s?", '<Cmd>lua builtin.search_hist()<CR>', keymap_opts)
-EOF

@@ -1,4 +1,3 @@
-lua << EOF
 local status_ok, lspconfig = require('lspconfig')
 if not status_ok then
     return
@@ -42,6 +41,3 @@ nvim_lsp.quick_lint_js.setup({
     on_attach = on_attach,
     filetypes = { "javascript", "javascriptreact", },
 })
-
-EOF
-" vim: filetype=vim:

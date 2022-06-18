@@ -1,5 +1,3 @@
-lua << EOF
-
 vim.o['completeopt'] = 'menu,menuone,noselect'
 
 ------------------------------------------------------------------------------
@@ -27,7 +25,3 @@ cmp.setup {
 
 local lspkind = require('lspkind')
     lspkind.init()
-
-EOF
-
-" vim: filetype=vim:
