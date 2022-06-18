@@ -1,18 +1,16 @@
 if exists('b:loaded_ftplugin')
     finish
 endif
-
 let b:loaded_ftplugin = 1
 
-let s:winheight = winheight(winnr())
-let s:winheight_qtrs = s:winheight / 4
+"OPTS -------------------------------------------------------------------------
+let &l:scrolloff = winheight(winnr()) / 4
 
-let &l:scrolloff =  s:winheight_qtrs / 3
-
+"KEYMAPS ----------------------------------------------------------------------
 nnoremap <buffer><CR> <C-]>
-nnoremap <buffer><nowait>d <C-d>
-nnoremap <buffer>u <C-u>
-nnoremap <buffer>J 5<C-e>
-noremap <buffer>K 5<C-y>
 
-echo 'SOURCED: ftplugin/help.vim'
+nnoremap <buffer><nowait>d 3<C-e>
+nnoremap <buffer><nowait>u 3<C-y>
+
+noremap <buffer>J <C-d>
+noremap <buffer>K <C-u>
