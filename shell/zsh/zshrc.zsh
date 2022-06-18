@@ -2,12 +2,13 @@ source $HOME/.shrc
 
 #------------------------------------------------------------------------------
 
-FPATH="/opt/homebrew/share/zsh/site-functions:${FPATH}"
+FPATH="$HOME/.opt/homebrew/share/zsh/site-functions:${FPATH}"
 autoload -Uz compinit && compinit
 
 #------------------------------------------------------------------------------
 
 export PROMPT="[ %F{49}%n%f%f@%F{190}%M%f : %F{120}%~/%f ]
 > "
+
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
