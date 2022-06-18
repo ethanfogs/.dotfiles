@@ -53,8 +53,4 @@ set_keymap('n', "s,", '<Cmd>lua builtin.oldfiles()<CR>', keymap_opts)
 set_keymap('n', "s/", '<Cmd>lua builtin.current_buffer_fuzzy_find()<CR>', keymap_opts)
 set_keymap('n', "s;", '<Cmd>lua builtin.command_hist()<CR>', keymap_opts)
 set_keymap('n', "s?", '<Cmd>lua builtin.search_hist()<CR>', keymap_opts)
-
-set_keymap('n', 'gb', '<Cmd>lua builtin.git_branches()<CR>', keymap_opts)
-set_keymap('n', 'gc', '<Cmd>lua builtin.git_commits()<CR>', keymap_opts)
-set_keymap('n', 'gs', '<Cmd>lua builtin.git_status()<CR>', keymap_opts)
 EOF
