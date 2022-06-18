@@ -1,12 +1,8 @@
-unix_bin_dirs=( {/{,usr{,/local}/},$HOME/.local/}{,s}bin )
-opt_bin_dirs=$(find /opt -name "*bin" -type d -maxdepth 2 2> /dev/null)
-lua_default_version=/opt/homebrew/opt/lua@5.3/bin
-cargo_bin_home=$HOME/.cargo/bin
+PATH="$PATH:$HOME/.bin:$HOME/.opt/homebrew/bin"
+PATH="$PATH:$HOME/.cargo/bin"
+#PATH="$PATH:$HOME/.opt/homebrew/bin/lua@5.3/bin"
 
-#------------------------------------------------------------------------------
-
-_path=( $opt_bin_dirs $unix_bin_dirs $lua_default_version $cargo_bin_home )
-export PATH=${"${_path}"//[[:space:]]/:}:.
+export PATH
 
 #------------------------------------------------------------------------------
 
@@ -25,14 +21,10 @@ export HIST_VERIFY
 
 #------------------------------------------------------------------------------
 
-export VIM_DEFAULT_PROG=${$(command -v nvim):-/usr/bin/vim}
-export EDITOR=${VIM_DEFAULT_PROG}
+export EDITOR=${$(command -v nvim):-/usr/bin/vim}
 export BROWSER='firefox'
 #export VISUAL="${EDITOR}"
 #export TERMINAL="${TERM}"
 
-#------------------------------------------------------------------------------
-
-#[ -n $PS1 ] && source $HOME/.${SHELL//*\//}rc
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
