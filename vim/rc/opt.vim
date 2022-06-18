@@ -24,7 +24,7 @@ let &path            .= '**,'
 let &suffixes        = '/'
 let &ignorecase      = v:true
 let &fileignorecase  = v:true
-let &wildignore      = readfile('.gitignore')
+let &wildignore      = readfile($HOME . '/.gitignore')
                         \->filter('v:val != "" && v:val !~ "#.*"')->join(',')
 let &smartcase       = v:true
 let &smartindent     = v:true
@@ -45,6 +45,9 @@ let &signcolumn      = 'no'
 let &equalalways     = v:true
 let &splitbelow      = v:true
 let &splitright      = v:true
+
+"TODO: config tabline
+"set tabline=!%{getcwd()->fnamemodify(':~')}
 
 "{ NERDTREE CONFIG }----------------------------------------------------------
 
