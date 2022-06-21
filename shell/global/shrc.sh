@@ -1,6 +1,6 @@
 # RC\SOURCE FILES -------------------------------------------------------------
 
-source ~/.config/shell/global/aliasrc.sh
+source $XDG_CONFIG_HOME/shell/global/aliasrc.sh
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
     
@@ -14,7 +14,11 @@ export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
 
 #------------------------------------------------------------------------------
 
-if [[ ${SHLVL} = 1 ]] && [[ $(command -v neofetch) ]]; then neofetch; fi
+#if [[ ${SHLVL} = 1 ]] && [[ $(command -v neofetch) ]]; then
+#    neofetch
+#fi
+
+#[[ -n $TERM_PROGRAM ]]&& tmux -f ~/.tmux.conf
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:

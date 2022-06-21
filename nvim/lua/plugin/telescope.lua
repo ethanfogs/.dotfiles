@@ -1,5 +1,5 @@
-local status_ok, telescope = pcall(require, 'telescope')
-if not (status_ok) then
+local import_status, telescope = pcall(require, 'telescope')
+if not (import_status) then
     return
 end
     
@@ -14,18 +14,18 @@ telescope.setup({
         ['sorting_strategy'] = 'ascending',
         ['selection_strategy'] = 'follow',
         ['dynamic_preview_title'] = true, 
-        ['file_ignore_patterns'] = vim.fn['split'](vim.o['wildignore'], ','),
+        ['file_ignore_patterns'] = vim.opt.wildignore:get(),
         ['mappings'] = {
             ['n'] = {
-                ['<Tab>'] = actions.toggle_selection,
-                ['<Space>'] = actions.toggle_selection,
+                ['<Home>'] = actions.toggle_selection,
+                ['<End>'] = actions.toggle_selection,
             },
             ['i'] = {
                 ['<Space>'] = actions.toggle_selection,
                 ['<C-a>'] = actions.toggle_all,
                 ['<C-k>'] = actions.move_selection_previous,
                 ['<C-j>'] = actions.move_selection_next,
-                ['<esc>'] = actions.close,
+                ['<Esc>'] = actions.close,
                 ['<C-c>'] = actions.close,
                 --['jj'] = { '<esc>' },
             }
@@ -36,7 +36,7 @@ telescope.setup({
 --{ UTIL FUNCTIONS }-----------------------------------------------------------
 
 set_keymap = vim.api.nvim_set_keymap
-keymap_opts = { ['noremap'] = true, ['silent'] = true }
+keymap_opts = { noremap = true, silent = true }
 
 set_keymap('n', "sb", '<Cmd>lua builtin.buffers()<CR>', keymap_opts)
 set_keymap('n', "sc", '<Cmd>lua builtin.colorscheme()<CR>', keymap_opts)

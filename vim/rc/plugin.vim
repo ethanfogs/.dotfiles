@@ -21,11 +21,15 @@ call plug#begin()
         Plug 'folke/lsp-colors.nvim'
         Plug 'glepnir/lspsaga.nvim'
         Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+        Plug 'nvim-treesitter/nvim-treesitter-context'
         Plug 'L3MON4D3/LuaSnip'
         Plug 'windwp/nvim-autopairs'
         Plug 'nvim-lualine/lualine.nvim'
         Plug 'nvim-lua/plenary.nvim'
-        "Plug 'akinsho/toggleterm.nvim'
+        Plug 'williamboman/nvim-lsp-installer'
+        Plug 'lewis6991/impatient.nvim'
+        Plug 'windwp/nvim-autopairs'
+        Plug 'akinsho/toggleterm.nvim'
 
         "File Manager
         Plug 'preservim/nerdtree'
@@ -45,11 +49,14 @@ call plug#begin()
         Plug 'hrsh7th/cmp-path'
         Plug 'saadparwaiz1/cmp_luasnip'
         Plug 'onsails/lspkind-nvim'
-        "Plug 'kyazdani42/nvim-tree.lua'
+        Plug 'kyazdani42/nvim-tree.lua'
         Plug 'nvim-lua/popup.nvim'
         Plug 'nvim-telescope/telescope-fzy-native.nvim'
         Plug 'nvim-telescope/telescope-symbols.nvim'
         Plug 'nvim-telescope/telescope.nvim'
         Plug 'kyazdani42/nvim-web-devicons'
+
+        "Plug 'folke/which-key.nvimfolke/which-key'
+        Plug 'nvim-pack/nvim-spectre'
     endif
 call plug#end()
