@@ -5,9 +5,10 @@ end
 
 -------------------------------------------------------------------------------
 
+pcall(require, 'plugin.lsp.lsp-signature')
 pcall(require, 'plugin.lsp.lsp-installer')
 
 local import_status, handlers = pcall(require, 'plugin.lsp.handlers')
 if import_status then
-    pcall(setup, handlers)
+    handlers.setup()
 end

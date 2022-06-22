@@ -14,7 +14,7 @@ telescope.setup({
         ['sorting_strategy'] = 'ascending',
         ['selection_strategy'] = 'follow',
         ['dynamic_preview_title'] = true, 
-        ['file_ignore_patterns'] = vim.opt.wildignore:get(),
+        ['file_ignore_patterns'] = vim.fn.split(vim.o.wildignore, ','),
         ['mappings'] = {
             ['n'] = {
                 ['<Home>'] = actions.toggle_selection,

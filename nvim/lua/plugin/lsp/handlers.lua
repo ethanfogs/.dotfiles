@@ -46,55 +46,47 @@ lsp_handlers.setup = function()
     vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
         border = "rounded",
     })
+end
 
-    local function lsp_highlight_document(client)
-        if client.resolved_capabilities.document_highlight then
+function lsp_highlight_document(client)
+    if client.resolved_capabilities.document_highlight then
 
-            local create_augroup = vim.api.nvim_create_augroup
-            local create_autocmd = function(event, luafunc)
-                local create_autocmd = vim.api.nvim_create_autocmd
-                local au_opts = { group = "lsp_document_highlight", buffer = 0, }
+        vim.api.nvim_create_augroup( "lsp_document_highlight", { clear = true })
 
-                create_autocmd(event, { au_opts, callback = vim.lsp.buf[luafunc] })
-            end
+        local au_opts = {}
+        vim.api.nvim_create_autocmd("CursorHold", {
+            group = "lsp_document_highlight",
+            buffer = 0,
+            callback = vim.lsp.buf.document_highlight,
+        })
 
-            create_augroup( "lsp_document_highlight", { clear = true })
-                create_autocmd("CursorHold", "document_highlight")
-                create_autocmd("CursorMoved", "clear_references")
-        end
+        vim.api.nvim_create_autocmd("CursorMoved", {
+            group = "lsp_document_highlight",
+            buffer = 0,
+            callback = vim.lsp.buf.clear_references,
+        })
     end
-    
-    local function lsp_keymaps(bufnr)
-        local buf_set_keymap = vim.api.nvim_buf_set_keymap
+end
+
+function lsp_keymaps(bufnr)
+    local buf_set_n_keymap = function(bufnr, lhs, rhs)
         local opts = { noremap = true, silent = true, }
-        local buf_set_n_keymap = function(bufnr, lhs, rhs)
-            buf_set_keymap(bufnr, "n", lhs, rhs, opts)
-        end
-
-        local fmt_rhs = function(fn) return "<Cmd>lua vim." .. fn .. "<CR>" end
-        local _rnd = function(fn) return fn .. "({ border = 'rounded', })" end
-        local fmt_rhs = {
-            fmt_rhs, _rnd,
-            lbuf  = function(fn) return fmt._cmd("lsp.buf." .. fn .. "()") end,
-            diag  = function(fn) return fmt_rhs(_rnd("diagnostic." .. fn)) end,
-            ldiag = function(fn) return fmt_rhs(_rnd("lsp.diagnostic." .. fn)) end,
-        }
-
-        buf_set_n_keymap(bufnr, "gc", fmt_rhs.lbuf("code_action"))
-        buf_set_n_keymap(bufnr, "gd", fmt_rhs.lbuf("definition"))
-        buf_set_n_keymap(bufnr, "gD", fmt_rhs.lbuf("declaration"))
-        buf_set_n_keymap(bufnr, "gi", fmt_rhs.lbuf("implementation"))
-        buf_set_n_keymap(bufnr, "gr", fmt_rhs.lbuf("references"))
-        buf_set_n_keymap(bufnr, "gR", fmt_rhs.lbuf("rename"))
-        buf_set_n_keymap(bufnr, "gS", fmt_rhs.lbuf("signature_help"))
-        buf_set_n_keymap(bufnr, "K",  fmt_rhs.lbuf('hover'))
-        buf_set_n_keymap(bufnr, "gj", fmt_rhs.ldiag("show_line_diagnostics"))
-        buf_set_n_keymap(bufnr, "gl", fmt_rhs.ldiag("goto_next"))
-        buf_set_n_keymap(bufnr, "go", fmt_rhs.diag("open_float"))
-
-        local create_user_cmd = vim.api.nvim_create_user_command
-        create_user_cmd("Format", "execute 'lua vim.lsp.buf.formatting()'")
+        vim.api.nvim_buf_set_keymap(bufnr, "n", lhs, rhs, opts)
     end
+
+    buf_set_n_keymap(bufnr, "gc", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
+    buf_set_n_keymap(bufnr, "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
+    buf_set_n_keymap(bufnr, "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>")
+    buf_set_n_keymap(bufnr, "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>")
+    buf_set_n_keymap(bufnr, "gr", "<Cmd>lua vim.lsp.buf.references()<CR>")
+    buf_set_n_keymap(bufnr, "gR", "<Cmd>lua vim.lsp.buf.rename(<CR>)")
+    buf_set_n_keymap(bufnr, "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
+    buf_set_n_keymap(bufnr, "K",  "<Cmd>lua vim.lsp.buf.hover()<CR>")
+    buf_set_n_keymap(bufnr, "gj", "<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = 'rounded' })<CR>")
+    buf_set_n_keymap(bufnr, "gl", "<Cmd>lua vim.lsp.diagnostic.goto_next({ border = 'rounded' })<CR>")
+    buf_set_n_keymap(bufnr, "go", "<Cmd>lua vim.diagnostic.open_float({ border = 'rounded' })<CR>")
+
+    vim.api.nvim_create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
 end
 
 lsp_handlers.on_attach = function(client, bufnr)
@@ -106,13 +98,11 @@ lsp_handlers.on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not status_ok then
+local import_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not import_status_ok then
     return
 end
 
 lsp_handlers.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 return lsp_handlers
-
--- vim: filetype=lua:foldmethod=indent:

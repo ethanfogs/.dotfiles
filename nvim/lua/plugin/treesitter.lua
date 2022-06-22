@@ -1,10 +1,10 @@
-local status, treesitter = pcall(require, "nvim-treesitter")
-if not status then
+local import_status, treesitter = pcall(require, "nvim-treesitter")
+if not import_status then
 	return
 end
 
-local status, configs = pcall(require, "nvim-treesitter.configs")
-if not status then
+local import_status, configs = pcall(require, "nvim-treesitter.configs")
+if not import_status then
 	return
 end
 
@@ -13,8 +13,11 @@ local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
 ft_to_parser.motoko = "typescript"
 --]]
 
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+
 configs.setup({
-	ensure_installed = "all", -- one of "all" or a list of languages
+	-- ensure_installed = "all", -- one of "all" or a list of languages
 	sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
 	ignore_install = { "" }, -- List of parsers to ignore installing
 	highlight = {
@@ -27,7 +30,7 @@ configs.setup({
 	autopairs = {
 		enable = true,
 	},
-	indent = { enable = true, disable = { "python", "css" } },
+	indent = { enable = true, disable = {  } },
 	context_commentstring = {
 		enable = true,
 		enable_autocmd = false,

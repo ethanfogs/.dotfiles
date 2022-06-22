@@ -5,17 +5,15 @@ require("rc.plugin")
 
 -------------------------------------------------------------------------------
 
-require("plugin.colors")
-
 require("plugin.lsp") -- this sources lua/plugin/lsp/init.lua
 require("plugin.telescope")
---require("plugin.treesitter")
---require("plugin.treesitter-context")
+require("plugin.treesitter")
+require("plugin.treesitter-context")
 
---require("plugin.cmp")
---require("plugin.nvim-cmp")
+require("plugin.cmp")
+require("plugin.nvim-cmp")
 
---require("plugin.luasnip")
+require("plugin.luasnip")
 
 --require("plugin.indentline")
 --require("plugin.bufferline")
@@ -23,10 +21,10 @@ require("plugin.telescope")
 --require("plugin.winbar")
 --require("plugin.toggleterm")
 
---require("plugin.nvim-webdev-icons")
---require("plugin.icons")
+require("plugin.nvim-webdev-icons")
+require("plugin.icons")
 
---require("plugin.nvim-tree")
+require("plugin.nvim-tree")
 --require("plugin.spectre")
 --require("plugin.whichkey")
 
@@ -39,6 +37,11 @@ require("plugin.telescope")
 
 -------------------------------------------------------------------------------
 
-local randomIdx = (math.floor(math.random() * 100) % #vim.g.Colors.favorite) + 1
+local import_status, Colors = pcall(require, 'plugin.colors')
+if not import_status then
+    return
+end
 
-vim.cmd('colorscheme ' .. vim.g.Colors.favorite[randomIdx])
+-- local randomIdx = (math.floor(math.random() * 100) % #vim.g.Colors.favorite)
+-- vim.cmd('colorscheme ' .. vim.g.Colors.favorite[randomIdx  + 1])
+vim.cmd('colorscheme solarized8_flat')
