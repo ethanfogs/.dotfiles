@@ -1,5 +1,5 @@
-source ~/.config/shell/global/.alias/ls.sh
-source ~/.config/shell/global/.alias/git.sh
+source $HOME/.config/shell/global/.alias/ls.sh
+source $HOME/.config/shell/global/.alias/git.sh
 
 #-----------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ alias mkx='chmod +x'
 
 ##-----------------------------------------------------------------------------
 
-alias e="${$(command -v nvim):-/usr/bin/vim} -c NERDTreeVCS"
+alias e="${$(command -v nvim):-/usr/bin/vim}"
 
 #-----------------------------------------------------------------------------
 
