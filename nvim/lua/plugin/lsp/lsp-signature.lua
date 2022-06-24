@@ -1,9 +1,5 @@
-local status_ok, signature = pcall(require, "lsp_signature")
-if not status_ok then
-  return
-end
-
-local icons = require "user.icons"
+local signature = require("lsp_signature")
+local icons = require "plugin.icons"
 
 local config = {
     debug = false, -- set to true to enable debug logging
@@ -17,7 +13,7 @@ local config = {
     -- This setting only take effect in insert mode, it does not affect signature help in normal
     -- mode, 10 by default
 
-    floating_window = true, -- show hint in a floating window, set to false for virtual text only mode
+    floating_window = false, -- show hint in a floating window, set to false for virtual text only mode
 
     floating_window_above_cur_line = false, -- try to place the floating above the current line when possible Note:
     -- will set to true when fully tested, set to false will use whichever side has more space

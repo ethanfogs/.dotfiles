@@ -4,31 +4,31 @@
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
 vim.g.use_nerd_icons = false
-if vim.fn.has "mac" == 1 or vim.g.use_nerd_icons then
-    -- elseif vim.fn.has "mac" == 1 then
+
+if(vim.fn.has("mac") == 1) or (vim.g.use_nerd_icons) then
     return {
         kind = {
             Text = "",
-            -- Method = "m",
-            -- Function = "",
-            -- Constructor = "",
+            Method = "m",
+            Function = "",
+            Constructor = "",
             Method = "",
             Function = "",
             Constructor = "",
             Field = "",
-            -- Variable = "",
+            Variable = "",
             Variable = "",
             Class = "",
             Interface = "",
-            -- Module = "",
+            Module = "",
             Module = "",
             Property = "",
             Unit = "",
             Value = "",
             Enum = "",
-            -- Keyword = "",
+            Keyword = "",
             Keyword = "",
-            -- Snippet = "",
+            Snippet = "",
             Snippet = "",
             Color = "",
             File = "",
@@ -115,7 +115,7 @@ else
 --   פּ ﯟ   蘒練 some other good icons
     return {
         kind = {
-            Text = " ",
+            Text = "",
             Method = " ",
             Function = " ",
             Constructor = " ",
@@ -213,5 +213,3 @@ else
         },
     }
 end
-
--- vim: filetype=lua:foldmethod=indent:

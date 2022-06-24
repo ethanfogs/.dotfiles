@@ -1,7 +1,5 @@
 local set_keymap = vim.api.nvim_set_keymap
-
 local opts = { noremap = true }
-local nowait_opts = { noremap = true, nowait = true }
 
 -- [NORMAL,VISUAL,SELECT]-MODE
 set_keymap("", "H", "0", opts)
@@ -17,8 +15,10 @@ set_keymap("", "_", "<C-w>2-", opts)
 set_keymap("", "!!", "@:", opts)
 set_keymap("", "<BS>", "<C-o>", opts)
 set_keymap("", "<S-BS>", "<C-i>", opts)
-set_keymap("", "<Bar>", "<C-w>4<", nowait_opts)
-set_keymap("", "<BSlash>", "<C-w>4>", nowait_opts)
+set_keymap("", "<Bar>", "<C-w>4<", { noremap = true, nowait = true })
+set_keymap("", "<BSlash>", "<C-w>4>", { noremap = true, nowait = true })
+set_keymap("", "<C-j>", "5<C-e>", opts)
+set_keymap("", "<C-k>", "5<C-y>", opts)
 
 -- NORMAL-MODE:BASEKEYS
 set_keymap("n", "U", "<C-r>", opts)
@@ -27,7 +27,8 @@ set_keymap("n", "V", "V$", opts)
 
 -- NORMAL-MODE:LEADER-KEY::<Space> //(buf nav)
 set_keymap("", "<Space>", "<C-w>", opts)
-set_keymap("", "<Space>t", "<Cmd>split|terminal<CR>i", opts)
+-- set_keymap("", "<Space>t", "<Cmd>split|terminal<CR>i", opts)
+set_keymap("", "<Space>t", "<Cmd>ToggleTerm<CR>", opts)
 set_keymap("", "<Space>w", "<Cmd>write<CR>", opts)
 set_keymap("", "<Space>/", "<Cmd>let @/=''<CR>", opts)
 set_keymap("", "<Space>,", "zA", opts)
@@ -39,21 +40,7 @@ set_keymap("", "<Tab>j", "<Cmd>tabprevious<CR>", opts)
 set_keymap("", "<Tab>k", "<Cmd>tabnext<CR>", opts)
 set_keymap("", "<Tab><Tab>", "<Cmd>tabnext<CR>", opts)
 set_keymap("", "<S-Tab>", "<Cmd>tabprevious<CR>", opts)
-set_keymap("", "<Tab>t", "<Cmd>tabnew|terminal<CR>i", opts)
 set_keymap("", "<Tab>x", "<Cmd>tabclose<CR>", opts)
-
--- NORMAL-MODE:LEADER-KEY::q //(quickfix nav)
-set_keymap("", "qh", "<Cmd>cprevious<CR>", opts)
-set_keymap("", "ql", "<Cmd>cnext<CR>", opts)
-set_keymap("", "qo", "<Cmd>copen<CR>", opts)
-set_keymap("", "qw", "<Cmd>cwindow<CR>", opts)
-set_keymap("", "qx", "<Cmd>cclose<CR>", opts)
-
--- GIT-PLUGIN KEYMAPS
-set_keymap("", "gs", "<Cmd>Git<CR>", opts)
-set_keymap("", "gb <Cmd>Git", "branch<CR>", opts)
-set_keymap("", "gc <Cmd>Git", "commit<CR>", opts)
-set_keymap("", "gd <Cmd>Git", "commit<CR>", opts)
 
 -- VISUAL-MODE
 set_keymap("v", "<Space>", "<C-[>", opts)
@@ -74,10 +61,33 @@ set_keymap("!", "}{", "{}<Left>", opts)
 set_keymap("!", "''", "''<Left>", opts)
 set_keymap("!", '""', '""<Left>', opts)
 
--- INSERT-MODE
-set_keymap("i", "<C-f>", "<C-x><C-f>", opts)
-set_keymap("i", "<C-v>", "<C-x><C-v>", opts)
-
 -- TERMINAL-MODE
-set_keymap("t", "<Esc>", "<C-BSlash><C-n>", opts)
+set_keymap("t", "<Esc><Esc>", "<C-BSlash><C-n>", opts)
 set_keymap("t", "jj", "<C-BSlash><C-n>", opts)
+
+-- TELESCOPE KEYMAPS
+
+local telescope_opts  = { noremap = true, silent = true }
+set_keymap("n", "sb", "<Cmd>lua builtin.buffers()<CR>", telescope_opts)
+set_keymap("n", "sc", "<Cmd>lua builtin.colorscheme({ enable_preview = true })<CR>", telescope_opts)
+set_keymap("n", "sf", "<Cmd>lua builtin.find_files()<CR>", telescope_opts)
+set_keymap("n", "sh", "<Cmd>lua builtin.help_tags()<CR>", telescope_opts)
+set_keymap("n", "sk", "<Cmd>lua builtin.keymaps()<CR>", telescope_opts)
+set_keymap("n", "sl", "<Cmd>lua builtin.live_grep()<CR>", telescope_opts)
+set_keymap("n", "sm", "<Cmd>lua builtin.man_pages()<CR>", telescope_opts)
+set_keymap("n", "so", "<Cmd>lua builtin.vim_options()<CR>", telescope_opts)
+set_keymap("n", "sq", "<Cmd>lua builtin.quickfix()<CR>", telescope_opts)
+set_keymap("n", "sr", "<Cmd>lua builtin.registers()<CR>", telescope_opts)
+set_keymap("n", "sv", "<Cmd>lua builtin.commands()<CR>", telescope_opts)
+set_keymap("n", "s,", "<Cmd>lua builtin.oldfiles()<CR>", telescope_opts)
+set_keymap("n", "s/", "<Cmd>lua builtin.current_buffer_fuzzy_find()<CR>", telescope_opts)
+set_keymap("n", "s;", "<Cmd>lua builtin.command_hist()<CR>", telescope_opts)
+set_keymap("n", "s?", "<Cmd>lua builtin.builtin()<CR>", telescope_opts)
+
+-- GIT-PLUGIN KEYMAPS
+set_keymap("", "gs", "<Cmd>Git<CR>", opts)
+set_keymap("", "gb", "<Cmd>Git branch<CR>", opts)
+set_keymap("", "gc", "<Cmd>Git commit<CR>", opts)
+
+-- NVIM-TREE (File Browser) PLUGIN KEYMAPS
+set_keymap("", "<Space>e", "<Cmd>NvimTreeToggle<CR>", opts)

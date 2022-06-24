@@ -1,12 +1,4 @@
-local status, lualine = pcall(require, "lualine")
-if not status then
-    return
-end
-
-local theme_status, theme = pcall(require, "lualine.themes.darkplus_dark")
-if not theme_status then
-    return
-end
+local lualine = require("lualine")
 
 -------------------------------------------------------------------------------
 
@@ -56,7 +48,7 @@ local mode = {
 
 local hide_in_width = function() return vim.fn.winwidth(0) > 80 end
 
-local icons = require "user.icons"
+local icons = require("plugin.icons")
 
 local diagnostics = {
     "diagnostics",
@@ -203,5 +195,3 @@ lualine.setup({
     tabline = {},
     extensions = {},
 })
-
--- vim: filetype=lua:foldmethod=indent:

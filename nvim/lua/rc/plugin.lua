@@ -1,44 +1,51 @@
-return require('packer').startup(function()
-    use 'L3MON4D3/LuaSnip'
-    use 'akinsho/toggleterm.nvim'
-    -- use 'cohama/lexima.vim'
-    use 'folke/lsp-colors.nvim'
-    -- use 'folke/which-key.nvimfolke/which-key' -- 
-    -- use 'glepnir/lspsaga.nvim'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-nvim-lua'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/nvim-cmp'
-    use 'kyazdani42/nvim-tree.lua'
-    use 'kyazdani42/nvim-web-devicons'
-    -- use 'lewis6991/impatient.nvim'
-    use 'mhinz/vim-startify'
-    use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/plenary.nvim'
+return require("packer").startup(function()
+    use "akinsho/bufferline.nvim"
+    use "akinsho/toggleterm.nvim"
+    -- use "cohama/lexima.vim"
+    use "folke/lsp-colors.nvim"
+    -- use "folke/which-key.nvimfolke/which-key"
+    -- use "glepnir/lspsaga.nvim"
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-cmdline"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-nvim-lua"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/nvim-cmp"
     use "jose-elias-alvarez/null-ls.nvim"
-    use "tom-anders/telescope-vim-bookmarks.nvim"
+    use 'kdheepak/lazygit.nvim'
+    use "kyazdani42/nvim-tree.lua"
+    use "kyazdani42/nvim-web-devicons"
+    -- use "lewis6991/impatient.nvim"
+    use "lewis6991/gitsigns.nvim"
+    use "L3MON4D3/LuaSnip"
+    use "mhinz/vim-startify"
+    use "neovim/nvim-lspconfig"
+    use "nvim-lua/plenary.nvim"
+    use "nvim-lua/popup.nvim"
+    use {
+        "nvim-lualine/lualine.nvim",
+        requires = {  "kyazdani42/nvim-web-devicons", opt = true }
+    }
+    -- use "nvim-pack/nvim-spectre"
+    use "nvim-telescope/telescope.nvim"
+    use "nvim-telescope/telescope-fzy-native.nvim"
     use "nvim-telescope/telescope-media-files.nvim"
-    use 'nvim-lua/popup.nvim'
-    use 'nvim-lualine/lualine.nvim'
-    -- use 'nvim-pack/nvim-spectre'
-    use 'nvim-telescope/telescope-fzy-native.nvim'
+    use "nvim-telescope/telescope-symbols.nvim"
+    use "nvim-treesitter/nvim-treesitter"
+    use "nvim-treesitter/nvim-treesitter-context"
+    use "nvim-treesitter/playground"
+    use "onsails/lspkind-nvim"
+    use "rafi/awesome-vim-colorschemes"
+    use "ray-x/lsp_signature.nvim"
     use "RRethy/vim-illuminate"
-    use 'nvim-telescope/telescope-symbols.nvim'
-    use 'nvim-telescope/telescope.nvim'
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'nvim-treesitter/playground'
-    use 'nvim-treesitter/nvim-treesitter-context'
-    use 'onsails/lspkind-nvim'
-    use 'rafi/awesome-vim-colorschemes'
-    --  use 'ryanoasis/vim-devicons' 
-    use 'saadparwaiz1/cmp_luasnip'
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-rhubarb'
-    use 'tpope/vim-surround'
-    -- use 'vimwiki/vimwiki'
-    use 'wbthomason/packer.nvim'
-    use 'williamboman/nvim-lsp-installer'
-    use 'windwp/nvim-autopairs'
+    use "ryanoasis/vim-devicons" 
+    use "saadparwaiz1/cmp_luasnip"
+    use "tom-anders/telescope-vim-bookmarks.nvim"
+    use "tpope/vim-fugitive"
+    use "tpope/vim-rhubarb"
+    use "tpope/vim-surround"
+    -- use "vimwiki/vimwiki"
+    use "wbthomason/packer.nvim"
+    use "williamboman/nvim-lsp-installer"
+    use "windwp/nvim-autopairs"
 end)

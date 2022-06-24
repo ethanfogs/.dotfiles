@@ -6,8 +6,8 @@ lsp_handlers.setup = function()
 
     -- local icons = {} -- require('plugin.icons')
     local signs = {
-        { name = "DiagnosticSignError", text = "💥" },
-        { name = "DiagnosticSignWarn", text = "⚠️"},
+        { name = "DiagnosticSignError", text = "❌" },
+        { name = "DiagnosticSignWarn", text = "⚠"},
         { name = "DiagnosticSignHint", text = "💡" },
         { name = "DiagnosticSignInfo", text = "ℹ️" },
     }
@@ -98,10 +98,8 @@ lsp_handlers.on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-local import_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not import_status_ok then
-    return
-end
+
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 lsp_handlers.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 

@@ -1,4 +1,4 @@
-PATH="$PATH:$HOME/.bin:$HOME/.opt/homebrew/bin"
+PATH="$PATH:$HOME/.local/bin:$HOME/.opt/homebrew/bin"
 PATH="$PATH:$HOME/.cargo/bin"
 #PATH="$PATH:$HOME/.opt/homebrew/bin/lua@5.3/bin"
 

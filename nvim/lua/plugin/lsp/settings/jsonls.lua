@@ -1,5 +1,5 @@
-local status_ok, schemastore = pcall(require, "schemastore")
-if not status_ok then
+local import_status, schemastore = pcall(require, "schemastore")
+if not import_status then
     return
 end
 
