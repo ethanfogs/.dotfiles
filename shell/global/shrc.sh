@@ -6,11 +6,6 @@ source $XDG_CONFIG_HOME/shell/global/aliasrc.sh
     
 export LESSHISTFILE=/dev/null
 
-export HISTFILE="$XDG_DATA_HOME/${SHELL//*\//}_history"
-export HISTSIZE=
-export SHARE_HISTORY
-export HIST_VERIFY
-
 # FZF -------------------------------------------------------------------------
 
 #export FZF_DEFAULT_OPTS="--multi --cycle --reverse --border=rounded --preview='[[ ! -d {} ]] && bat {}'"
