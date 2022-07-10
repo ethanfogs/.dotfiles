@@ -1,6 +1,4 @@
 PATH="$PATH:$HOME/.loca/bin:$HOME/.opt/homebrew/bin"
-PATH="$PATH:$HOME/.cargo/bin"
-#PATH="$PATH:$HOME/.opt/homebrew/bin/lua@5.3/bin"
 
 export PATH
 
@@ -23,8 +21,6 @@ export HIST_VERIFY
 
 export EDITOR=${$(command -v nvim):-/usr/bin/vim}
 export BROWSER='firefox'
-#export VISUAL="${EDITOR}"
-#export TERMINAL="${TERM}"
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:

@@ -1,14 +1,13 @@
 local lualine = require("lualine")
+local set_hl = vim.api.nvim_set_hl
 
 -------------------------------------------------------------------------------
 
-local set_hl = vim.api.nvim_set_hl
-
-set_hl(0, "SLGitIcon", { fg = "#E8AB53", bg = "#303030" })
+set_hl(0, "SLGitIcon",    { fg = "#E8AB53", bg = "#303030" })
 set_hl(0, "SLBranchName", { fg = "#D4D4D4", bg = "#303030", bold = false })
--- set_hl(0, "SLProgress", { fg = "#D7BA7D", bg = "#252525" })
-set_hl(0, "SLProgress", { fg = "#D4D4D4", bg = "#303030" })
-set_hl(0, "SLSeparator", { fg = "#808080", bg = "#252525" })
+set_hl(0, "SLProgress",   { fg = "#D7BA7D", bg = "#252525" })
+set_hl(0, "SLProgress",   { fg = "#D4D4D4", bg = "#303030" })
+set_hl(0, "SLSeparator",  { fg = "#808080", bg = "#252525" })
 
 local mode_color = {
     n = "#569cd6",
@@ -71,14 +70,7 @@ local diff = {
     separator = "%#SLSeparator#" .. "│ " .. "%*",
 }
 
---[[
-    local mode = {
-      "mode",
-      fmt = function(str)
-        return "-- " .. str .. " --"
-      end,
-    }
---]]
+-- local mode = { "mode", }
 
 local filetype = {
     "filetype",
@@ -96,51 +88,31 @@ local branch = {
 
 local progress = {
     "progress",
-    color = "SLProgress",
-    -- fmt = function(str)
-    --   print(vim.fn.expand(str))
-    --   if str == "1%" then
-    --     return "TOP"
-    --   end
-    --   if str == "100%" then
-    --     return "BOT"
-    --   end
-    --   return str
-    -- end,
-    -- padding = 0,
-}
-
-local progress = {
-    "progress",
     fmt = function(str)
         print(vim.fn.expand(str))
-        if str == "1%"   then return "TOP" end
-        if str == "100%" then return "BOT" end
+        if (str == "1%")   then return "TOP" end
+        if (str == "100%") then return "BOT" end
         return str
      end,
     -- padding = 0,
 }
 
 local current_signature = function()
-    if not pcall(require, "lsp_signature") then
-      return
-    end
+    if pcall(require, "lsp_signature") then return end
     local sig = require("lsp_signature").status_line(30)
-    -- return sig.label .. "🐼" .. sig.hint
     return "%#SLSeparator#" .. sig.hint .. "%*"
 end
 
---[[ cool function for progress
-    local progress = function()
-        local current_line = vim.fn.line "."
-        local total_lines = vim.fn.line "$"
-        local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-        local line_ratio = current_line / total_lines
-        local index = math.ceil(line_ratio * #chars)
-        -- return chars[index]
-        return "%#SLProgress#" .. chars[index] .. "%*"
-    end
---]]
+
+local progress = function() --cool function for progress bars
+    local current_line = vim.fn.line "."
+    local total_lines = vim.fn.line "$"
+    local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+    local line_ratio = current_line / total_lines
+    local index = math.ceil(line_ratio * #chars)
+    -- return chars[index]
+    return "%#SLProgress#" .. chars[index] .. "%*"
+end
 
 local spaces = {
     function()
@@ -159,7 +131,7 @@ local location = {
 
 lualine.setup({
     options = {
-        globalstatus = true,
+        globalstatus = false,
         icons_enabled = true,
         theme = "auto",
         component_separators = { left = "", right = "" },

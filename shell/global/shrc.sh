@@ -1,6 +1,6 @@
 # RC\SOURCE FILES -------------------------------------------------------------
 
-source $XDG_CONFIG_HOME/shell/global/aliasrc.sh
+source $HOME/.config/shell/global/aliasrc.sh
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
     

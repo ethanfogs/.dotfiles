@@ -97,4 +97,3 @@ inoremap <C-p> <C-x><C-p>
 "TERMINAL-MODE
 tnoremap <Esc> <C-BSlash><C-n>
 tnoremap jj <C-BSlash><C-n>
-tnoremap <C-x> <C-BSlash><C-n>i<C-c><C-d><>:bd!<CR>

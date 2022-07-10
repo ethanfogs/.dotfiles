@@ -1,4 +1,5 @@
 source $HOME/.shrc
+source $HOME/.config/shell/zsh/oh-my-zshrc.zsh
 
 #------------------------------------------------------------------------------
 
@@ -14,11 +15,6 @@ autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-
-#------------------------------------------------------------------------------
-
-export PROMPT="[ %F{49}%n%f%f@%F{190}%M%f : %F{120}%~/%f ]
-> "
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:

@@ -48,4 +48,5 @@ return require("packer").startup(function()
     use "wbthomason/packer.nvim"
     use "williamboman/nvim-lsp-installer"
     use "windwp/nvim-autopairs"
+    use "JoosepAlviste/nvim-ts-context-commentstring"
 end)
