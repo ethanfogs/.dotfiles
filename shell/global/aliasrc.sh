@@ -35,6 +35,3 @@ if [[ $(command -v tree) ]]; then
     alias tree=$TREE_DEFAULT_COMMAND
     alias t=$TREE_DEFAULT_COMMAND
 fi
-
-#------------------------------------------------------------------------------
-# vim: filetype=bash:

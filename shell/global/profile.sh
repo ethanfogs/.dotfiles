@@ -1,4 +1,4 @@
-PATH="$PATH:$HOME/.loca/bin:$HOME/.opt/homebrew/bin"
+PATH="$PATH:$HOME/.local/bin"
 
 export PATH
 
@@ -21,6 +21,3 @@ export HIST_VERIFY
 
 export EDITOR=${$(command -v nvim):-/usr/bin/vim}
 export BROWSER='firefox'
-
-#------------------------------------------------------------------------------
-# vim: filetype=bash:

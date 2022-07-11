@@ -17,6 +17,3 @@ source /opt/homebrew/completions/bash/brew
 BASH_COMPLETIONS=$HOME/.config/shell/bash/completions
 source $BASH_COMPLETIONS/.fzf.bash
 source $BASH_COMPLETIONS/alacritty.bash
-
-#------------------------------------------------------------------------------
-# vim: filetype=bash:
