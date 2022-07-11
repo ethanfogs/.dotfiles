@@ -2,7 +2,7 @@ require("rc.opt")
 require("rc.keymap")
 require("rc.autocmd")
 require("rc.plugin")
---require("rc.funcs")
+require("rc.funcs")
 
 -------------------------------------------------------------------------------
 
