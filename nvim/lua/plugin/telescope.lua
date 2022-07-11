@@ -17,7 +17,7 @@ telescope.setup({
         layout_config = {
             height = 0.95,
             width = 0.95,
-            preview_width = 0.75,
+            preview_width = 0.60,
         },
         mappings = {
             n = {
