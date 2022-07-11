@@ -27,7 +27,7 @@ require("plugin.lualine")
 
 require("plugin.toggleterm")
 
-require('plugin.startify')
+--require('plugin.startify')
 
 --require("plugin.spectre")
 

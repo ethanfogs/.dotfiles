@@ -2,6 +2,7 @@
 
 vim.o.backup     = false
 vim.o.swapfile   = false
+vim.o.lazyredraw = true
 -- { [INDENTATION, TABBING, SPACING]-BEHAVIOR }----------------------------
 
 vim.o.expandtab   = true      -- convert tabs to spaces
@@ -15,7 +16,7 @@ vim.o.updatetime = 2000
 vim.o.timeoutlen = 2000
 
 vim.o.undofile = true
-vim.o.undodir  = os.getenv('HOME') .. "/undo"
+vim.o.undodir  = vim.fn.stdpath('data')  .. "/undo"
 -- { [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
 vim.o.path        = ".,**"

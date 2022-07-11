@@ -18,7 +18,7 @@ return require("packer").startup(function()
     -- use "lewis6991/impatient.nvim"
     use "lewis6991/gitsigns.nvim"
     use "L3MON4D3/LuaSnip"
-    use "mhinz/vim-startify"
+    --use "mhinz/vim-startify"
     use "neovim/nvim-lspconfig"
     use "nvim-lua/plenary.nvim"
     use "nvim-lua/popup.nvim"

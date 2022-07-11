@@ -86,9 +86,9 @@ set_keymap("n", "s;", "<Cmd>lua builtin.command_hist()<CR>", ts_opts)
 set_keymap("n", "s?", "<Cmd>lua builtin.builtin()<CR>", ts_opts)
 
 -- GIT-PLUGIN KEYMAPS
-set_keymap("", "gs", "<Cmd>Git<CR>", opts)
-set_keymap("", "gb", "<Cmd>Git branch<CR>", opts)
-set_keymap("", "gc", "<Cmd>Git commit<CR>", opts)
+set_keymap("", "gs", "<Cmd>G<CR>", opts)
+set_keymap("", "gb", "<Cmd>G branch<CR>", opts)
+set_keymap("", "gc", "<Cmd>G commit<CR>", opts)
 
 -- NVIM-TREE (File Browser) PLUGIN KEYMAPS
 set_keymap("", "<Space>e", "<Cmd>NvimTreeToggle<CR>", opts)

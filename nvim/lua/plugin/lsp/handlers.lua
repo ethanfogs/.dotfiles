@@ -74,7 +74,7 @@ function lsp_keymaps(bufnr)
         vim.api.nvim_buf_set_keymap(bufnr, "n", lhs, rhs, opts)
     end
 
-    buf_set_n_keymap(bufnr, "gc", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
+    --buf_set_n_keymap(bufnr, "gc", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
     buf_set_n_keymap(bufnr, "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
     buf_set_n_keymap(bufnr, "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>")
     buf_set_n_keymap(bufnr, "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>")

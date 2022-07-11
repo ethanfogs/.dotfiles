@@ -12,7 +12,7 @@ telescope.setup({
         selection_strategy = 'follow',
         winblend = 7,
         dynamic_preview_title = true,
-        file_ignore_patterns = vim.fn.readfile(os.getenv("HOME") .. "/.gitignore"),
+        file_ignore_patterns = vim.fn.readfile(os.getenv("HOME") .. "/.config/git/ignore"),
         layout_strategy = 'horizontal',
         layout_config = {
             height = 0.95,
