@@ -2,12 +2,16 @@
 
 #-----------------------------------------------------------------------------
 
+alias gc="git commit"
 alias gbr="git branch"
-alias gl="git log"
-alias gco="git checkout"
+alias gl="git log --oneline"
+alias gco="git checkout -b"
 alias gs="git status"
 alias ga="git add"
-alias gcmt="git commit"
-alias grsv="git revert"
+#alias grsv="git revert"
+
+alias gp='git push'
+alias gP='git pull'
+
 #-----------------------------------------------------------------------------
 #vim: filetype=bash:
