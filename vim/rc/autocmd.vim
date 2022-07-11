@@ -16,5 +16,5 @@ augroup END
 
 augroup on_VimrcFile_Write
     autocmd!
-    autocmd BufWritePost */.config/*vim/*.vim source %
+    autocmd BufWritePost $XDG_CONFIG_HOME/**.vim source %
 augroup END

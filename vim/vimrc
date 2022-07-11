@@ -1,0 +1,10 @@
+source $HOME/.config/vim/rc/opt.vim
+source $HOME/.config/vim/rc/keymap.vim
+source $HOME/.config/vim/rc/autocmd.vim
+source $HOME/.config/vim/rc/plugin.vim
+
+if(has("termguicolors"))
+    colorscheme materialbox
+else
+    colorscheme industry
+endif

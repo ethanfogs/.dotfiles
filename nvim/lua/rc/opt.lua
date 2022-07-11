@@ -16,9 +16,8 @@ vim.o.autoread   = true
 vim.o.clipboard  = "unnamed"
 vim.o.updatetime = 200
 vim.o.timeoutlen = 500
-
-vim.o.undofile = true
-vim.o.undodir  = vim.fn.stdpath('data')  .. "/undo"
+vim.o.undofile   = true
+vim.o.undodir    = vim.fn.stdpath('data')  .. "/undo"
 -- { [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
 vim.o.path        = ".,**"
@@ -27,11 +26,13 @@ vim.o.ignorecase  = true
 vim.o.smartcase   = true
 vim.o.smartindent = true
 vim.o.smarttab    = false
+vim.o.incsearch   = true
 -- { VISUAL-UI }-----------------------------------------------------------
 
 vim.o.termguicolors = true
 vim.o.number        = true
 vim.o.showtabline   = 2
+vim.o.showmode      = false
 vim.o.colorcolumn   = '79'
 vim.o.cursorline    = true
 vim.o.scroll        = 5
