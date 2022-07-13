@@ -14,4 +14,4 @@ export LESSHISTFILE=/dev/null
 
 #------------------------------------------------------------------------------
 
-#[[ -n $TERM_PROGRAM ]]&& tmux -f ~/.tmux.conf
+[[ -z $TERM_PROGRAM ]] && tmux -f ~/.tmux.conf
