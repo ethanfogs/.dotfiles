@@ -3,7 +3,7 @@
 source $HOME/.config/shell/global/aliasrc.sh
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
-    
+
 export LESSHISTFILE=/dev/null
 
 # FZF -------------------------------------------------------------------------
