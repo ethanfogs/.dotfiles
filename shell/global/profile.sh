@@ -1,8 +1,9 @@
-if [ $(uname) = "Darwin" ]; then
-    PATH="$PATH:/opt/homebrew/bin"
-fi
+[ $(uname) = "Darwin" ] && PATH="$PATH:/opt/homebrew/bin"
 
-export PATH="$PATH:$HOME/.local/bin"
+PATH="$PATH:$HOME/.local/bin"
+
+export PATH
+
 #------------------------------------------------------------------------------
 
 export XDG_CONFIG_HOME=$HOME/.config
@@ -21,3 +22,4 @@ export HIST_VERIFY
 #------------------------------------------------------------------------------
 
 export EDITOR=${$(command -v nvim):-/usr/bin/vim}
+export BROWSER='firefox'

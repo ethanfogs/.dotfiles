@@ -24,7 +24,7 @@ nnoremap V V$
 
 "NORMAL-MODE:LEADER-KEY::<Space> //(buf nav)
 noremap <Space> <C-w>
-noremap <Space>t <Cmd>split\|terminal<CR>i
+noremap <Space>t <Cmd>split\|terminal<CR>
 noremap <Space>w <Cmd>write<CR>
 noremap <Space>; @:
 noremap <Space>/ <Cmd>let @/=''<CR>
