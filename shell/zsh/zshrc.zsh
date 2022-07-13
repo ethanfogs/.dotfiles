@@ -3,7 +3,10 @@ source $HOME/.config/shell/zsh/oh-my-zshrc.zsh
 
 #------------------------------------------------------------------------------
 
-FPATH="$HOME/.opt/homebrew/share/zsh/site-functions:${FPATH}"
+if [ $(uname) = "Darwin" ]; then
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
 autoload -Uz compinit && compinit
 
 zstyle ':completion:*' menu select
