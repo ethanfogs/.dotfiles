@@ -3,6 +3,7 @@
 let &lazyredraw      = v:true
 let &backup          = v:false
 let &swapfile        = v:false
+let &viminfofile     = $XDG_DATA_HOME . '/' . v:progname . '/viminfo'
 "{ [INDENTATION, TABBING, SPACING]-BEHAVIOR }----------------------------
 
 let &expandtab       = v:true    "convert tabs to spaces
