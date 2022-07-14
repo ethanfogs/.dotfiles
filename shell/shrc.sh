@@ -1,6 +1,6 @@
 # RC\SOURCE FILES -------------------------------------------------------------
 
-source $HOME/.config/shell/global/aliasrc.sh
+source $HOME/.config/shell/aliasrc.sh
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
 
