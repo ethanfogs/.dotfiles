@@ -14,12 +14,5 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 #------------------------------------------------------------------------------
 
-export HISTFILE="$XDG_DATA_HOME/${SHELL/*\//}/${SHELL/*\//}_history"
-export HISTSIZE=
-export SHARE_HISTORY
-export HIST_VERIFY
-
-#------------------------------------------------------------------------------
-
 export EDITOR=${$(command -v nvim):-/usr/bin/vim}
 export BROWSER='firefox'
