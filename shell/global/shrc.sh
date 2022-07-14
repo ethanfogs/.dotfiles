@@ -5,6 +5,10 @@ source $HOME/.config/shell/global/aliasrc.sh
 # HISTORY MANAGEMENT ----------------------------------------------------------
 
 export LESSHISTFILE=/dev/null
+export HISTFILE="$XDG_DATA_HOME/${SHELL/*\//}/${SHELL/*\//}_history"
+export HISTSIZE=
+export SHARE_HISTORY
+export HIST_VERIFY
 
 # FZF -------------------------------------------------------------------------
 
