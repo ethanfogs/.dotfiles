@@ -1,5 +1,0 @@
-Host *
-    AddKeysToAgent yes
-    IdentityFile ~/.ssh/github
-
-# vim: filetype=sshconfig:
