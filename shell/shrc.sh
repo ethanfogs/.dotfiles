@@ -18,4 +18,4 @@ export HIST_VERIFY
 
 #------------------------------------------------------------------------------
 
-[[ -z $TERM_PROGRAM ]] && tmux -f ~/.tmux.conf
+[[ -z $TERM_PROGRAM ]] && tmux -f ~/.config/tmux/tmux.conf

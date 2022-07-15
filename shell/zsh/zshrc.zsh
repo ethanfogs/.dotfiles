@@ -1,4 +1,4 @@
-source $HOME/.shrc
+source $HOME/.config/shell/shrc.sh
 source $HOME/.config/shell/zsh/oh-my-zshrc.zsh
 
 #------------------------------------------------------------------------------
