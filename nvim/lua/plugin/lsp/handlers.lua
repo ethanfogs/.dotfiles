@@ -98,9 +98,6 @@ lsp_handlers.on_attach = function(client, bufnr)
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-lsp_handlers.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+lsp_handlers.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 return lsp_handlers
