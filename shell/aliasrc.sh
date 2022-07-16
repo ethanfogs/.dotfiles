@@ -5,7 +5,9 @@ alias lla="ls -laFG"
 alias lal="ls -laFG"
 
 function trash(){
-    mv -f $* ~/.Trash
+    for file in $*; do
+        [[ $file =~ ".*.DS_Store" ]] && rm -rf $file || mv $file ~/.Trash
+    done;
 }
 
 #alias rm='trash'
