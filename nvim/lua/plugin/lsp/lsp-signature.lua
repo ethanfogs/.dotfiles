@@ -1,5 +1,5 @@
 local signature = require("lsp_signature")
-local icons = require "plugin.icons"
+local icons = require("plugin.icons")
 
 local config = {
     debug = false, -- set to true to enable debug logging
