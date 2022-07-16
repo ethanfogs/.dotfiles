@@ -2,7 +2,6 @@
 
 vim.o.backup     = false
 vim.o.swapfile   = false
-vim.o.lazyredraw = true
 -- { [INDENTATION, TABBING, SPACING]-BEHAVIOR }----------------------------
 
 vim.o.expandtab   = true      -- convert tabs to spaces

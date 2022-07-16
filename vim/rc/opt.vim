@@ -1,9 +1,7 @@
 "{ GENERAL HOUSEKEEPING }------------------------------------------------------
 
-let &lazyredraw      = v:true
 let &backup          = v:false
 let &swapfile        = v:false
-let &viminfofile     = $XDG_DATA_HOME . '/' . v:progname . '/viminfo'
 "{ [INDENTATION, TABBING, SPACING]-BEHAVIOR }----------------------------
 
 let &expandtab       = v:true    "convert tabs to spaces
@@ -18,6 +16,7 @@ let &clipboard       = 'unnamed'
 let &hidden          = v:false
 let &undofile        = v:true
 let &undodir         = $XDG_DATA_HOME . '/' . v:progname .'/undo'
+let &viminfofile     = $XDG_DATA_HOME . '/' . v:progname . '/viminfo'
 let &updatetime      = 200
 let &timeoutlen      = 500
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
