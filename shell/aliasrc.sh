@@ -31,8 +31,13 @@ alias gl="git log --oneline"
 alias gbr="git branch"
 alias gch="git checkout -b"
 alias gsw="git switch"
+<<<<<<< HEAD
 alias ga="git add"
 alias gA="git add ."
+=======
+alias ga="git add ."
+alias gA="git add"
+>>>>>>> 5e307baeace70b67dd531769a88895262b3e69b5
 alias gc="git commit"
 alias gp="git push"
 alias gps="git push"
