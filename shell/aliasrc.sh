@@ -4,6 +4,12 @@ alias la="ls -aFG"
 alias lla="ls -laFG"
 alias lal="ls -laFG"
 
+function trash(){
+    mv -f $* ~/.Trash
+}
+
+#alias rm='trash'
+
 alias mkdir='mkdir -p'
 function mcd(){ mkdir -p "${1}" && cd "${1}"; }
 
