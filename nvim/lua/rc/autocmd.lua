@@ -42,7 +42,7 @@ create_autocmd({ "BufWritePost" }, {
     group = "onInitLuaWrite", pattern = { "*/.config/*vim/*" },
     callback = function()
         if(not(vim.b.source_on_write == false)) then
-            vim.cmd('source ' .. vim.fn.expand('<afile>'))
+            vim.cmd('source %')
         end
     end
 })
