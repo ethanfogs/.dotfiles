@@ -16,21 +16,17 @@ require("plugin.luasnip")
 
 require("plugin.icons")
 require("plugin.nvim-webdev-icons")
--- require("plugin.gitsigns")
-
 require("plugin.nvim-tree")
-
 require("plugin.lualine")
---require("plugin.indentline")
---require("plugin.bufferline")
---require("plugin.winbar")
-
 require("plugin.toggleterm")
 
---require('plugin.startify')
-
---require("plugin.spectre")
+require("plugin.scratchbuf")
 
 -------------------------------------------------------------------------------
 
-pcall(vim.cmd, 'colorscheme materialbox')
+local favColorSchemes = {
+    'atom', 'ayu', 'default', 'focuspoint', 'materialbox', 'molokai',
+    'molokayo', 'OceanicNext', 'solarized8_flat', 'solarized8_high',
+}
+
+vim.cmd('colorscheme ' .. favColorSchemes[math.random(#favColorSchemes)])
