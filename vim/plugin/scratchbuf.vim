@@ -1,5 +1,5 @@
 let ScratchBuf = {}
-let ScratchBuf.dir = $HOME . '/.local/share/' . v:progname . '/scratch'
+let ScratchBuf.dir = $HOME . '/.local/share/' . v:progname . '/scratchbuf'
 
 call mkdir(ScratchBuf.dir, 'p')
 

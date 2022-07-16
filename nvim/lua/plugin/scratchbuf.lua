@@ -1,8 +1,8 @@
 ScratchBuf = {
-    dir = os.getenv('HOME') ..'/.local/share/'.. vim.v.progname ..'/scratch'
+    dir = os.getenv('HOME') ..'/.local/share/'.. vim.v.progname ..'/scratchbuf'
 }
 
-os.execute('mdkir -p ' .. ScratchBuf.dir)
+os.execute('mkdir -p ' .. ScratchBuf.dir)
 
 ScratchBuf.ftype2fextn = {
     markdown        = 'md',
