@@ -28,6 +28,10 @@ alias ds='dirs'
 
 alias tree='tree -C'
 
+function git_switch(){
+    [ -z $1 ] && git switch main || git switch $1
+}
+
 alias gs="git status --short"
 alias gS="git status"
 alias gl="git log --oneline"
