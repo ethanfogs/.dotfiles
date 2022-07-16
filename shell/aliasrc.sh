@@ -28,14 +28,19 @@ alias tree='tree -C'
 
 alias gs="git status"
 alias gl="git log --oneline"
-alias gbr="git branch"
+alias gb="git branch --oneline"
+alias gbr="git branch --oneline"
 alias gch="git checkout -b"
+alias gco="git checkout -b"
 alias gsw="git switch"
 alias ga="git add"
 alias gA="git add ."
 alias gc="git commit"
+alias gC="git add . && git commit"
 alias gp="git push"
 alias gps="git push"
 alias gP="git pull"
 alias gpl="git pull"
 alias gm="git merge"
+
+# vim: filetype=bash:
