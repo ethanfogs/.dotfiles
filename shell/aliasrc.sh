@@ -10,7 +10,7 @@ function trash(){
     done;
 }
 
-#alias rm='trash'
+alias rm='trash'
 
 alias mkdir='mkdir -p'
 function mcd(){ mkdir -p "${1}" && cd "${1}"; }
