@@ -26,7 +26,8 @@ alias ds='dirs'
 
 alias tree='tree -C'
 
-alias gs="git status"
+alias gs="git status --short"
+alias gS="git status"
 alias gl="git log --oneline"
 alias gsh="git show --oneline"
 alias gb="git branch"
