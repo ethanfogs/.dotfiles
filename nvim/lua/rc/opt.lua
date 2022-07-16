@@ -13,14 +13,13 @@ vim.o.shiftround  = true      -- auto align indentation to nearest shiftwidth
 
 vim.o.autoread   = true
 vim.o.clipboard  = "unnamed"
-vim.o.updatetime = 200
+vim.o.updatetime = 500
 vim.o.timeoutlen = 500
 vim.o.undofile   = true
 vim.o.undodir    = vim.fn.stdpath('data')  .. "/undo"
 -- { [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
 vim.o.path        = ".,**"
-vim.o.wildignore  = "node_modules/,package-*.json,*cargo/,rustup/,luarocks/,gtk-*/,ssh/"
 vim.o.ignorecase  = true
 vim.o.smartcase   = true
 vim.o.smartindent = true
