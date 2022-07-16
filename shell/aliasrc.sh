@@ -33,14 +33,16 @@ function git_switch(){
 }
 
 alias gs="git status --short"
+alias gss="nvim -c 'G | bdelete 1'"
 alias gS="git status"
 alias gl="git log --oneline"
+alias gL="git log"
 alias gsh="git show --oneline"
 alias gb="git branch"
 alias gbr="git branch"
 alias gch="git checkout -b"
-alias gco="git checkout -b"
-alias gsw="git switch"
+alias gco="git checkout -B"
+alias gsw="git chechout -B"
 alias ga="git add"
 alias gA="git add ."
 alias gc="git commit"
