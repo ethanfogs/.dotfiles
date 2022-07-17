@@ -25,8 +25,6 @@ function trash(){
     done;
 }
 
-alias rm='trash'
-
 function chx(){ [ -x $1 ] && chmod -x $1 || chmod +x $1 }
 
 # TEXT EDITOR -----------------------------------------------------------------
