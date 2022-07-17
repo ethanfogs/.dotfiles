@@ -2,9 +2,9 @@
 
 alias ls="ls -FG"
 alias ll="ls -lFG"
-alias la="ls -aFG"
-alias lla="ls -laFG"
-alias lal="ls -laFG"
+alias la="ls -AFG"
+alias lla="ls -lAFG"
+alias lal="ls -lAFG"
 
 function files(){ find ${@:-.} -not -type d 2> /dev/null | sort; }
 function dirs (){ find ${@:-.} -type d 2> /dev/null | sort; }
