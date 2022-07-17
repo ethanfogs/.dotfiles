@@ -19,16 +19,17 @@ alias mkdir='mkdir -p'
 function mcd(){ mkdir -p "${1}" && cd "${1}"; }
 
 function trash(){
-    for file in $*; do
+    for file in $@; do
+        # this check for macOS throwing an error when trying to move .DS_Store
         [[ $file =~ ".*.DS_Store" ]] && rm $file || mv -f $file ~/.Trash/
     done;
 }
 
-#alias rm='trash'
+alias rm='trash'
 
-alias chx='chmod +x'
+function chx(){ [ -x $1 ] && chmod -x $1 || chmod +x $1 }
 
-# text editor -----------------------------------------------------------------
+# TEXT EDITOR -----------------------------------------------------------------
 
 alias edit=$EDITOR
 alias e=$EDITOR
@@ -53,6 +54,7 @@ alias gsw="git switch"
 alias ga="git add"
 alias gA="git add ."
 alias gc="git commit"
+alias gd="git diff"
 
 function git_COMMIT(){
     git add $@ && git commit
