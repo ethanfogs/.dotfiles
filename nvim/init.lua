@@ -24,9 +24,6 @@ require("plugin.scratchbuf")
 
 -------------------------------------------------------------------------------
 
-local favColorSchemes = {
-    'atom', 'ayu', 'default', 'focuspoint', 'materialbox', 'molokai',
-    'molokayo', 'OceanicNext', 'solarized8_flat', 'solarized8_high',
-}
+local favColorSchemes = { 'atom', 'focuspoint', 'materialbox', 'solarized8_high', }
 
 vim.cmd('colorscheme ' .. favColorSchemes[math.random(#favColorSchemes)])
