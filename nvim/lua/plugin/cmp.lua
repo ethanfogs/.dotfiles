@@ -3,15 +3,7 @@ local luasnip = require('luasnip')
 
 require('luasnip/loaders/from_vscode').lazy_load()
 
-local icons = require('plugin.icons')
-local kind_icons = icons.kind
-
 -------------------------------------------------------------------------------
-
-local check_backspace = function()
-    local col = vim.fn.col('.') - 1
-    return col == 0 or vim.fn.getline("."):sub(col, col):match('%s')
-end
 
 cmp.setup({
     snippet = {
@@ -30,18 +22,18 @@ cmp.setup({
         },
         ["<CR>"]  = cmp.mapping.confirm({ select = true }),
         ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            if (cmp.visible()) then
                 cmp.select_next_item()
-            elseif luasnip.expandable() then
+            elseif (luasnip.expandable()) then
                 luasnip.expand()
-            elseif luasnip.expand_or_jumpable() then
+            elseif (luasnip.expand_or_jumpable()) then
                 luasnip.expand_or_jump()
             else
                 fallback()
             end
         end, { "i", "s", }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
+            if (cmp.visible()) then
                 cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
                 luasnip.jump(-1)
@@ -53,7 +45,7 @@ cmp.setup({
     formatting = {
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
-            vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+            vim_item.kind = string.format("%s", icons.kind[vim_item.kind])
             vim_item.menu = ({
                 nvim_lsp = "[LSP]",
                 luasnip = "[Snippet]",

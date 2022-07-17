@@ -41,10 +41,16 @@ create_augroup("onInitLuaWrite", { clear = true })
 create_autocmd({ "BufWritePost" }, {
     group = "onInitLuaWrite", pattern = { "*/.config/*vim/*" },
     callback = function()
-        if(not(vim.b.source_on_write == false)) then
-            vim.cmd('source ' .. vim.fn.expand('<afile>'))
-        end
+        vim.cmd('source %')
     end
+})
+
+-------------------------------------------------------------------------------
+
+create_augroup("onTmuxConfWrite", { clear = true })
+create_autocmd({ "BufWritePost" }, {
+    group = "onTmuxConfWrite", pattern = { "*/.config/tmux/*.conf" },
+    callback = function() vim.cmd('silent !tmux source-file %') end
 })
 
 -------------------------------------------------------------------------------

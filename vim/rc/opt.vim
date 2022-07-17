@@ -1,9 +1,7 @@
 "{ GENERAL HOUSEKEEPING }------------------------------------------------------
 
-let &lazyredraw      = v:true
 let &backup          = v:false
 let &swapfile        = v:false
-let &viminfofile     = $XDG_DATA_HOME . '/' . v:progname . '/viminfo'
 "{ [INDENTATION, TABBING, SPACING]-BEHAVIOR }----------------------------
 
 let &expandtab       = v:true    "convert tabs to spaces
@@ -18,14 +16,14 @@ let &clipboard       = 'unnamed'
 let &hidden          = v:false
 let &undofile        = v:true
 let &undodir         = $XDG_DATA_HOME . '/' . v:progname .'/undo'
-let &updatetime      = 200
+let &viminfofile     = $XDG_DATA_HOME . '/' . v:progname . '/viminfo'
+let &updatetime      = 500
 let &timeoutlen      = 500
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
 let &path            = ".,**"
 let &ignorecase      = v:true
 let &fileignorecase  = v:true
-let &wildignore      = "node_modules/,package-*.json,*cargo/,rustup/,luarocks/,gtk-*/,ssh/"
 let &smartcase       = v:true
 let &smartindent     = v:true
 let &smarttab        = v:false

@@ -1,4 +1,6 @@
-[ $(uname) = "Darwin" ] && PATH="$PATH:/opt/homebrew/bin"
+[ $SHLVL -gt 1 ] && return
+
+[ $(uname -p) = "arm" ] && PATH="$PATH:/opt/homebrew/bin"
 
 PATH="$PATH:$HOME/.local/bin"
 
@@ -16,3 +18,5 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 export EDITOR=${$(command -v nvim):-/usr/bin/vim}
 export BROWSER='firefox'
+
+# vim: filetype=bash:
