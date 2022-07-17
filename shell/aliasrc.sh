@@ -11,7 +11,7 @@ function dirs (){ find ${@:-.} -type d 2> /dev/null | sort; }
 alias fs='files'
 alias ds='dirs'
 
-command -v tree 2> /dev/null && alias tree='tree -C'
+command -v tree > /dev/null && alias tree='tree -C'
 
 # FILE-SYSTEM - WRITING -------------------------------------------------------
 
@@ -20,7 +20,7 @@ function mcd(){ mkdir -p "${1}" && cd "${1}"; }
 
 function trash(){
     for file in $*; do
-        [[ $file =~ ".*.DS_Store" ]] && rm -rf $file || mv $file ~/.Trash
+        [[ $file =~ ".*.DS_Store" ]] && rm -rf $file || mv -f $file ~/.Trash
     done;
 }
 
