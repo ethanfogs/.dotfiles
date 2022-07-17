@@ -68,4 +68,9 @@ alias gpl="git pull"
 alias gm="git merge"
 
 #------------------------------------------------------------------------------
+
+function nvim_man(){ nvim -c "Man $1 | only" }
+which nvim > /dev/null && alias man=nvim_man
+
+#------------------------------------------------------------------------------
 # vim: filetype=bash:
