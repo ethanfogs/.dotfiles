@@ -2,15 +2,20 @@ source $HOME/.config/shell/shrc.sh
 
 #------------------------------------------------------------------------------
 
-[ $(uname) = "Darwin" ] && FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+if [ $(uname) = "Darwin" ]; then
+    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    # all 
+    FIGNORE="$FIGNORE:cache:ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
+fi
 
 # OH-MY-ZSH CONFIG ------------------------------------------------------------
 
 autoload -Uz compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 
 export ZSH=/usr/local/share/zsh/oh-my-zsh
+
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
-ZSH_THEME="agnoster" #fav themes: agnoster, cloud, darkblood, edvardm, fox, jonathan, trapd00r
+ZSH_THEME="agnoster"
 source $ZSH/oh-my-zsh.sh
 
 zstyle ':completion:*' menu select
