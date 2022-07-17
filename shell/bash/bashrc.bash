@@ -1,4 +1,4 @@
-source $HOME/.shrc
+source $HOME/.config/shell/shrc.sh
 
 #{ SHOPT\SET }----------------------------------------------------------------
 
@@ -6,14 +6,19 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 shopt -s cmdhist histappend histverify
 shopt -s checkwinsize dotglob extglob nocaseglob nocasematch nullglob
 
-#{ PROMPT }-------------------------------------------------------------------
+# OH-MY-BASH ------------------------------------------------------------------
 
-export PS1="[ \u@\H : \w ]\n > "
+export OSH=/usr/local/share/bash/oh-my-bash
 
-#{ IMPORT COMMAND-LINE [TOOLS, UTILS] }---------------------------------------
+OSH_THEME="font"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true" # display red dots whilst waiting for completion.
+DISABLE_UNTRACKED_FILES_DIRTY="false"
+HIST_STAMPS="mm-dd-yyyy"
 
-source /opt/homebrew/completions/bash/brew
+OMB_USE_SUDO=true
 
-BASH_COMPLETIONS=$HOME/.config/shell/bash/completions
-source $BASH_COMPLETIONS/.fzf.bash
-source $BASH_COMPLETIONS/alacritty.bash
+completions=(git)
+plugins=(git)
+
+source $OSH/oh-my-bash.sh
