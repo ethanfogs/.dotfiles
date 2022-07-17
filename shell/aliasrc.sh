@@ -20,11 +20,11 @@ function mcd(){ mkdir -p "${1}" && cd "${1}"; }
 
 function trash(){
     for file in $*; do
-        [[ $file =~ ".*.DS_Store" ]] && rm -rf $file || mv -f $file ~/.Trash
+        [[ $file =~ ".*.DS_Store" ]] && rm $file || mv -f $file ~/.Trash/
     done;
 }
 
-alias rm='trash'
+#alias rm='trash'
 
 alias chx='chmod +x'
 
@@ -47,8 +47,8 @@ alias gL="git log"
 alias gsh="git show --oneline"
 alias gb="git branch"
 alias gbr="git branch"
-alias gch="git checkout -b"
-alias gco="git checkout -B"
+alias gch="git checkout"
+alias gco="git checkout -b"
 alias gsw="git switch"
 alias ga="git add"
 alias gA="git add ."
