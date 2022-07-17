@@ -20,7 +20,7 @@ function mcd(){ mkdir -p "${1}" && cd "${1}"; }
 
 function trash(){
     for file in $*; do
-        [[ $file =~ ".*.DS_Store" ]] && rm -rf $file || mv -f $file ~/.Trash
+        mv $file ~/.Trash/ 2> /dev/null || rm -rf $file
     done;
 }
 
