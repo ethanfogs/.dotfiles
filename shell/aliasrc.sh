@@ -14,7 +14,7 @@ function ds(){
     find ${@:-.} -type d 2> /dev/null | sort
 }
 
-[ $(command -v tree) ]  && alias tree='tree -C'
+[[ $(command -v tree) ]] && alias tree='tree -C'
 
 # FILE-SYSTEM - WRITING -------------------------------------------------------
 

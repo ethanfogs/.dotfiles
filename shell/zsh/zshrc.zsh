@@ -16,6 +16,7 @@ export ZSH=/usr/local/share/zsh/oh-my-zsh
 
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 ZSH_THEME="agnoster"
+plugins=(vi-mode)
 source $ZSH/oh-my-zsh.sh
 
 zstyle ':completion:*' menu select
