@@ -19,4 +19,5 @@ export XDG_CACHE_HOME=$HOME/.cache
 export EDITOR=${$(command -v nvim):-/usr/bin/vim}
 export BROWSER='firefox'
 
+#------------------------------------------------------------------------------
 # vim: filetype=bash:

@@ -47,6 +47,14 @@ create_autocmd({ "BufWritePost" }, {
 
 -------------------------------------------------------------------------------
 
+create_augroup("onShellRcWrite", { clear = true })
+create_autocmd({ "BufWritePost" }, {
+    group = "onShellRcWrite", pattern = { "*/.config/shell/*.*sh" },
+    callback = function() vim.cmd('silent !source %') end
+})
+
+-------------------------------------------------------------------------------
+
 create_augroup("onTmuxConfWrite", { clear = true })
 create_autocmd({ "BufWritePost" }, {
     group = "onTmuxConfWrite", pattern = { "*/.config/tmux/*.conf" },

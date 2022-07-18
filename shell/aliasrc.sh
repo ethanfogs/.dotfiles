@@ -1,48 +1,93 @@
+# FILE-SYSTEM - READING -------------------------------------------------------
+
 alias ls="ls -FG"
 alias ll="ls -lFG"
-alias la="ls -aFG"
-alias lla="ls -laFG"
-alias lal="ls -laFG"
+alias la="ls -AFG"
+alias lla="ls -lAFG"
+alias lal="ls -lAFG"
 
-function trash(){
-    mv -f $* ~/.Trash
+function fs(){
+    find ${@:-.} -not -type d 2> /dev/null | sort
 }
 
-#alias rm='trash'
+function ds(){
+    find ${@:-.} -type d 2> /dev/null | sort
+}
+
+[[ $(command -v tree) ]] && alias tree='tree -C'
+
+# FILE-SYSTEM - WRITING -------------------------------------------------------
 
 alias mkdir='mkdir -p'
-function mcd(){ mkdir -p "${1}" && cd "${1}"; }
+function mcd(){
+    mkdir -p "${1}" && cd "${1}"
+}
 
-alias chx='chmod +x'
+function trash(){
+    for file in $@; do
+        # this check for macOS throwing an error when trying to move .DS_Store
+        [[ $file =~ ".*.DS_Store" ]] && rm $file || mv -f $file ~/.Trash/
+    done
+}
+
+function chx(){
+    [ -x $1 ] && chmod -x $1 || chmod +x $1
+}
+
+# TEXT EDITOR -----------------------------------------------------------------
 
 alias edit=$EDITOR
 alias e=$EDITOR
 
-function files(){ find ${@:-.} -not -type d 2> /dev/null | sort; }
-function dirs (){ find ${@:-.} -type d 2> /dev/null | sort; }
+# GIT -------------------------------------------------------------------------
 
-alias fs='files'
-alias ds='dirs'
-
-alias tree='tree -C'
-
+if [[ $(command -v nvim) ]]; then
+    alias gss="git status 1> /dev/null && nvim -c 'G | bdelete 1'"
+fi
 alias gs="git status --short"
 alias gS="git status"
 alias gl="git log --oneline"
-alias gsh="git show --oneline"
+alias gL="git log"
 alias gb="git branch"
-alias gbr="git branch"
-alias gch="git checkout -b"
-alias gco="git checkout -b"
-alias gsw="git switch"
+alias gco="git checkout"
+alias gcb="git checkout -b"
+function gsw(){
+    [ -n $* ] && git switch $1 || git checkout -
+}
 alias ga="git add"
 alias gA="git add ."
+alias grm="git rm"
+
+alias gd="git diff --minimal"
+
+alias gst="git stash"
+
 alias gc="git commit"
 alias gC="git add . && git commit"
+
 alias gp="git push"
-alias gps="git push"
 alias gP="git pull"
-alias gpl="git pull"
+
 alias gm="git merge"
 
+#------------------------------------------------------------------------------
+
+function nvim_man(){
+    nvim -c "Man $1 | only"
+}
+
+[[ $(command -v nvim) ]] && alias man='nvim_man'
+
+#------------------------------------------------------------------------------
+
+alias python=$(command -v python3)
+alias py=$(command -v python3)
+
+#------------------------------------------------------------------------------
+
+function google(){
+    [ -n $* ] && open "https://google.com/search?q=${*// /+}" || open "https://google.com"
+}
+
+#------------------------------------------------------------------------------
 # vim: filetype=bash:

@@ -1,10 +1,6 @@
-local lsp_handlers = {}
+lsp.handlers.capabilities = vim.lsp.protocol.make_client_capabilities()
 
-lsp_handlers.capabilities = vim.lsp.protocol.make_client_capabilities()
-
-lsp_handlers.setup = function()
-
-    -- local icons = {} -- require('plugin.icons')
+function lsp.handlers.setup()
     local signs = {
         { name = "DiagnosticSignError", text = "❌" },
         { name = "DiagnosticSignWarn", text = "⚠"},
@@ -12,7 +8,7 @@ lsp_handlers.setup = function()
         { name = "DiagnosticSignInfo", text = "ℹ️" },
     }
 
-    for _, sign in ipairs(signs) do
+    for _, sign in pairs(signs) do
         vim.fn.sign_define(sign.name, {
             texthl = sign.name,
             text = sign.text,
@@ -20,8 +16,8 @@ lsp_handlers.setup = function()
         })
     end
 
-    local config = {
-        virtual_text = false,
+    vim.diagnostic.config({
+        --virtual_text = false,
         signs = { active = signs },
         update_in_insert = true,
         underline = true,
@@ -34,70 +30,39 @@ lsp_handlers.setup = function()
             header = "",
             prefix = "",
         }
-    }
+    })
 
-    vim.diagnostic.config(config)
-
-    local handlers = vim.lsp.handlers
-    handlers["textDocument/hover"] = vim.lsp.with(handlers.hover, {
+    lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, {
         border = "rounded",
     })
 
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
         border = "rounded",
     })
 end
 
-function lsp_highlight_document(client)
-    if client.resolved_capabilities.document_highlight then
-
-        vim.api.nvim_create_augroup( "lsp_document_highlight", { clear = true })
-
-        local au_opts = {}
-        vim.api.nvim_create_autocmd("CursorHold", {
-            group = "lsp_document_highlight",
-            buffer = 0,
-            callback = vim.lsp.buf.document_highlight,
-        })
-
-        vim.api.nvim_create_autocmd("CursorMoved", {
-            group = "lsp_document_highlight",
-            buffer = 0,
-            callback = vim.lsp.buf.clear_references,
-        })
-    end
-end
-
-function lsp_keymaps(bufnr)
+function lsp.keymaps(bufnr)
     local buf_set_n_keymap = function(bufnr, lhs, rhs)
         local opts = { noremap = true, silent = true, }
-        vim.api.nvim_buf_set_keymap(bufnr, "n", lhs, rhs, opts)
+        vim.api.nvim_buf_set_keymap(bufnr, "n", lhs, '<Cmd>lua '.. rhs ..'<CR>', opts)
     end
 
     --buf_set_n_keymap(bufnr, "gc", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
-    buf_set_n_keymap(bufnr, "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
-    buf_set_n_keymap(bufnr, "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>")
-    buf_set_n_keymap(bufnr, "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>")
-    buf_set_n_keymap(bufnr, "gr", "<Cmd>lua vim.lsp.buf.references()<CR>")
-    buf_set_n_keymap(bufnr, "gR", "<Cmd>lua vim.lsp.buf.rename(<CR>)")
-    buf_set_n_keymap(bufnr, "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
-    buf_set_n_keymap(bufnr, "K",  "<Cmd>lua vim.lsp.buf.hover()<CR>")
-    buf_set_n_keymap(bufnr, "gj", "<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = 'rounded' })<CR>")
-    buf_set_n_keymap(bufnr, "gl", "<Cmd>lua vim.lsp.diagnostic.goto_next({ border = 'rounded' })<CR>")
-    buf_set_n_keymap(bufnr, "go", "<Cmd>lua vim.diagnostic.open_float({ border = 'rounded' })<CR>")
+    buf_set_n_keymap(bufnr, "gd", "lsp.buf.definition()")
+    buf_set_n_keymap(bufnr, "gD", "lsp.buf.declaration()")
+    buf_set_n_keymap(bufnr, "gi", "lsp.buf.implementation()")
+    buf_set_n_keymap(bufnr, "gr", "lsp.buf.references()")
+    buf_set_n_keymap(bufnr, "gR", "lsp.buf.rename(<CR>)")
+    buf_set_n_keymap(bufnr, "gS", "lsp.buf.signature_help()")
+    buf_set_n_keymap(bufnr, "K",  "lsp.buf.hover()")
+    buf_set_n_keymap(bufnr, "gj", "lsp.diagnostic.show_line_diagnostics({ border = 'rounded' })")
+    buf_set_n_keymap(bufnr, "gl", "lsp.diagnostic.goto_next({ border = 'rounded' })")
+    buf_set_n_keymap(bufnr, "go", "diagnostic.open_float({ border = 'rounded' })")
 
     vim.api.nvim_create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
 end
 
-lsp_handlers.on_attach = function(client, bufnr)
-    if client.name == "tsserver" then
-        client.resolved_capabilities.document_formatting = false
-    end
-    lsp_keymaps(bufnr)
-    lsp_highlight_document(client)
-end
+lsp.handlers.capabilities = require("cmp_nvim_lsp")
+                                .update_capabilities(lsp.handlers.capabilities)
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-lsp_handlers.capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
-return lsp_handlers
+lsp.handlers.setup()
