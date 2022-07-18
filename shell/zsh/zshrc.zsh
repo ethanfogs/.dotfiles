@@ -2,14 +2,16 @@ source $HOME/.config/shell/shrc.sh
 
 #------------------------------------------------------------------------------
 
-setopt extendedglob
+setopt dotglob extendedglob
 
 #------------------------------------------------------------------------------
 
 if [ $(uname) = "Darwin" ]; then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
     # ignore completions for macOS default $HOME directories that I never use
-    FIGNORE="$FIGNORE:cache:ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
+    FIGNORE="$FIGNORE:cache:.ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
+
+    export HOMEBREW_CASK_OPTS="--no-quarantine"
 fi
 
 # OH-MY-ZSH CONFIG ------------------------------------------------------------
