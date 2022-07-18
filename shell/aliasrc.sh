@@ -41,34 +41,29 @@ alias e=$EDITOR
 
 # GIT -------------------------------------------------------------------------
 
-function git_switch(){
-    [ -n $1 ] && git switch $1 || git switch main
-}
-
 alias gs="git status --short"
-[ $(command -v nvim) ] && alias gss="nvim -c 'G | bdelete 1'"
+[[ $(command -v nvim) ]] && alias gss="git status 1> /dev/null && nvim -c 'G | bdelete 1'"
 alias gS="git status"
 alias gl="git log --oneline"
 alias gL="git log"
 alias gb="git branch"
 alias gco="git checkout"
 alias gcb="git checkout -b"
-
 function gsw(){
     [ -n ] && git switch $1 || git checkout -
 }
-
 alias ga="git add"
 alias gA="git add ."
-alias gd="git diff"
+
+alias grm="git rm"
+
+alias gd="git diff --minimal"
 
 alias gc="git commit"
 alias gC="git add . && git commit"
 
 alias gp="git push"
-alias gps="git push"
 alias gP="git pull"
-alias gpl="git pull"
 
 alias gm="git merge"
 
