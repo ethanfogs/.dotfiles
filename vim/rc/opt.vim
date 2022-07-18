@@ -16,7 +16,6 @@ let &clipboard       = 'unnamed'
 let &undofile        = v:true
 let &undodir         = $XDG_DATA_HOME . '/vim/undo'
 let &viminfofile     = $XDG_DATA_HOME . '/vim/viminfo'
-let &timeoutlen      = 1500
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
 let &path            = ".,**"

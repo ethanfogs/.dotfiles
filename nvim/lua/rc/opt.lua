@@ -14,7 +14,6 @@ vim.o.shiftround  = true      -- auto align indentation to nearest shiftwidth
 
 vim.o.autoread   = true
 vim.o.clipboard  = "unnamed"
-vim.o.timeoutlen = 1500
 vim.o.undofile   = true
 vim.o.undodir    = vim.fn.stdpath('data')  .. "/undo"
 -- { [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
