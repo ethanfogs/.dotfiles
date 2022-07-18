@@ -1,6 +1,4 @@
-local bufferline = require("bufferline")
-
-bufferline.setup({
+require("bufferline").setup({
     options = {
         numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
         close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
@@ -159,4 +157,4 @@ bufferline.setup({
     },
 })
 
--- vim: filetype=lua:foldmethod=indent:
+vim.o.laststatus = 0

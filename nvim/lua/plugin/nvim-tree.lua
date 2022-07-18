@@ -1,6 +1,5 @@
 local nvim_tree = require('nvim-tree')
 local nvim_tree_config = require("nvim-tree.config")
-local icons = require("plugin.icons")
 
 local tree_cb = nvim_tree_config.nvim_tree_callback
 

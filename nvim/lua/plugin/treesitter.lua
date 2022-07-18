@@ -1,13 +1,11 @@
 local treesitter = require("nvim-treesitter")
 local configs    = require("nvim-treesitter.configs")
 
---[[
-local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
-ft_to_parser.motoko = "typescript"
---]]
+--local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
+--ft_to_parser.motoko = "typescript"
 
 vim.o.foldmethod = "expr"
-vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldexpr   = "nvim_treesitter#foldexpr()"
 
 configs.setup({
 	sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
@@ -48,4 +46,10 @@ configs.setup({
 	playground = {
 		enable = true,
 	},
+})
+
+require("treesitter-context").setup({
+    enable = false,
+    throttle = true, -- may improve performance
+    max_lines = 0, -- How many lines the window should span. 0 => no limit.
 })

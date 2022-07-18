@@ -1,25 +1,26 @@
-# HISTORY MANAGEMENT ----------------------------------------------------------
-
-export LESSHISTFILE=/dev/null
-
-export APPEND_HISTORY
-export SHARE_HISTORY
-export HIST_VERIFY
-export HISTSIZE=
-export HISTFILE="$XDG_DATA_HOME/${SHELL/*\//}/${SHELL/*\//}_history"
-
 # RC\SOURCE FILES -------------------------------------------------------------
 
 source $HOME/.config/shell/aliasrc.sh
 
-# FZF -------------------------------------------------------------------------
+# HISTORY MANAGEMENT ----------------------------------------------------------
 
-#export FZF_DEFAULT_OPTS="--multi --cycle --reverse --border=rounded --preview='[[ ! -d {} ]] && bat {}'"
-#export FZF_DEFAULT_COMMAND="fzf ${FZF_DEFAULT_OPTS}"
-#export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
+export APPEND_HISTORY
+export SHARE_HISTORY
+export HIST_VERIFY
+export HISTFILE="$HOME/.local/share/${SHELL/*\//}/${SHELL/*\//}_history"
+
+export LESSHISTFILE=/dev/null
 
 #------------------------------------------------------------------------------
 
-[ -z $TMUX ] && exec tmux
+COMPLETION_HOME=/usr/local/share/${SHELL/*\//}/completion
+for COMPLETION_FILE in $(find $COMPLETION_HOME -type f); do
+    source $COMPLETION_FILE
+done
 
+# TMUX ON SHELL START-UP ------------------------------------------------------
+
+[[ $(command -v tmux) ]] && [ -z $TMUX ] && exec tmux
+
+#------------------------------------------------------------------------------
 # vim: filetype=bash:

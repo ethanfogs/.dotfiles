@@ -53,16 +53,6 @@ set_keymap("", "aq", 'a"', opts)
 
 -- [INSERT,CMDLINE]-MODE
 set_keymap("!", "jj", "<C-c>", opts)
-set_keymap("!", "()", "()<Left>", opts)
-set_keymap("!", ")(", "()<Left>", opts)
-set_keymap("!", "<>", "<><Left>", opts)
-set_keymap("!", "><", "<><Left>", opts)
-set_keymap("!", "[]", "[]<Left>", opts)
-set_keymap("!", "][", "[]<Left>", opts)
-set_keymap("!", "{}", "{}<Left>", opts)
-set_keymap("!", "}{", "{}<Left>", opts)
-set_keymap("!", "''", "''<Left>", opts)
-set_keymap("!", '""', '""<Left>', opts)
 
 -- TERMINAL-MODE
 set_keymap("t", "<Esc><Esc>", "<C-BSlash><C-n>", opts)
