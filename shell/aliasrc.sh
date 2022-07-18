@@ -86,7 +86,7 @@ alias py=$(command -v python3)
 #------------------------------------------------------------------------------
 
 function google(){
-    [ -n $* ] && open "https://google.com/search?q=${*// /+}" || open "https://google.com"
+    [ -n "$*" ] && open "https://google.com/search?q=${*// /+}" || open "https://google.com"
 }
 
 #------------------------------------------------------------------------------
