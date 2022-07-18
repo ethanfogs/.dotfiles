@@ -21,9 +21,9 @@ telescope.setup({
         },
         mappings = {
             n = {
-                ["<Esc>"] = actions.close,
-                q = actions.close,
-                ["<C-c>"] = actions.close,
+                ["<Esc>"]   = actions.close,
+                ["q"]       = actions.close,
+                ["<C-c>"]   = actions.close,
                 ["<Space>"] = actions.toggle_selection,
             },
             i = {
