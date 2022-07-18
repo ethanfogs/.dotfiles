@@ -22,6 +22,5 @@ init:
 	mkdir -p ~/.{cache,config,local/{share,state,bin,env}}
 	git clone https://github.com/ethanfogs/dotfiles .dotfiles
 
-
-#echo $(HOME)/.{cache,config,local/{share,state}}
-#mkdir -p ~/.{cache,config,local/{share,state}}
+macos_defaults:
+	defaults write com.apple.Finder AppleShowAllFiles true
