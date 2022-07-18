@@ -85,12 +85,9 @@ alias py=$(command -v python3)
 
 #------------------------------------------------------------------------------
 
-
-if [[ $(command -v fzf) ]]; then 
-    #FZF_DEFAULT_PREVIEW="--preview='[[ ! -d {} ]] && bat {}'"
-    FZF_DEFAULT_OPTS="--multi --cycle --reverse --border=rounded"
-    alias fzf="fzf $FZF_DEFAULT_OPTS"
-fi
+function google(){
+    [ -n $* ] && open "https://google.com/search?q=${*// /+}" || open "https://google.com"
+}
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
