@@ -7,6 +7,7 @@ require("rc.funcs")
 -------------------------------------------------------------------------------
 
 require("plugin.icons")
+require("plugin.gitsigns")
 
 require("plugin.lsp") -- this sources lua/plugin/lsp/init.lua
 require("plugin.telescope")
@@ -14,6 +15,9 @@ require("plugin.telescope")
 require("plugin.cmp")
 
 require("plugin.treesitter")
+
+require("plugin.autopairs")
+require("plugin.comment")
 
 require("plugin.nvim-tree")
 require("plugin.lualine")

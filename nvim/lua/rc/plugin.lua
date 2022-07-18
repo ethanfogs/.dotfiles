@@ -1,10 +1,8 @@
 return require("packer").startup(function()
     use "akinsho/bufferline.nvim"
     use "akinsho/toggleterm.nvim"
-    -- use "cohama/lexima.vim"
     use "folke/lsp-colors.nvim"
     -- use "folke/which-key.nvimfolke/which-key"
-    -- use "glepnir/lspsaga.nvim"
     use "hrsh7th/cmp-buffer"
     use "hrsh7th/cmp-cmdline"
     use "hrsh7th/cmp-nvim-lsp"
@@ -12,10 +10,8 @@ return require("packer").startup(function()
     use "hrsh7th/cmp-path"
     use "hrsh7th/nvim-cmp"
     use "jose-elias-alvarez/null-ls.nvim"
-    use 'kdheepak/lazygit.nvim'
     use "kyazdani42/nvim-tree.lua"
     use "kyazdani42/nvim-web-devicons"
-    -- use "lewis6991/impatient.nvim"
     use "lewis6991/gitsigns.nvim"
     use "L3MON4D3/LuaSnip"
     --use "mhinz/vim-startify"
@@ -44,9 +40,9 @@ return require("packer").startup(function()
     use "tpope/vim-fugitive"
     use "tpope/vim-rhubarb"
     use "tpope/vim-surround"
-    -- use "vimwiki/vimwiki"
     use "wbthomason/packer.nvim"
     use "williamboman/nvim-lsp-installer"
     use "windwp/nvim-autopairs"
+    use "numToStr/Comment.nvim"
     use "JoosepAlviste/nvim-ts-context-commentstring"
 end)
