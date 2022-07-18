@@ -74,8 +74,16 @@ alias gm="git merge"
 
 #------------------------------------------------------------------------------
 
-#function nvim_man(){ nvim -c "Man $1 | only" }
-#which nvim > /dev/null && alias man=nvim_man
+function nvim_man(){
+    nvim -c "Man $1 | only"
+}
+
+[[ $(command -v nvim) ]] && alias man='nvim_man'
+
+#------------------------------------------------------------------------------
+
+alias python=$(command -v python3)
+alias py=$(command -v python3)
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
