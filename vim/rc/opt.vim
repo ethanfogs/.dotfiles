@@ -13,12 +13,10 @@ let &shiftround      = v:true    " auto align indentation to nearest shiftwidth
 
 let &autoread        = v:true    "changes to a file are shown in real-time
 let &clipboard       = 'unnamed'
-let &hidden          = v:false
 let &undofile        = v:true
-let &undodir         = $XDG_DATA_HOME . '/' . v:progname .'/undo'
-let &viminfofile     = $XDG_DATA_HOME . '/' . v:progname . '/viminfo'
-let &updatetime      = 500
-let &timeoutlen      = 500
+let &undodir         = $XDG_DATA_HOME . '/vim/undo'
+let &viminfofile     = $XDG_DATA_HOME . '/vim/viminfo'
+let &timeoutlen      = 1500
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
 let &path            = ".,**"

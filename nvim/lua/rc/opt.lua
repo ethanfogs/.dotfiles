@@ -1,7 +1,8 @@
 -- { GENERAL HOUSEKEEPING }------------------------------------------------------
 
-vim.o.backup     = false
-vim.o.swapfile   = false
+vim.o.backup   = false
+vim.o.swapfile = false
+vim.o.hidden   = false
 -- { [INDENTATION, TABBING, SPACING]-BEHAVIOR }----------------------------
 
 vim.o.expandtab   = true      -- convert tabs to spaces
@@ -13,8 +14,7 @@ vim.o.shiftround  = true      -- auto align indentation to nearest shiftwidth
 
 vim.o.autoread   = true
 vim.o.clipboard  = "unnamed"
-vim.o.updatetime = 500
-vim.o.timeoutlen = 500
+vim.o.timeoutlen = 1500
 vim.o.undofile   = true
 vim.o.undodir    = vim.fn.stdpath('data')  .. "/undo"
 -- { [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
@@ -37,5 +37,7 @@ vim.o.scroll        = 5
 vim.o.scrolloff     = 7
 vim.o.splitbelow    = true
 vim.o.splitright    = true
+
+vim.o.laststatus    = 0
 
 vim.o.inccommand = "split"   -- preview buffer for `:substitute`
