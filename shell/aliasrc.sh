@@ -41,8 +41,10 @@ alias e=$EDITOR
 
 # GIT -------------------------------------------------------------------------
 
+if [[ $(command -v nvim) ]]; then
+    alias gss="git status 1> /dev/null && nvim -c 'G | bdelete 1'"
+fi
 alias gs="git status --short"
-[[ $(command -v nvim) ]] && alias gss="git status 1> /dev/null && nvim -c 'G | bdelete 1'"
 alias gS="git status"
 alias gl="git log --oneline"
 alias gL="git log"
@@ -50,14 +52,15 @@ alias gb="git branch"
 alias gco="git checkout"
 alias gcb="git checkout -b"
 function gsw(){
-    [ -n ] && git switch $1 || git checkout -
+    [ -n $* ] && git switch $1 || git checkout -
 }
 alias ga="git add"
 alias gA="git add ."
-
 alias grm="git rm"
 
 alias gd="git diff --minimal"
+
+alias gst="git stash"
 
 alias gc="git commit"
 alias gC="git add . && git commit"
@@ -79,6 +82,15 @@ function nvim_man(){
 
 alias python=$(command -v python3)
 alias py=$(command -v python3)
+
+#------------------------------------------------------------------------------
+
+
+if [[ $(command -v fzf) ]]; then 
+    #FZF_DEFAULT_PREVIEW="--preview='[[ ! -d {} ]] && bat {}'"
+    FZF_DEFAULT_OPTS="--multi --cycle --reverse --border=rounded"
+    alias fzf="fzf $FZF_DEFAULT_OPTS"
+fi
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:

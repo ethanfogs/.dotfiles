@@ -18,15 +18,9 @@ for COMPLETION_FILE in $(find $COMPLETION_HOME -type f); do
     source $COMPLETION_FILE
 done
 
-# FZF -------------------------------------------------------------------------
-
-#export FZF_DEFAULT_OPTS="--multi --cycle --reverse --border=rounded --preview='[[ ! -d {} ]] && bat {}'"
-#export FZF_DEFAULT_COMMAND="fzf ${FZF_DEFAULT_OPTS}"
-#export FZF_CTRL_T_COMMAND="${FZF_DEFAULT_COMMAND}"
-
 # TMUX ON SHELL START-UP ------------------------------------------------------
 
-[ $(command -v tmux) ] && [ -z $TMUX ] && exec tmux
+[[ $(command -v tmux) ]] && [ -z $TMUX ] && exec tmux
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
