@@ -34,7 +34,6 @@ vim.o.showmode      = false
 vim.o.colorcolumn   = '79'
 vim.o.cursorline    = true
 vim.o.scroll        = 5
-vim.o.wrap          = false
 vim.o.scrolloff     = 7
 vim.o.splitbelow    = true
 vim.o.splitright    = true

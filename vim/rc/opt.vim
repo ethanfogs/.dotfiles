@@ -35,7 +35,6 @@ let &showtabline     = 2
 let &colorcolumn     = 79
 let &cursorline      = v:true
 let &scroll          = 5
-let &wrap            = v:false
 let &scrolloff       = 7
 let &showmode        = v:false
 let &splitbelow      = v:true
