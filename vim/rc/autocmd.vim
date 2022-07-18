@@ -16,10 +16,15 @@ augroup END
 
 augroup onVimrcFileWrite
     autocmd!
-    autocmd BufWritePost $XDG_CONFIG_HOME/**.vim source %
+    autocmd BufWritePost **/.config/**.vim source %
+augroup END
+
+augroup onShellRcWrite
+    autocmd!
+    autocmd BufWritePost **/.config/shell/**.*sh silent !source %
 augroup END
 
 augroup onTmuxConfWrite
     autocmd!
-    autocmd BufWritePost **/tmux/*.conf silent !tmux source-file <afile>
+    autocmd BufWritePost **/.config/tmux/*.conf silent !tmux source-file <afile>
 augroup END
