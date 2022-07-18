@@ -10,7 +10,7 @@ shopt -s checkwinsize dotglob extglob nocaseglob nocasematch nullglob
 
 export OSH=/usr/local/share/bash/oh-my-bash
 
-OSH_THEME="font"
+OSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true" # display red dots whilst waiting for completion.
 DISABLE_UNTRACKED_FILES_DIRTY="false"
