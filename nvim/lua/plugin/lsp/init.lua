@@ -8,7 +8,7 @@ lsp.signature = require('plugin.lsp.lsp-signature')
 
 require("nvim-lsp-installer").setup()
 
-local servers = { "jsonls", "sumneko_lua", "tsserver", "bashls", "vimls", "quick_lint_js" }
+local servers = { "jsonls", "sumneko_lua", "tsserver", "bashls", "vimls", "quick_lint_js", "marksman" }
 
 for _, server in pairs(servers) do
     local opts = {
