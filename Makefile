@@ -1,26 +1,73 @@
-PKGS_BASE = wget
+XDG_BIN_HOME    ?= $(HOME)/.local/bin
+XDG_CONFIG_HOME ?= $(HOME)/.config
+XDG_CACHE_HOME  ?= $(HOME)/.cache
+XDG_DATA_HOME   ?= $(HOME)/.local/share
+XDG_STATE_HOME  ?= $(HOME)/.local/state
 
-PKGS_TERMINALS = kitty alacritty
-PKGS_CLI_TOOLS = tmux neovim jq fd ripgrep bat exa most fzf tree tldr 
-PKGS_PROGLANGS = python3 node rust lua golang
+BASE_DIRS = \
+	$(XDG_BIN_HOME) $(XDG_CONFIG_HOME) $(XDG_STATE_HOME)
+	$(XDG_CACHE_HOME) $(XDG_DATA_HOME)
 
-PKGS_DESKTOP = firefox brave-browser bitwarden protonvpn
-PKGS_MAC_DESKTOP = amethyst
-PKGS_FONTS = font-hack-nerd-font
+#------------------------------------------------------------------------------
 
-PKGS_ADMIN = ansible nmap wireshark masscan
-PKGS_SEC = burp-suite snort metasploit john-jumbo hydra ghidra aircrack-ng
+GH            = https://github.com
+CLONE         = git clone $(GH)
+DOTFILES_GH   = ethanfogs/dotfiles
 
-PKGS_ALL = $(PKGS_DEV) $(PKGS_TERMINALS) $(PKGS_CLI_TOOLS) $(PKGS_DEV) $(PKGS_DESKTOP) $(PKGS_MAC_DESKTOP) $(PKGS_FONTS) $(PKGS_ADMIN) $(PKGS_SEC)
+#------------------------------------------------------------------------------
 
-HOMEBREW_URL = https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-INSTALL_HOMEBREW = curl -fsSL $(HOMEBREW_URL) | /bin/bash
+#.SILENT:
+#.ONESHELL:
+config:
+	mkdir -p $(BASE_DIRS)
+	$(CLONE)/$(DOTFILES_GH) $(XDG_CACHE_HOME)/dotfiles
+	cp -iR  $(XDG_CACHE_HOME)/dotfiles/* $(XDG_CONFIG_HOME)/
+	ln -svf $(XDG_CONFIG_HOME)/shell/profile.sh             $(HOME)/.profile
+	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zprofile.zsh       $(HOME)/.zprofile
+	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zshrc.zsh          $(HOME)/.zshrc
+	ln -svf $(XDG_CONFIG_HOME)/shell/bash/bash_profile.bash $(HOME)/.bash_profile
+	ln -svf $(XDG_CONFIG_HOME)/shell/bash/bashrc.bash       $(HOME)/.bashrc
 
-MAC_INIT = sudo softwareupdate --install && sudo xcode-select --install
+#------------------------------------------------------------------------------
 
-init:
-	mkdir -p ~/.{cache,config,local/{share,state,bin,env}}
-	git clone https://github.com/ethanfogs/dotfiles .dotfiles
+homebrew:
+	mkdir -p $(BASE_DIRS)
+	[ `command -v brew` ] || $(CLONE)/Homebrew/brew $(XDG_DATA_HOME)/homebrew
+	ln -sfv $(XDG_DATA_HOME)/homebrew/bin/brew $(XDG_BIN_HOME)/
 
-macos_defaults:
-	defaults write com.apple.Finder AppleShowAllFiles true
+#------------------------------------------------------------------------------
+
+CLI_PKGS  = neovim tmux fd ripgrep bat exa jq tree tldr fzf
+DEV_PKGS  = python3 node lua rust golang
+FONT_PGKS = font-hack-nerd-font
+
+ifeq ($(shell uname -s),Darwin)
+        INSTALL := brew install
+else
+        INSTALL := sudo apt-get install
+endif
+
+cli:
+	$(INSTALL) $(CLI_PKGS)
+
+dev:
+	$(INSTALL) $(DEV)
+
+#------------------------------------------------------------------------------
+
+DESKTOP_PKGS     = kitty firefox bitwarden protonvpn logi-options-plus
+MAC_DESKTOP_PKGS = $(DESKTOP_PKGS) amethyst
+
+desktop:
+	$(INSTALL) $(DESKTOP_PKGS)
+
+mac_desktop:
+	$(INSTALL) $(MAC_DESKTOP_PKGS)
+
+#------------------------------------------------------------------------------
+
+clean:
+	rm -rf $(XDG_CACHE_HOME)/dotfiles
+
+#macos_defaults:
+#       defaults write com.apple.Finder AppleShowAllFiles true
