@@ -8,7 +8,11 @@ shopt -s checkwinsize dotglob extglob nocaseglob nocasematch nullglob
 
 # OH-MY-BASH ------------------------------------------------------------------
 
-export OSH=/usr/local/share/bash/oh-my-bash
+OSH=$XDG_DATA_HOME/bash/oh-my-bash
+
+[ ! -d $OSH ] && return
+
+export OSH
 
 OSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
@@ -19,6 +23,6 @@ HIST_STAMPS="mm-dd-yyyy"
 OMB_USE_SUDO=true
 
 completions=(git)
-plugins=(git)
+plugins=(git vi-mode)
 
 source $OSH/oh-my-bash.sh

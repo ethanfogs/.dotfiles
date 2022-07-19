@@ -2,7 +2,7 @@ source $HOME/.config/shell/shrc.sh
 
 #------------------------------------------------------------------------------
 
-setopt dotglob extendedglob
+setopt dotglob extendedglob nomatch menucomplete
 
 #------------------------------------------------------------------------------
 
@@ -18,7 +18,10 @@ fi
 
 autoload -Uz compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 
-export ZSH=/usr/local/share/zsh/oh-my-zsh
+ZSH=$XDG_DATA_HOME/zsh/oh-my-zsh
+[ ! -d $ZSH ] && return
+
+export ZSH
 
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 ZSH_THEME="agnoster"
