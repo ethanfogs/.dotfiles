@@ -8,7 +8,7 @@ shopt -s checkwinsize dotglob extglob nocaseglob nocasematch nullglob
 
 # OH-MY-BASH ------------------------------------------------------------------
 
-OSH=$XDG_DATA_HOME/bash/plugins/oh-my-bash
+OSH=$XDG_DATA_HOME/bash/oh-my-bash
 
 [ ! -d $OSH ] && return
 

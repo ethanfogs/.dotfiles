@@ -3,7 +3,6 @@ source $HOME/.config/shell/shrc.sh
 #------------------------------------------------------------------------------
 
 setopt dotglob extendedglob nomatch menucomplete
-unsetopt BEEP
 
 #------------------------------------------------------------------------------
 
@@ -19,7 +18,7 @@ fi
 
 autoload -Uz compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 
-ZSH=$XDG_DATA_HOME/zsh/plugins/oh-my-zsh
+ZSH=$XDG_DATA_HOME/zsh/oh-my-zsh
 [ ! -d $ZSH ] && return
 
 export ZSH
