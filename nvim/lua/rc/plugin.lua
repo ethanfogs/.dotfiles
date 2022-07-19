@@ -22,7 +22,7 @@ return require("packer").startup(function()
         "nvim-lualine/lualine.nvim",
         requires = {  "kyazdani42/nvim-web-devicons", opt = true }
     }
-    use "nvim-pack/nvim-spectre"
+    -- use "nvim-pack/nvim-spectre"
     use "nvim-telescope/telescope.nvim"
     use "nvim-telescope/telescope-fzy-native.nvim"
     use "nvim-telescope/telescope-media-files.nvim"
