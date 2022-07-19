@@ -4,24 +4,20 @@ XDG_CACHE_HOME  ?= $(HOME)/.cache
 XDG_DATA_HOME   ?= $(HOME)/.local/share
 XDG_STATE_HOME  ?= $(HOME)/.local/state
 
-BASE_DIRS = \
-	$(XDG_BIN_HOME) $(XDG_CONFIG_HOME) $(XDG_STATE_HOME) \
-	$(XDG_CACHE_HOME) $(XDG_DATA_HOME)
+MK_BASEIRS = \
+	mkdir -p $(XDG_BIN_HOME) $(XDG_CONFIG_HOME) $(XDG_STATE_HOME) \
+             $(XDG_CACHE_HOME) $(XDG_DATA_HOME)
 
 #------------------------------------------------------------------------------
 
-GH            = https://github.com
-CLONE         = git clone $(GH)
-DOTFILES_GH   = ethanfogs/dotfiles
+GH = https://github.com
 
 #------------------------------------------------------------------------------
 
-#.SILENT:
+.SILENT:
 #.ONESHELL:
 config:
-	mkdir -p $(BASE_DIRS)
-	$(CLONE)/$(DOTFILES_GH) $(XDG_CACHE_HOME)/dotfiles
-	cp -iR  $(XDG_CACHE_HOME)/dotfiles/* $(XDG_CONFIG_HOME)/
+	cp -iR  $(PWD)/* $(XDG_CONFIG_HOME)/
 	ln -svf $(XDG_CONFIG_HOME)/shell/profile.sh             $(HOME)/.profile
 	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zprofile.zsh       $(HOME)/.zprofile
 	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zshrc.zsh          $(HOME)/.zshrc
@@ -32,7 +28,8 @@ config:
 
 homebrew:
 	mkdir -p $(BASE_DIRS)
-	[ `command -v brew` ] || $(CLONE)/Homebrew/brew $(XDG_DATA_HOME)/homebrew
+	[ `command -v brew` ] || \
+		git clone $(GH)/Homebrew/brew $(XDG_DATA_HOME)/homebrew
 	ln -sfv $(XDG_DATA_HOME)/homebrew/bin/brew $(XDG_BIN_HOME)/
 
 #------------------------------------------------------------------------------
