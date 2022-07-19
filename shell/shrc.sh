@@ -14,7 +14,7 @@ export LESSHISTFILE=/dev/null
 #------------------------------------------------------------------------------
 
 COMPLETION_HOME=$XDG_DATA_HOME/${SHELL/*\//}/completion
-for COMPLETION_FILE in $(find $COMPLETION_HOME -type f); do
+for COMPLETION_FILE in $(find $COMPLETION_HOME -type f 2> /dev/null); do
     source $COMPLETION_FILE
 done
 
