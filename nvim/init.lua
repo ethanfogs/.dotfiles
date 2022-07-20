@@ -18,11 +18,12 @@ require("plugin.treesitter")
 
 require("plugin.autopairs")
 require("plugin.comment")
-require("plugin.indentline")
 
 require("plugin.nvim-tree")
 require("plugin.lualine")
 require("plugin.bufferline")
+
+require("plugin.indentline")
 
 require("plugin.toggleterm")
 
