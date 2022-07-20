@@ -1,6 +1,6 @@
 local signature = require("lsp_signature")
 
-signature.setup({
+signature.config = {
     debug = false, -- set to true to enable debug logging
     log_path = "debug_log_file_path", -- debug log path
     verbose = false, -- show debug line number
