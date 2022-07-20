@@ -1,3 +1,9 @@
+# TMUX ON SHELL START-UP ------------------------------------------------------
+
+if [[ $(command -v tmux) ]] && [ -z $TMUX ] && [ -n $SSH_CONNECION ]; then
+    exec tmux
+fi
+
 # RC\SOURCE FILES -------------------------------------------------------------
 
 source $HOME/.config/shell/aliasrc.sh
@@ -17,12 +23,6 @@ COMPLETION_HOME=$XDG_DATA_HOME/${SHELL/*\//}/completion
 for COMPLETION_FILE in $(find $COMPLETION_HOME -type f 2> /dev/null); do
     source $COMPLETION_FILE
 done
-
-# TMUX ON SHELL START-UP ------------------------------------------------------
-
-if [[ $(command -v tmux) ]] && [ -z $TMUX ] && [ -n $SSH_CONNECION ]; then
-    exec tmux
-fi
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
