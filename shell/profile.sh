@@ -2,9 +2,8 @@
 
 [ $(uname -p) = "arm" ] && PATH="$PATH:/opt/homebrew/bin"
 
-PATH="$PATH:$HOME/.local/bin"
-
-export PATH
+path+=( {/usr/,~/.}local/{s,}bin )
+export path
 
 #------------------------------------------------------------------------------
 
