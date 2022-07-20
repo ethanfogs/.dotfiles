@@ -23,6 +23,6 @@ HIST_STAMPS="mm-dd-yyyy"
 OMB_USE_SUDO=true
 
 completions=(git)
-plugins=(git vi-mode)
+plugins=(git)
 
 source $OSH/oh-my-bash.sh
