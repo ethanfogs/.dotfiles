@@ -36,6 +36,6 @@ vim.o.scrolloff     = 7
 vim.o.splitbelow    = true
 vim.o.splitright    = true
 
-vim.o.laststatus    = 0
+vim.o.laststatus = 0
 
-vim.o.inccommand = "split"   -- preview buffer for `:substitute`
+vim.o.inccommand = "split" -- preview buffer for `:substitute`
