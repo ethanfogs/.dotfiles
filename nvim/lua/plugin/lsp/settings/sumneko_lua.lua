@@ -1,4 +1,3 @@
--- TODO: setup global vim var to prevent lsp from not recognizing it
 return {
     settings = {
         Lua = {

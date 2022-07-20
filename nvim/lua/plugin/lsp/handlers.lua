@@ -1,6 +1,6 @@
-lsp.handlers.capabilities = vim.lsp.protocol.make_client_capabilities()
+vim.lsp.handlers.capabilities = vim.lsp.protocol.make_client_capabilities()
 
-function lsp.handlers.setup()
+function vim.lsp.handlers.setup()
     local signs = {
         { name = "DiagnosticSignError", text = "❌" },
         { name = "DiagnosticSignWarn", text = "⚠"},
@@ -32,37 +32,37 @@ function lsp.handlers.setup()
         }
     })
 
-    lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, {
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
         border = "rounded",
     })
 
-    lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
+    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
         border = "rounded",
     })
 end
 
-function lsp.keymaps(bufnr)
+function vim.lsp.handlers.on_attach(client, bufnr)
     local buf_set_n_keymap = function(bufnr, lhs, rhs)
         local opts = { noremap = true, silent = true, }
         vim.api.nvim_buf_set_keymap(bufnr, "n", lhs, '<Cmd>lua '.. rhs ..'<CR>', opts)
     end
 
     --buf_set_n_keymap(bufnr, "gc", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
-    buf_set_n_keymap(bufnr, "gd", "lsp.buf.definition()")
-    buf_set_n_keymap(bufnr, "gD", "lsp.buf.declaration()")
-    buf_set_n_keymap(bufnr, "gi", "lsp.buf.implementation()")
-    buf_set_n_keymap(bufnr, "gr", "lsp.buf.references()")
-    buf_set_n_keymap(bufnr, "gR", "lsp.buf.rename(<CR>)")
-    buf_set_n_keymap(bufnr, "gS", "lsp.buf.signature_help()")
-    buf_set_n_keymap(bufnr, "K",  "lsp.buf.hover()")
-    buf_set_n_keymap(bufnr, "gj", "lsp.diagnostic.show_line_diagnostics({ border = 'rounded' })")
-    buf_set_n_keymap(bufnr, "gl", "lsp.diagnostic.goto_next({ border = 'rounded' })")
+    buf_set_n_keymap(bufnr, "gd", "vim.lsp.buf.definition()")
+    buf_set_n_keymap(bufnr, "gD", "vim.lsp.buf.declaration()")
+    buf_set_n_keymap(bufnr, "gi", "vim.lsp.buf.implementation()")
+    buf_set_n_keymap(bufnr, "gr", "vim.lsp.buf.references()")
+    buf_set_n_keymap(bufnr, "gR", "vim.lsp.buf.rename(<CR>)")
+    buf_set_n_keymap(bufnr, "gS", "vim.lsp.buf.signature_help()")
+    buf_set_n_keymap(bufnr, "K",  "vim.lsp.buf.hover()")
+    buf_set_n_keymap(bufnr, "gj", "vim.lsp.diagnostic.show_line_diagnostics({ border = 'rounded' })")
+    buf_set_n_keymap(bufnr, "gl", "vim.lsp.diagnostic.goto_next({ border = 'rounded' })")
     buf_set_n_keymap(bufnr, "go", "diagnostic.open_float({ border = 'rounded' })")
 
     vim.api.nvim_create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
 end
 
-lsp.handlers.capabilities = require("cmp_nvim_lsp")
-                                .update_capabilities(lsp.handlers.capabilities)
+vim.lsp.handlers.capabilities = require("cmp_nvim_lsp")
+                                .update_capabilities(vim.lsp.handlers.capabilities)
 
-lsp.handlers.setup()
+vim.lsp.handlers.setup()

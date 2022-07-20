@@ -1,6 +1,6 @@
 local import_status, schemastore = pcall(require, "schemastore")
 if not import_status then
-    return
+    return nil
 end
 
 return {

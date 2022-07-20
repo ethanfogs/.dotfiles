@@ -1,24 +1,16 @@
-lsp = vim.lsp
+local lspconfig = require("lspconfig")
 
--------------------------------------------------------------------------------
+--vim.lsp.signature = require('plugin.lsp.lsp-signature')
 
-lsp.signature = require('plugin.lsp.lsp-signature')
-
--------------------------------------------------------------------------------
-
-require("nvim-lsp-installer").setup()
-
-local servers = { "jsonls", "sumneko_lua", "tsserver", "bashls", "vimls", "quick_lint_js", "marksman" }
-
-for _, server in pairs(servers) do
-    local opts = {
-        on_attach    = lsp.handlers.on_attach,
-        capabilities = lsp.handlers.capabilities,
-    }
-
-    require('lspconfig')[server].setup(opts)
-end
-
--------------------------------------------------------------------------------
+vim.lsp.installer = require("nvim-lsp-installer")
+vim.lsp.installer.setup()
 
 require('plugin.lsp.handlers')
+
+for _, server in pairs(vim.lsp.installer.get_installed_servers()) do
+    local import_status, opts = pcall(require, "plugin.lsp.settings." .. server.name)
+    if(not import_status) then opts = {} end
+    opts.on_attach    = vim.lsp.handlers.on_attach
+    opts.capabilities = vim.lsp.handlers.capabilities
+    lspconfig[server.name].setup(opts)
+end
