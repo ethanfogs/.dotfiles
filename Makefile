@@ -24,6 +24,7 @@ config:
 	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zshrc.zsh          $(HOME)/.zshrc
 	ln -svf $(XDG_CONFIG_HOME)/shell/bash/bash_profile.bash $(HOME)/.bash_profile
 	ln -svf $(XDG_CONFIG_HOME)/shell/bash/bashrc.bash       $(HOME)/.bashrc
+	ln -svf $(XDG_CONFIG_HOME)/vim                          $(HOME)/.vim
 
 #------------------------------------------------------------------------------
 
