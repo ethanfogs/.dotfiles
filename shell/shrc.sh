@@ -20,7 +20,7 @@ done
 
 # TMUX ON SHELL START-UP ------------------------------------------------------
 
-if [[ $(command -v tmux) ]] && [[ -z $TMUX ]] && [[ -n $SSH_CONNECION ]]; then
+if [[ $(command -v tmux) ]] && [ -z $TMUX ] && [ -n $SSH_CONNECION ]; then
     exec tmux
 fi
 
