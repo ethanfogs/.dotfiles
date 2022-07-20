@@ -62,3 +62,11 @@ create_autocmd({ "BufWritePost" }, {
 })
 
 -------------------------------------------------------------------------------
+
+create_augroup("formatOnBufWrite", { clear = true })
+create_autocmd({ "BufWritePre" }, {
+    group = "formatOnBufWrite", pattern = "*",
+    callback = vim.lsp.buf.formatting
+})
+
+-------------------------------------------------------------------------------
