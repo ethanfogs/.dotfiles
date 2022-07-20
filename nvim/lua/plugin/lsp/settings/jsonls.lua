@@ -1,15 +1,10 @@
-local import_status, schemastore = pcall(require, "schemastore")
-if not import_status then
-    return nil
-end
-
 return {
     init_options = {
         provideFormatter = false,
     },
     settings = {
         json = {
-          schemas = schemastore.json.schemas(),
+          schemas = require("schemastore").json.schemas(),
         },
     },
     setup = {
