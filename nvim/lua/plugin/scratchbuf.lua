@@ -8,6 +8,7 @@ ScratchBuf.ftype2fextn = {
     markdown        = 'md',
     javascript      = 'js',
     javascriptreact = 'jsx',
+    python          = 'py',
     rust            = 'rs',
     typescript      = 'ts',
     typescriptreact = 'tsx',
