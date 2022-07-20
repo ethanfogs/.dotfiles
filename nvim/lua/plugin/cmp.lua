@@ -1,9 +1,11 @@
 local cmp     = require('cmp')
 local luasnip = require('luasnip')
-
 require('luasnip/loaders/from_vscode').lazy_load()
 
--------------------------------------------------------------------------------
+local cmp_config_opts = {
+    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    winhighlight =  "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+}
 
 cmp.setup({
     snippet = {
@@ -70,20 +72,6 @@ cmp.setup({
         ghost_text = true,
         -- native_menu = true,
     },
-})
-
--------------------------------------------------------------------------------
-
-local cmp_config_opts = {
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    winhighlight =  "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
-}
-
-cmp.setup({
     bordered = cmp_config_opts,
     completion = cmp_config_opts
 })
-
--------------------------------------------------------------------------------
-
--- vim: filetype=lua:foldmethod=indent:
