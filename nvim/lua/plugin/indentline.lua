@@ -1,4 +1,4 @@
-local indent_blankline = require('indent-blankline')
+local indent_blankline = require('indent_blankline')
 
 vim.g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
 vim.g.indent_blankline_filetype_exclude = {
