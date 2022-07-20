@@ -1,18 +1,8 @@
-telescope = require('telescope')
-
-builtin = require('telescope.builtin')
-actions = require('telescope.actions')
-themes  = require('telescope.themes')
-
-------------------------------------------------------------------------------
-
-telescope.setup({
+require('telescope').setup({
     defaults = {
         sorting_strategy = 'ascending',
-        selection_strategy = 'follow',
         winblend = 7,
         dynamic_preview_title = true,
-        file_ignore_patterns = vim.fn.readfile(os.getenv("HOME") .. "/.config/git/ignore"),
         layout_strategy = 'horizontal',
         layout_config = {
             height = 0.95,
@@ -21,21 +11,21 @@ telescope.setup({
         },
         mappings = {
             n = {
-                ["<Esc>"]   = actions.close,
-                ["q"]       = actions.close,
-                ["<C-c>"]   = actions.close,
-                ["<Space>"] = actions.toggle_selection,
+                ["<Esc>"]   = "close",
+                ["q"]       = "close",
+                ["<C-c>"]   = "close",
+                ["<Space>"] = "toggle_selection",
             },
             i = {
-                ["<C-a>"] = actions.toggle_all,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-j>"] = actions.move_selection_next,
-                ["<Esc>"] = actions.close,
-                ["<C-c>"] = actions.close,
-                --['jj'] = { '<esc>' },
+                ["<C-a>"] = "toggle_all",
+                ["<C-k>"] = "move_selection_previous",
+                ["<C-j>"] = "move_selection_next",
+                ["<Esc>"] = "close",
+                ["<C-c>"] = "close",
+                ['jj']    = { "<Esc>", type = "command" }
             }
         }
     }
 })
 
--- TELESCOPE KEYMAPS SET @ $XDG_CONFIG_HOME/nvim/lua/rc/keymaps.lua
+-- TELESCOPE KEYMAPS SET @ lua/rc/keymaps.lua

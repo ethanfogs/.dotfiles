@@ -1,5 +1,5 @@
 local set_keymap = vim.api.nvim_set_keymap
-local opts = { noremap = true }
+local opts = { noremap = true, silent = true }
 
 -- NORMAL-MODE:BASEKEYS
 set_keymap("n", "U", "<C-r>", opts)
@@ -59,22 +59,22 @@ set_keymap("t", "<Esc><Esc>", "<C-BSlash><C-n>", opts)
 set_keymap("t", "jj", "<C-BSlash><C-n>", opts)
 
 -- TELESCOPE KEYMAPS
-local ts_opts  = { noremap = true, silent = true }
-set_keymap("n", "sb", "<Cmd>lua builtin.buffers()<CR>", ts_opts)
-set_keymap("n", "sc", "<Cmd>lua builtin.colorscheme({ enable_preview = true })<CR>", ts_opts)
-set_keymap("n", "sf", "<Cmd>lua builtin.find_files()<CR>", ts_opts)
-set_keymap("n", "sh", "<Cmd>lua builtin.help_tags()<CR>", ts_opts)
-set_keymap("n", "sk", "<Cmd>lua builtin.keymaps()<CR>", ts_opts)
-set_keymap("n", "sl", "<Cmd>lua builtin.live_grep()<CR>", ts_opts)
-set_keymap("n", "sm", "<Cmd>lua builtin.man_pages()<CR>", ts_opts)
-set_keymap("n", "so", "<Cmd>lua builtin.vim_options()<CR>", ts_opts)
-set_keymap("n", "sq", "<Cmd>lua builtin.quickfix()<CR>", ts_opts)
-set_keymap("n", "sr", "<Cmd>lua builtin.registers()<CR>", ts_opts)
-set_keymap("n", "sv", "<Cmd>lua builtin.commands()<CR>", ts_opts)
-set_keymap("n", "s,", "<Cmd>lua builtin.oldfiles()<CR>", ts_opts)
-set_keymap("n", "s/", "<Cmd>lua builtin.current_buffer_fuzzy_find()<CR>", ts_opts)
-set_keymap("n", "s;", "<Cmd>lua builtin.command_hist()<CR>", ts_opts)
-set_keymap("n", "s?", "<Cmd>lua builtin.builtin()<CR>", ts_opts)
+builtin = require('telescope.builtin')
+set_keymap("n", "sb", "<Cmd>lua builtin.buffers()<CR>", opts)
+set_keymap("n", "sc", "<Cmd>lua builtin.colorscheme({ enable_preview = true })<CR>", opts)
+set_keymap("n", "sf", "<Cmd>lua builtin.find_files()<CR>", opts)
+set_keymap("n", "sh", "<Cmd>lua builtin.help_tags()<CR>", opts)
+set_keymap("n", "sk", "<Cmd>lua builtin.keymaps()<CR>", opts)
+set_keymap("n", "sl", "<Cmd>lua builtin.live_grep()<CR>", opts)
+set_keymap("n", "sm", "<Cmd>lua builtin.man_pages()<CR>", opts)
+set_keymap("n", "so", "<Cmd>lua builtin.vim_options()<CR>", opts)
+set_keymap("n", "sq", "<Cmd>lua builtin.quickfix()<CR>", opts)
+set_keymap("n", "sr", "<Cmd>lua builtin.registers()<CR>", opts)
+set_keymap("n", "sv", "<Cmd>lua builtin.commands()<CR>", opts)
+set_keymap("n", "s,", "<Cmd>lua builtin.oldfiles()<CR>", opts)
+set_keymap("n", "s/", "<Cmd>lua builtin.current_buffer_fuzzy_find()<CR>", opts)
+set_keymap("n", "s;", "<Cmd>lua builtin.command_hist()<CR>", opts)
+set_keymap("n", "s?", "<Cmd>lua builtin.builtin()<CR>", opts)
 
 -- GIT-PLUGIN KEYMAPS
 set_keymap("", "gs", "<Cmd>G<CR>", opts)
