@@ -47,9 +47,9 @@ cmp.setup({
         },
         ["<CR>"]    = cmp.mapping.confirm({ select = true }),
         ["<Up>"]    = cmp.mapping(cmp.mapping.smart_select_prev, { "i", "s" }),
-        ["<Tab>"]   = cmp.mapping(cmp.mapping.smart_select_prev, { "i", "s", }),
-        ["<S-Tab>"] = cmp.mapping(cmp.mapping.smart_select_next, { "i", "s" }),
-        ["<Down>"]  = cmp.mapping(cmp.mapping.smart_select_next, { "i", "s", }),
+        ["<S-Tab>"] = cmp.mapping(cmp.mapping.smart_select_prev, { "i", "s" }),
+        ["<Tab>"]   = cmp.mapping(cmp.mapping.smart_select_next, { "i", "s" }),
+        ["<Down>"]  = cmp.mapping(cmp.mapping.smart_select_next, { "i", "s" }),
     },
     formatting = {
         fields = { "kind", "abbr", "menu" },

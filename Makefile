@@ -4,7 +4,7 @@ XDG_CACHE_HOME  ?= $(HOME)/.cache
 XDG_DATA_HOME   ?= $(HOME)/.local/share
 XDG_STATE_HOME  ?= $(HOME)/.local/state
 
-MK_BASEIRS = \
+MK_BASEDIRS = \
 	mkdir -p $(XDG_BIN_HOME) $(XDG_CONFIG_HOME) $(XDG_STATE_HOME) \
              $(XDG_CACHE_HOME) $(XDG_DATA_HOME)
 
@@ -17,6 +17,7 @@ GH = https://github.com
 .SILENT:
 #.ONESHELL:
 config:
+	$(MK_BASEDIRS)
 	cp -iR  $(PWD)/* $(XDG_CONFIG_HOME)/
 	ln -svf $(XDG_CONFIG_HOME)/shell/profile.sh             $(HOME)/.profile
 	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zprofile.zsh       $(HOME)/.zprofile
