@@ -1,10 +1,10 @@
-ScratchBuf = {
+scratch_buf = {
     dir = os.getenv('HOME') ..'/.local/share/'.. vim.v.progname ..'/scratchbuf'
 }
 
-os.execute('mkdir -p ' .. ScratchBuf.dir)
+os.execute('mkdir -p ' .. scratch_buf.dir)
 
-ScratchBuf.ftype2fextn = {
+scratch_buf.ftype2fextn = {
     markdown        = 'md',
     javascript      = 'js',
     javascriptreact = 'jsx',
@@ -14,11 +14,13 @@ ScratchBuf.ftype2fextn = {
     typescriptreact = 'tsx',
 }
 
-function ScratchBuf:tempname() return self.dir .. '/' .. os.time() end
+function scratch_buf:tempname() return self.dir .. '/' .. os.time() end
 
-function ScratchBuf:new(fname, ftype)
+function scratch_buf:new(fname, ftype)
     fname = ((fname ~= nil) and fname or os.time())
     ftype = ((ftype ~= nil) and ftype or vim.fn.input('FILETYPE: ', '', 'filetype'))
     ftype = (self.ftype2fextn[ftype] ~= nil) and self.ftype2fextn[ftype] or ftype
     vim.cmd('new ' .. self.dir .. '/' .. fname .. ((#ftype > 0) and '.' .. ftype or ''))
 end
+
+vim.api.nvim_create_user_command("ScratchBuf", "lua scratch_buf:new()", { })
