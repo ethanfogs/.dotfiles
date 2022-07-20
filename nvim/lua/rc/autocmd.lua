@@ -28,7 +28,8 @@ create_autocmd({ "InsertEnter" }, {
         vim.o.relativenumber = true
     end
 })
-create_autocmd({ "InsertLeave",  "InsertLeavePre" }, {
+
+create_autocmd({ "InsertLeave", "InsertLeavePre" }, {
     group = "onInsModeChange", pattern = { "*" },
     callback = function()
         vim.o.relativenumber = false
@@ -41,7 +42,7 @@ create_augroup("onInitLuaWrite", { clear = true })
 create_autocmd({ "BufWritePost" }, {
     group = "onInitLuaWrite", pattern = { "*/.config/*vim/*" },
     callback = function()
-        vim.cmd('source %')
+        vim.cmd('source <afile>')
     end
 })
 
@@ -58,15 +59,15 @@ create_autocmd({ "BufWritePost" }, {
 create_augroup("onTmuxConfWrite", { clear = true })
 create_autocmd({ "BufWritePost" }, {
     group = "onTmuxConfWrite", pattern = { "*/.config/tmux/*.conf" },
-    callback = function() vim.cmd('silent !tmux source-file %') end
+    callback = function() vim.cmd('silent !tmux source-file <afile>') end
 })
 
 -------------------------------------------------------------------------------
 
 create_augroup("formatOnBufWrite", { clear = true })
 create_autocmd({ "BufWritePre" }, {
-    group = "formatOnBufWrite", pattern = "*",
-    callback = vim.lsp.buf.formatting
+    group = "formatOnBufWrite", pattern = "*.*",
+    callback = vim.lsp.buf.formatting_sync
 })
 
 -------------------------------------------------------------------------------
