@@ -20,7 +20,9 @@ done
 
 # TMUX ON SHELL START-UP ------------------------------------------------------
 
-[[ $(command -v tmux) ]] && [ -z $TMUX ] && exec tmux
+if [[ $(command -v tmux) ]] && [[ -z $TMUX ]] && [[ -z $SSH_CONNECION ]]; then
+    exec tmux
+fi
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
