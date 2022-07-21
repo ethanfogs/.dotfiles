@@ -35,6 +35,7 @@ vim.o.scroll        = 5
 vim.o.scrolloff     = 7
 vim.o.splitbelow    = true
 vim.o.splitright    = true
+vim.o.mouse         = 'a'
 
 vim.o.laststatus = 0
 
