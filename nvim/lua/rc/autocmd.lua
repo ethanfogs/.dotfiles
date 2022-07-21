@@ -41,9 +41,7 @@ create_autocmd({ "InsertLeave", "InsertLeavePre" }, {
 create_augroup("onInitLuaWrite", { clear = true })
 create_autocmd({ "BufWritePost" }, {
     group = "onInitLuaWrite", pattern = { "*/.config/*vim/*" },
-    callback = function()
-        vim.cmd('source <afile>')
-    end
+    command = 'source <afile>'
 })
 
 -------------------------------------------------------------------------------
@@ -51,15 +49,15 @@ create_autocmd({ "BufWritePost" }, {
 create_augroup("onShellRcWrite", { clear = true })
 create_autocmd({ "BufWritePost" }, {
     group = "onShellRcWrite", pattern = { "*/.config/shell/*.*sh" },
-    callback = function() vim.cmd('silent !source %') end
+    command = 'silent !source <afile>'
 })
 
 -------------------------------------------------------------------------------
 
 create_augroup("onTmuxConfWrite", { clear = true })
 create_autocmd({ "BufWritePost" }, {
-    group = "onTmuxConfWrite", pattern = { "*/.config/tmux/*.conf" },
-    callback = function() vim.cmd('silent !tmux source-file <afile>') end
+    group = "onTmuxConfWrite", pattern = "*/.config/tmux/*.conf",
+    command = 'silent !tmux source-file <afile>'
 })
 
 -------------------------------------------------------------------------------
@@ -71,3 +69,8 @@ create_autocmd({ "BufWritePre" }, {
 })
 
 -------------------------------------------------------------------------------
+
+create_autocmd("TermClose", {
+    pattern = { "term://*" },
+    command = "silent bdelete"
+})
