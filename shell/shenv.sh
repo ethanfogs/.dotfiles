@@ -1,5 +1,4 @@
-path=( {{,/usr{,/local}}/,~/.local/}{s,}bin )
-export path
+export path=( {/usr/,~/.}local/{s,}bin $path )
 
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_BIN_HOME=$HOME/.local/bin
