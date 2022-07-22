@@ -156,5 +156,3 @@ require("bufferline").setup({
         },
     },
 })
-
-vim.o.laststatus = 0
