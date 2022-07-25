@@ -31,55 +31,44 @@ function cmp.mapping.smart_select_next(fallback)
 end
 
 cmp.setup({
-    snippet = {
-        expand = function(args) luasnip.lsp_expand(args.body) end,
-    },
-    mapping = {
-        ["<C-k>"]   = cmp.mapping.select_prev_item(),
+    snippet      = { expand = function(args) luasnip.lsp_expand(args.body) end, },
+    mapping      = {
+        ["<C-K>"]   = cmp.mapping.select_prev_item(),
         ["<C-j>"]   = cmp.mapping.select_next_item(),
         ["<C-p>"]   = cmp.mapping.select_prev_item(),
         ["<C-n>"]   = cmp.mapping.select_next_item(),
         ["<C-h>"]   = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-        ["<C-y>"]   = cmp.config.disable,
-        ["<C-e>"]   = cmp.mapping {
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-        },
         ["<CR>"]    = cmp.mapping.confirm({ select = true }),
-        ["<Up>"]    = cmp.mapping(cmp.mapping.smart_select_prev, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(cmp.mapping.smart_select_prev, { "i", "s" }),
-        ["<Tab>"]   = cmp.mapping(cmp.mapping.smart_select_next, { "i", "s" }),
+        ["<Tab>"]   = cmp.mapping(cmp.mapping.smart_select_next, { "i", "s", }),
         ["<Down>"]  = cmp.mapping(cmp.mapping.smart_select_next, { "i", "s" }),
+        ["<S-Tab>"] = cmp.mapping(cmp.mapping.smart_select_prev, { "i", "s" }),
+        ["<Up>"]    = cmp.mapping(cmp.mapping.smart_select_prev, { "i", "s", }),
     },
-    formatting = {
+    formatting   = {
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
             vim_item.kind = string.format("%s", icons.kind[vim_item.kind])
             vim_item.menu = ({
                 nvim_lsp = "[LSP]",
+                path     = "[Path]",
                 luasnip  = "[Snippet]",
                 buffer   = "[Buffer]",
-                path     = "[Path]",
-                cmdline  = "[CMD]",
-                nvim_lua = "[NVIM-LUA]",
             })[entry.source.name]
             return vim_item
         end
     },
-    sources = {
+    sources      = {
         -- ORDER DETERMINES PREFERED PRECEDENCE
         { name = "nvim_lsp" },
         { name = "luasnip" },
+        { name = "nvim_lua" },
         { name = "buffer" },
         { name = "path" },
     },
     confirm_opts = {
         behavior = cmp.ConfirmBehavior.Replace,
-        select = false,
+        select = true,
     },
-    experimental = {
-        ghost_text = true,
-    },
-    bordered = cmp.config_opts,
-    completion = cmp.config_opts
+    bordered     = cmp.config_opts,
+    completion   = cmp.config_opts
 })
