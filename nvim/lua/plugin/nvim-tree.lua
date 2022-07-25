@@ -1,29 +1,17 @@
 local nvim_tree = require('nvim-tree')
 local nvim_tree_config = require("nvim-tree.config")
-
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
 nvim_tree.setup {
-    hijack_directories = {
-        enable = false,
-    },
-    -- update_to_buf_dir = {
-    --   enable = false,
-    -- },
-    -- disable_netrw = true,
-    -- hijack_netrw = true,
-    -- open_on_setup = false,
-    ignore_ft_on_setup = {
-        "startify",
-        "dashboard",
-        "alpha",
-    },
+    hijack_directories = { enable = false, },
+    -- update_to_buf_dir = { enable = false, },
+    disable_netrw = true,
+    hijack_netrw = true,
+    open_on_setup = true,
     filters = {
         custom = { ".git" },
         exclude = { ".gitignore" },
     },
-    -- auto_close = true,
-    -- open_on_tab = false,
     -- hijack_cursor = false,
     update_cwd = true,
     -- update_to_buf_dir = {
