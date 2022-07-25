@@ -8,7 +8,6 @@ end
 call plug#begin()
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
-    Plug 'rafi/awesome-vim-colorschemes'
     Plug 'tpope/vim-surround'
     Plug 'ryanoasis/vim-devicons'
     Plug 'preservim/nerdtree'
