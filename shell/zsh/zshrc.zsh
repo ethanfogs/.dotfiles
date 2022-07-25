@@ -8,10 +8,11 @@ unsetopt BEEP
 #------------------------------------------------------------------------------
 
 if [ $(uname) = "Darwin" ]; then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
     # ignore completions for macOS default $HOME directories that I never use
     FIGNORE="sers:cache:ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
-    HOMEBREW_CASK_OPTS="--no-quarantine"
+    [ -d $XDG_DATA_HOME/zsh-autosuggestions ] \
+        && source $XDG_DATA_HOME/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 # OH-MY-ZSH CONFIG ------------------------------------------------------------

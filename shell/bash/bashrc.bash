@@ -6,6 +6,12 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 shopt -s cmdhist histappend histverify
 shopt -s checkwinsize dotglob extglob nocaseglob nocasematch nullglob
 
+if [ $(uname -s) = "Darwin" ]; then
+    for comp_file in $(brew --prefix)/etc/profile/d.bash_completion.d/*; do
+        source $comp_file
+    done
+fi
+
 # OH-MY-BASH ------------------------------------------------------------------
 
 OSH=$XDG_DATA_HOME/bash/plugins/oh-my-bash
