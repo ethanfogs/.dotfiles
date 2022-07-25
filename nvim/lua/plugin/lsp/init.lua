@@ -32,10 +32,10 @@ function lsp.handlers.on_attach(client, bufnr)
 end
 
 lsp.signs = {
-        { name = "DiagnosticSignError", text = "❌" },
-        { name = "DiagnosticSignWarn", text = "⚠"},
-        { name = "DiagnosticSignHint", text = "💡" },
-        { name = "DiagnosticSignInfo", text = "ℹ️" },
+    { name = "DiagnosticSignError", text = "❌" },
+    { name = "DiagnosticSignWarn", text = "⚠" },
+    { name = "DiagnosticSignHint", text = "💡" },
+    { name = "DiagnosticSignInfo", text = "ℹ️" },
 }
 
 for _, sign in pairs(lsp.signs) do
