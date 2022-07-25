@@ -72,5 +72,7 @@ create_autocmd({ "BufWritePre" }, {
 
 create_autocmd("TermClose", {
     pattern = { "term://*" },
-    command = "silent bdelete"
+    callback = function()
+        vim.api.nvim_buf_delete(0, {})
+    end
 })
