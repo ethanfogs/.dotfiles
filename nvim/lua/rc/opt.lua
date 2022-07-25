@@ -17,7 +17,7 @@ vim.o.undofile  = true
 vim.o.undodir   = vim.fn.stdpath('data') .. "/undo"
 -- { [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
-vim.o.path        = vim.o.path .. ",.,**"
+vim.o.path        = ".,**"
 vim.o.ignorecase  = true
 vim.o.smartcase   = true
 vim.o.smartindent = true
@@ -35,8 +35,3 @@ vim.o.scroll        = 5
 vim.o.scrolloff     = 7
 vim.o.splitbelow    = true
 vim.o.splitright    = true
-vim.o.mouse         = 'a'
-
-vim.o.laststatus = 0
-
-vim.o.inccommand = "split" -- preview buffer for `:substitute`
