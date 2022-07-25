@@ -50,6 +50,8 @@ set_keymap("v", "<Space>", "<C-[>", opts)
 set_keymap("o", "<Space>", "<C-[>", opts)
 set_keymap("", "iq", 'i"', opts)
 set_keymap("", "aq", 'a"', opts)
+set_keymap("", "ic", 'i{', opts)
+set_keymap("", "ac", 'a{', opts)
 
 -- [INSERT,CMDLINE]-MODE
 set_keymap("!", "jj", "<C-c>", opts)
@@ -60,8 +62,6 @@ set_keymap("t", "jj", "<C-BSlash><C-n>", opts)
 
 -- GIT-PLUGIN KEYMAPS
 set_keymap("", "gs", "<Cmd>G<CR>", opts)
-set_keymap("", "gb", "<Cmd>G branch<CR>", opts)
-set_keymap("", "gc", "<Cmd>G commit<CR>", opts)
 
 -- NVIM-TREE (File Browser) PLUGIN KEYMAPS
 set_keymap("", "<Space>e", "<Cmd>NvimTreeToggle<CR>", opts)
