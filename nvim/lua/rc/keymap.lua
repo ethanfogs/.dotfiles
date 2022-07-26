@@ -48,10 +48,10 @@ set_keymap("v", "<Space>", "<C-[>", opts)
 
 -- OPERATOR-PENDING-MODE //`<Space>` TO CANCEL OP-PENDING STATE
 set_keymap("o", "<Space>", "<C-[>", opts)
-set_keymap("", "iq", 'i"', opts)
-set_keymap("", "aq", 'a"', opts)
-set_keymap("", "ic", 'i{', opts)
-set_keymap("", "ac", 'a{', opts)
+set_keymap("o", "iq", 'i"', opts)
+set_keymap("o", "aq", 'a"', opts)
+set_keymap("o", "ic", 'i{', opts)
+set_keymap("o", "ac", 'a{', opts)
 
 -- [INSERT,CMDLINE]-MODE
 set_keymap("!", "jj", "<C-c>", opts)
