@@ -1,8 +1,6 @@
 # TMUX ON SHELL START-UP ------------------------------------------------------
 
-if [[ $(command -v tmux) ]] && [ -z $TMUX ] && [ -z $SSH_CONNECION ]; then
-    exec tmux
-fi
+[[ $(command -v tmux) && -z $TMUX && -z $SSH_CONNECION ]] && exec tmux
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
