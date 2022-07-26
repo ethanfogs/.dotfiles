@@ -52,8 +52,8 @@ vim.cmd([[
     highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine
 ]])
 
-vim.o.list = true
-vim.opt.listchars:append("space:⋅")
+-- vim.o.list = true
+-- vim.opt.listchars:append("space:⋅")
 -- vim.opt.listchars:append("space:")
 -- vim.opt.listchars:append("eol:↴")
 
