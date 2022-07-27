@@ -55,7 +55,9 @@ google(){
 
 #------------------------------------------------------------------------------
 
-[[ $(nmap -p22 pi 2> /dev/null) =~ "22/tcp open  ssh" ]] && alias pi='ssh pi'
+if [[ $(nmap -p22 pi 2> /dev/null) =~ "22/tcp open  ssh" ]] && [ ! $HOST = "pi" ]; then
+    alias pi='ssh pi'
+fi
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
