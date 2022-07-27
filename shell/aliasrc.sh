@@ -1,10 +1,5 @@
 # FILE-SYSTEM - READING -------------------------------------------------------
 
-alias ls="ls -FG"
-alias ll="ls -lFG"
-alias la="ls -AFG"
-alias lla="ls -lAFG"
-
 [[ $(command -v bat) ]]  && alias cat='bat'
 [[ $(command -v tree) ]] && alias tree='tree -C'
 
@@ -20,15 +15,14 @@ chx(){
 
 # TEXT EDITOR -----------------------------------------------------------------
 
-alias e=$EDITOR
+alias e=${EDITOR:-vim}
 
 # GIT -------------------------------------------------------------------------
 
 [[ $(command -v nvim) ]] && alias gss='[[ $(git status) ]] && nvim -c "G | bd 1"'
 alias gs="git status --short"
 alias gS="git status"
-alias gl="git log --oneline"
-alias gL="git log"
+alias gl="git log --oneline --graph"
 alias gb="git branch"
 alias gch="git checkout"
 alias gco="git checkout -b"
