@@ -1,6 +1,6 @@
 # TMUX ON SHELL START-UP ------------------------------------------------------
 
-[[ $(command -v tmux) && -z $TMUX && -z $SSH_CONNECION ]] && exec tmux
+[[ $(command -v tmux) && -z $TMUX && -z $SSH_CLIENT ]] && exec tmux
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
