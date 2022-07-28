@@ -15,4 +15,5 @@ call plug#begin()
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'PhilRunninger/nerdtree-buffer-ops'
     Plug 'PhilRunninger/nerdtree-visual-selection'
+    Plug "RRethy/vim-illuminate"
 call plug#end()
