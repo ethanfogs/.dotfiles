@@ -1,8 +1,8 @@
 scratch_buf = {
-    dir = os.getenv('HOME') ..'/.local/share/'.. vim.v.progname ..'/scratchbuf'
+    dir = os.getenv('HOME') .. '/.local/share/' .. vim.v.progname .. '/scratchbuf'
 }
 
-os.execute('mkdir -p ' .. scratch_buf.dir)
+vim.fn.mkdir(scratch_buf.dir, 'p')
 
 scratch_buf.ftype2fextn = {
     markdown        = 'md',
@@ -23,4 +23,4 @@ function scratch_buf:new(fname, ftype)
     vim.cmd('new ' .. self.dir .. '/' .. fname .. ((#ftype > 0) and '.' .. ftype or ''))
 end
 
-vim.api.nvim_create_user_command("ScratchBuf", "lua scratch_buf:new()", { })
+vim.api.nvim_create_user_command("ScratchBuf", "lua scratch_buf:new()", {})
