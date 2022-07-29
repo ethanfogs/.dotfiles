@@ -19,7 +19,7 @@ alias e=${EDITOR:-vim}
 
 # GIT -------------------------------------------------------------------------
 
-[[ $(command -v nvim) ]] && alias gss='[[ $(git status) ]] && nvim -c "G | bd 1"'
+alias gss='[[ $(git status) ]] && $EDITOR -c "Git | bd 1"'
 alias gs="git status --short"
 alias gS="git status"
 alias gl="git log --oneline --graph"
