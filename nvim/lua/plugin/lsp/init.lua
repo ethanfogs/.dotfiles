@@ -26,7 +26,7 @@ function lsp.handlers.on_attach(client, bufnr)
     buf_set_n_keymap(bufnr, "gr", "lsp.buf.references()")
 
     local create_user_cmd = vim.api.nvim_create_user_command
-    create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
+    create_user_cmd("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
 end
 
 lsp.signs = {
