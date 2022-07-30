@@ -44,6 +44,7 @@ let &splitbelow      = v:true
 let &splitright      = v:true
 let &wildmenu        = v:true
 let &wrap            = v:false
+let &foldmethod      = 'indent'
 
 if has('termguicolors')
     "not in nvim-exclusive block bc some later versions of vim have this opt
