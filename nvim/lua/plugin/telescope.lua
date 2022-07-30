@@ -17,6 +17,7 @@ ts.setup({
                 ["q"]       = "close",
                 ["<C-c>"]   = "close",
                 ["<Space>"] = "toggle_selection",
+                ["ZZ"]      = "close",
             },
             i = {
                 ["<C-a>"] = "toggle_all",
