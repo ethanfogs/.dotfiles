@@ -4,10 +4,11 @@ base:
 	for dir in $(PWD)/*; do \
 		[[ ! $$dir =~ ".*\.git.*" ]] && ln -sf $$dir ~/.config; \
 	done;
-	ln -sfv $(PWD)/shell/bash/bashrc.bash       ~/.bashrc;
-	ln -sfv $(PWD)/shell/bash/bash_profile.bash ~/.bash_profile;
-	ln -sfv $(PWD)/shell/zsh/zshrc.zsh          ~/.zshrc;
-	ln -sfv $(PWD)/shell/zsh/zshenv.zsh         ~/.zshenv;
+	ln -sfv $(PWD)/shell/bash/bashrc.bash       $(HOME)/.bashrc;
+	ln -sfv $(PWD)/shell/bash/bash_profile.bash $(HOME)/.bash_profile;
+	ln -sfv $(PWD)/shell/zsh/zshrc.zsh          $(HOME)/.zshrc;
+	ln -sfv $(PWD)/shell/zsh/zshenv.zsh         $(HOME)/.zshenv;
+	ln -sfv $(PWD)/vim                          $(HOME)/.vim;
 
 #------------------------------------------------------------------------------
 
