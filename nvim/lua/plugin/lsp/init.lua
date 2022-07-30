@@ -1,9 +1,10 @@
-local lsp     = vim.lsp
-lsp.config    = require("lspconfig")
-lsp.ignature  = require('plugin.lsp.lsp-signature')
-lsp.installer = require("nvim-lsp-installer")
-lsp.handlers  = { capabilities = lsp.protocol.make_client_capabilities() }
-lsp.installer.setup()
+require('plugin.lsp.lsp-signature')
+require("nvim-lsp-installer").setup()
+
+local lsp = {
+    config = require("lspconfig"),
+    handlers  = { capabilities = vim.lsp.protocol.make_client_capabilities() },
+}
 
 function lsp.handlers.on_attach(client, bufnr)
     local buf_set_n_keymap = function(bufnr, lhs, rhs)
@@ -56,22 +57,28 @@ vim.diagnostic.config({
     }
 })
 
-lsp.handlers["textDocument/hover"] = lsp.with(lsp.handlers.hover, {
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
 })
 
-lsp.handlers["textDocument/signatureHelp"] = lsp.with(lsp.handlers.signature_help, {
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
     border = "rounded",
 })
 
-lsp.handlers.capabilities = require("cmp_nvim_lsp").update_capabilities(lsp.handlers.capabilities)
+lsp.handlers.capabilities = require("cmp_nvim_lsp")
+                                .update_capabilities(lsp.handlers.capabilities)
 
-for _, server in pairs(lsp.installer.get_installed_servers()) do
-    local import_status, opts = pcall(require, "plugin.lsp.settings." .. server.name)
+lsp.servers = {
+    'bashls', 'cssls', 'emmet_ls', 'eslint', 'golangci_lint_ls', 'gopls', 'html',
+    'jsonls', 'jsonnet_ls', 'marksman', 'pylsp', 'pyright', 'quick_lint_js',
+    'rust_analyzer', 'sqlls', 'sumneko_lua', 'tsserver', 'vimls'
+}
+
+for _, ls in pairs(lsp.servers) do
+    local import_status, opts = pcall(require, "plugin.lsp.settings." .. ls)
     if (not import_status) then opts = {} end
 
     opts.on_attach    = lsp.handlers.on_attach
     opts.capabilities = lsp.handlers.capabilities
-
-    lsp.config[server.name].setup(opts)
+    lsp.config[ls].setup(opts)
 end
