@@ -14,19 +14,27 @@ let &shiftround      = v:true    " auto align indentation to nearest shiftwidth
 let &autoread        = v:true    "changes to a file are shown in real-time
 let &clipboard       = 'unnamed'
 let &undofile        = v:true
-let &undodir         = $XDG_DATA_HOME . '/vim/undo'
-let &viminfofile     = $XDG_DATA_HOME . '/vim/viminfo'
+let &undodir         = $HOME . '/.local/state/' . v:progname . '/undo'
+
+if(v:progname == "vim")
+    let &viminfofile = $HOME . '/.local/share/vim/viminfo'
+else
+    let &shadafile = stdpath('data') . '/shada'
+endif
+
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
-let &path            = ".,**"
+let &path = ".,**"
+
 let &ignorecase      = v:true
-let &fileignorecase  = v:true
 let &smartcase       = v:true
+let &fileignorecase  = v:true
+
 let &smartindent     = v:true
 let &smarttab        = v:false
-let &incsearch       = v:true
 "{ VISUAL-UI }-----------------------------------------------------------
 
+let &incsearch       = v:true
 let &number          = v:true
 let &showtabline     = 2
 let &colorcolumn     = 79
@@ -37,3 +45,13 @@ let &showmode        = v:false
 let &splitbelow      = v:true
 let &splitright      = v:true
 let &wildmenu        = v:true
+let &wrap            = v:false
+
+if has('termguicolors')
+    " not in nvim-exclusive block bc some later versions of vim have this opt
+    let &termguicolors = v:true
+endif
+
+if (v:progname == "vim") | finish | endif
+
+" NVIM-EXCLUSIVE VIM-OPTS

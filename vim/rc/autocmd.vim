@@ -6,15 +6,24 @@ augroup END
 
 "-----------------------------------------------------------------------------
 
-augroup onInstModeChange
+augroup onInsertModeChange
     autocmd!
-    autocmd InsertEnter * set norelativenumber
-    autocmd InsertLeave,InsertLeavePre * set relativenumber
+    autocmd InsertEnter * let &relativenumber = v:false
+    autocmd InsertLeavePre * let &relativenumber = v:true
 augroup END
 
 "-----------------------------------------------------------------------------
 
-augroup onVimrcFileWrite
+let ft_source_map = #{
+    \ vim:  'source %',
+    \ nvim: 'source %',
+    \ bash: '!source %',
+    \ sh:   '!source %',
+    \ zsh:  '!source %',
+    \ tmux: '!tmux source-file <afile>',
+\}
+
+augroup on_config_write
     autocmd!
     autocmd BufWritePost **/.config/**.vim source %
 augroup END

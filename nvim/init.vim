@@ -1,9 +1,14 @@
-require("rc.opt")
-require("rc.keymap")
-require("rc.autocmd")
-require("rc.plugin")
+source $HOME/.vim/rc/opt.vim
+source $HOME/.vim/rc/keymap.vim
+source $HOME/.vim/rc/autocmd.vim
+source $HOME/.vim/rc/plugin.vim
 
--------------------------------------------------------------------------------
+if (v:progname == 'vim')
+    colorscheme industry
+    finish
+endif
+
+lua << EOF
 
 require("plugin.icons")
 require("plugin.gitsigns")
@@ -24,3 +29,5 @@ require("plugin.scratchbuf")
 
 local favColorSchemes = { 'focuspoint', 'materialbox', 'solarized8_high', }
 vim.cmd('colorscheme ' .. favColorSchemes[math.random(#favColorSchemes)])
+
+EOF
