@@ -12,14 +12,15 @@ function keymap.set(mode, lhs, rhs, opts=self['default_opts']) dict
     let l:cmd = count(l:opts, 'noremap') ? 'noremap' : 'map'
     let l:cmd = (a:mode == "!") ? l:cmd . "!" : a:mode . l:cmd
 
-    if count(l:opts, 'cmd')
-        let l:opts[index(l:opts, 'cmd')] = 'command'
+    let l:rhs = a:rhs
+
+    if(count(l:opts, 'lua'))
+        let l:rhs = 'lua ' . l:rhs
+        "add `command` to l:opts so the lua command can be wrapped in <Cmd><CR>
+        if !count(l:opts, 'command') | call add(l:opts, 'command') | endif
     endif
 
-    let l:rhs = count(l:opts, 'lua') ? '<Cmd>lua ' . a:rhs . '<CR>' : a:rhs
-    let l:rhs = (count(l:opts, 'command') && count(l:opts, 'lua') == 0) 
-                \ ? '<Cmd>' . a:rhs . '<CR>' 
-                \ : a:rhs
+    let l:rhs = count(l:opts, 'command') ? '<Cmd>' . l:rhs . '<CR>' : l:rhs
 
     for l:opt in ['defaults', 'noremap', 'command', 'lua']
         silent! call remove(l:opts, l:opt)
@@ -97,9 +98,9 @@ call keymap.set('t', 'jj',    '<C-BSlash><C-n>', [ 'noremap' ])
 
 "PLUGIN:FILE-BROWSER ---------------------------------------------------------
 
-if (exists('NvimTreeToggle'))
+if (exists(':NvimTreeToggle'))
     let s:file_browser = 'NvimTreeToggle'
-elseif(exists('NERDTreeToggleVCS'))
+elseif(exists(':NERDTreeToggleVCS'))
     let s:file_browser = 'NERDTreeToggleVCS'
 else
     let s:file_browser = 'Lexplore'
@@ -115,18 +116,57 @@ call keymap.set('', 'gs', 'Git', [ 'defaults', 'command' ])
 
 if (v:progname == 'vim') | finish | endif
 
-"PLUGIN:TELESCOPE -------------------------------------------------------------
+lua << EOF
 
-let s:ts = 'lua require("telescope.builtin").'
+local set_keymap = vim.api.nvim_set_keymap
+set_keymap('', 's', '<Nop>', {}) -- to prevent invoking substitution operations
 
-call keymap.set('n', 's/', s:ts . 'live_grep()',  [ 'defaults', 'command' ])
-call keymap.set('n', 's?', s:ts . 'builtin()',    [ 'defaults', 'command' ])
-call keymap.set('n', 'sb', s:ts . 'buffers()',    [ 'defaults', 'command' ])
-call keymap.set('n', 'sc', s:ts . 'colorscheme({ enable_preview = true}) ', [ 'defaults', 'command' ])
-call keymap.set('n', 'sf', s:ts . 'find_files()',  [ 'defaults', 'command' ])
-call keymap.set('n', 'sF', s:ts . 'git_files()',  [ 'defaults', 'command' ])
-call keymap.set('n', 'sh', s:ts . 'help_tags()',  [ 'defaults', 'command' ])
-call keymap.set('n', 'sk', s:ts . 'keymaps()',    [ 'defaults', 'command' ])
-call keymap.set('n', 'sm', s:ts . 'man_pages()',  [ 'defaults', 'command' ])
-call keymap.set('n', 'so', s:ts . 'old_files()',  [ 'defaults', 'command' ])
-call keymap.set('n', 'sq', s:ts . 'quickfix()',   [ 'defaults', 'command' ])
+-- PLUGIN:TELESCOPE -------------------------------------------------------------
+telescope         = require('telescope')
+telescope.builtin = require('telescope.builtin')
+telescope.utils   = require('telescope.utils')
+telescope.actions = require('telescope.actions')
+
+telescope.keymaps = {
+    ['a'] = 'autocommands()',
+    ['b'] = 'buffers()',
+    ['B'] = 'builtin()',
+    ['c'] = 'colorscheme({ enable_preview = true})',
+    ['d'] = 'lsp_definitions()',
+    ['D'] = 'lsp_document_symbols()',
+    ['f'] = 'find_files()',
+    ['F'] = 'git_files()',
+    ['h'] = 'help_tags()',
+    ['H'] = 'highlights()',
+    ['g'] = 'git_status()',
+    ['G'] = 'grep_string()',
+    ['i'] = 'lsp_implementations()',
+    ['I'] = 'lsp_incoming_calls()',
+    ['j'] = 'jumplist()',
+    ['k'] = 'keymaps()',
+    ['l'] = 'live_grep()',
+    ['L'] = 'loclist()',
+    ['m'] = 'man_pages()',
+    ['o'] = 'old_files()',
+    ['O'] = 'lsp_outgoing_calls()',
+    ['q'] = 'quickfix()',
+    ['Q'] = 'quickfixhistory()',
+    ['r'] = 'lsp_references()',
+    ['R'] = 'reloader()',
+    ['s'] = 'git_stash()',
+    ['S'] = 'spell_suggest()',
+    ['t'] = 'treesitter()',
+    ['w'] = 'lsp_dynamic_workspace_symbols()',
+    [';'] = 'commands()',
+    ['?'] = 'builtin()',
+    ["'"] = 'registers()',
+    ["/"] = 'search_history()',
+    ["<Space>"] = 'resume()',
+}
+
+for lhs, rhs in pairs(telescope.keymaps) do
+    local rhs = "<Cmd>lua require('telescope.builtin')." .. rhs .. "<CR>"
+    set_keymap('n', 's' .. lhs, rhs, { noremap = true, silent = true })
+end
+
+EOF

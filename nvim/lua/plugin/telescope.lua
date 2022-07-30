@@ -7,17 +7,19 @@ ts.setup({
         dynamic_preview_title = true,
         layout_strategy = 'horizontal',
         layout_config = {
-            height = 0.95,
-            width = 0.95,
-            preview_width = 0.60,
+            height = 0.95, width = 0.95, preview_width = 0.60,
+            scroll_speed = 10
         },
         mappings = {
             n = {
-                ["<Esc>"]   = "close",
+                ["u"]       = "preview_scrolling_up",
+                ["d"]       = "preview_scrolling_down",
                 ["q"]       = "close",
+                ["ZZ"]      = "close",
+                ["<Esc>"]   = "close",
                 ["<C-c>"]   = "close",
                 ["<Space>"] = "toggle_selection",
-                ["ZZ"]      = "close",
+                ["<C-]>"]   = "close",
             },
             i = {
                 ["<C-a>"] = "toggle_all",
@@ -25,7 +27,8 @@ ts.setup({
                 ["<C-j>"] = "move_selection_next",
                 ["<Esc>"] = "close",
                 ["<C-c>"] = "close",
-                ['jj']    = { "<Esc>", type = "command" }
+                ['<C-]>'] = "close",
+                ['jj']    = { "<Esc>", type = "command" },
             }
         }
     }
