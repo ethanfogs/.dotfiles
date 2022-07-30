@@ -1,9 +1,9 @@
-let g:plug_head = $HOME . '/.local/share/' . v:progname . '/site'
+let g:plug_home = $HOME . '/.local/share/' . v:progname . '/site/plugged'
 
-if(isdirectory(g:plug_head . '/plugged') == v:false)
+if(!isdirectory(g:plug_home))
     let s:plug_init = (v:progname == "vim")
                 \ ? $HOME . '/.vim/autoload/plug.vim'
-                \ : $HOME . '/.local/share/' . v:progname . '/site/autoload/plug.vim'
+                \ : stdpath('data') . '/site/autoload/plug.vim'
 
     silent execute '!curl -fLo ' . 
         \ s:plug_init . ' --create-dirs ' . 
@@ -77,7 +77,6 @@ call plug#begin(g:plug_home)
         Plug 'nvim-pack/nvim-spectre'
         Plug 'kyazdani42/nvim-web-devicons'
         Plug 'lewis6991/gitsigns.nvim'
-        Plug 'rafi/awesome-vim-colorschemes'
     endif
 
 call plug#end()
