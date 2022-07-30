@@ -11,7 +11,6 @@ endif
 lua << EOF
 
 require("plugin.icons")
-require("plugin.gitsigns")
 require("plugin.lsp") -- this sources lua/plugin/lsp/init.lua
 require("plugin.telescope")
 require("plugin.treesitter")
