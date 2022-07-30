@@ -93,7 +93,7 @@ call keymap.set('!', '<>', '<>')
 
 "TERMINAL-MODE ---------------------------------------------------------------
 call keymap.set('t', '<Esc>', '<C-BSlash><C-n>')
-call keymap.set('t', 'jj',    '<C-BSlash><C-n>')
+call keymap.set('t', 'jj',    '<C-BSlash><C-n>', [ 'noremap' ])
 
 "PLUGIN:FILE-BROWSER ---------------------------------------------------------
 
