@@ -1,1 +1,1 @@
-/Users/user_00/.config/vim/vimrc
+../vim/vimrc
