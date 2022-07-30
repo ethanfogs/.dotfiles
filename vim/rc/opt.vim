@@ -16,11 +16,9 @@ let &clipboard       = 'unnamed'
 let &undofile        = v:true
 let &undodir         = $HOME . '/.local/state/' . v:progname . '/undo'
 
-if(v:progname == "vim")
-    let &viminfofile = $HOME . '/.local/share/vim/viminfo'
-else
-    let &shadafile = stdpath('data') . '/shada'
-endif
+"&viminfofile points to &shadafile in vim versions (nvim) that use support it
+let &viminfofile = $HOME . '/.local/share/' . v:progname . '/' .
+                                        \ (has('shada') ? 'shada' : 'viminfo')
 
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }-------------------------------------
 
@@ -48,7 +46,7 @@ let &wildmenu        = v:true
 let &wrap            = v:false
 
 if has('termguicolors')
-    " not in nvim-exclusive block bc some later versions of vim have this opt
+    "not in nvim-exclusive block bc some later versions of vim have this opt
     let &termguicolors = v:true
 endif
 
