@@ -1,13 +1,9 @@
 let g:plug_head = $HOME . '/.local/share/' . v:progname . '/site'
 
-" let g:plug_head = (v:progname == "vim") 
-"             \ ? $HOME . '/.local/share/vim/site' 
-"             \ : stdpath('data') . '/site'
-
 if(isdirectory(g:plug_head . '/plugged') == v:false)
     let s:plug_init = (v:progname == "vim")
                 \ ? $HOME . '/.vim/autoload/plug.vim'
-                \ : $HOME . '/.local/share/nvim/site/plug.vim'
+                \ : $HOME . '/.local/share/' . v:progname . '/site/autoload/plug.vim'
 
     silent execute '!curl -fLo ' . 
         \ s:plug_init . ' --create-dirs ' . 
