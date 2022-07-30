@@ -119,12 +119,12 @@ if (v:progname == 'vim') | finish | endif
 
 let s:ts = 'lua require("telescope.builtin").'
 
-call keymap.set('n', 's.', s:ts . 'find_files()', [ 'defaults', 'command' ])
 call keymap.set('n', 's/', s:ts . 'live_grep()',  [ 'defaults', 'command' ])
 call keymap.set('n', 's?', s:ts . 'builtin()',    [ 'defaults', 'command' ])
 call keymap.set('n', 'sb', s:ts . 'buffers()',    [ 'defaults', 'command' ])
 call keymap.set('n', 'sc', s:ts . 'colorscheme({ enable_preview = true}) ', [ 'defaults', 'command' ])
-call keymap.set('n', 'sf', s:ts . 'git_files()',  [ 'defaults', 'command' ])
+call keymap.set('n', 'sf', s:ts . 'find_files()',  [ 'defaults', 'command' ])
+call keymap.set('n', 'sF', s:ts . 'git_files()',  [ 'defaults', 'command' ])
 call keymap.set('n', 'sh', s:ts . 'help_tags()',  [ 'defaults', 'command' ])
 call keymap.set('n', 'sk', s:ts . 'keymaps()',    [ 'defaults', 'command' ])
 call keymap.set('n', 'sm', s:ts . 'man_pages()',  [ 'defaults', 'command' ])
