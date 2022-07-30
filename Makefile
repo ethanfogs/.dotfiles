@@ -1,72 +1,38 @@
-XDG_BIN_HOME    ?= $(HOME)/.local/bin
-XDG_CONFIG_HOME ?= $(HOME)/.config
-XDG_CACHE_HOME  ?= $(HOME)/.cache
-XDG_DATA_HOME   ?= $(HOME)/.local/share
-XDG_STATE_HOME  ?= $(HOME)/.local/state
-
-MK_BASEDIRS = \
-	mkdir -p $(XDG_BIN_HOME) $(XDG_CONFIG_HOME) $(XDG_STATE_HOME) \
-             $(XDG_CACHE_HOME) $(XDG_DATA_HOME)
-
-#------------------------------------------------------------------------------
-
-GH = https://github.com
+.SILENT:
+base:
+	mkdir -p ~/.{config,cache,local/{bin,share,state}}
+	for dir in $(PWD)/*; do \
+		[[ ! $$dir =~ ".*\.git.*" ]] && ln -sf $$dir ~/.config; \
+	done;
+	ln -sfv $(PWD)/shell/bash/bashrc.bash       ~/.bashrc;
+	ln -sfv $(PWD)/shell/bash/bash_profile.bash ~/.bash_profile;
+	ln -sfv $(PWD)/shell/zsh/zshrc.zsh          ~/.zshrc;
+	ln -sfv $(PWD)/shell/zsh/zshenv.zsh         ~/.zshenv;
 
 #------------------------------------------------------------------------------
 
 .SILENT:
-#.ONESHELL:
-config:
-	$(MK_BASEDIRS)
-	cp -iR  $(PWD)/* $(XDG_CONFIG_HOME)/
-	ln -svf $(XDG_CONFIG_HOME)/shell/profile.sh             $(HOME)/.profile
-	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zprofile.zsh       $(HOME)/.zprofile
-	ln -svf $(XDG_CONFIG_HOME)/shell/zsh/zshrc.zsh          $(HOME)/.zshrc
-	ln -svf $(XDG_CONFIG_HOME)/shell/bash/bash_profile.bash $(HOME)/.bash_profile
-	ln -svf $(XDG_CONFIG_HOME)/shell/bash/bashrc.bash       $(HOME)/.bashrc
-	ln -svf $(XDG_CONFIG_HOME)/vim                          $(HOME)/.vim
+mac_cli:
+	mkdir -p ~/.{config,cache,local/{bin,share,state}};
+	[[ $$(command -v brew) ]] \
+		|| git clone https://github.com/Homebrew/brew ~/.local/homebrew;
+	brew install -f btop bat exa fd fzf ripgrep tldr tree 2> /dev/null;
+	brew install -f gnu-sed wget cmake bitwarden-cli 2> /dev/null;
+	brew install -f neovim tmux 2> /dev/null;
+	brew install -f go node yarn python rust sqlite 2> /dev/null;
+	curl -sk https://bun.sh/install | bash &> /dev/null \
+		&& mv -f ~/.bun ~/.local/share/bun &> /dev/null;
+	brew install -f zsh-{completion,autosuggestion}s {bash,brew-cask,pip,rustc,yarn}-completion 2> /dev/null;
+	brew install -f gobuster httpie httpx john-jumbo nmap openvpn 2> /dev/null;
+	[ $$(uname -p) = "arm" ] || brew install -f docker{,-machine}
+	brew upgrade
 
-#------------------------------------------------------------------------------
-
-homebrew:
-	mkdir -p $(BASE_DIRS)
-	[ `command -v brew` ] || \
-		git clone $(GH)/Homebrew/brew $(XDG_DATA_HOME)/homebrew
-	ln -sfv $(XDG_DATA_HOME)/homebrew/bin/brew $(XDG_BIN_HOME)/
-
-#------------------------------------------------------------------------------
-
-CLI_PKGS  = neovim tmux fd ripgrep bat exa jq tree tldr fzf
-DEV_PKGS  = python3 node lua rust golang
-FONT_PGKS = font-hack-nerd-font
-
-ifeq ($(shell uname -s),Darwin)
-        INSTALL = brew install
-else
-        INSTALL = sudo apt-get install
-endif
-
-cli:
-	$(INSTALL) $(CLI_PKGS)
-
-dev:
-	$(INSTALL) $(DEV)
-
-#------------------------------------------------------------------------------
-
-DESKTOP_PKGS     = kitty firefox bitwarden protonvpn logi-options-plus
-MAC_DESKTOP_PKGS = $(DESKTOP_PKGS) amethyst
-
-desktop:
-	$(INSTALL) $(DESKTOP_PKGS)
-
+.SILENT:
 mac_desktop:
-	$(INSTALL) $(MAC_DESKTOP_PKGS)
-
-#------------------------------------------------------------------------------
-
-clean:
-	rm -rf $(XDG_CACHE_HOME)/dotfiles
+	mkdir -p ~/Applications;
+	brew install bitwarden amethyst kitty protonvpn firefox brave-browser \
+		wireshark burp-suite \
+			--cask --force --appdir=~/Applications --no-quarantine 2> /dev/null;
 
 #macos_defaults:
 #       defaults write com.apple.Finder AppleShowAllFiles true
