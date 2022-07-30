@@ -16,9 +16,12 @@ function keymap.set(mode, lhs, rhs, opts=self['default_opts']) dict
         let l:opts[index(l:opts, 'cmd')] = 'command'
     endif
 
-    let l:rhs = count(l:opts, 'command') ? '<Cmd>' . a:rhs . '<CR>' : a:rhs
+    let l:rhs = count(l:opts, 'lua') ? '<Cmd>lua ' . a:rhs . '<CR>' : a:rhs
+    let l:rhs = (count(l:opts, 'command') && count(l:opts, 'lua') == 0) 
+                \ ? '<Cmd>' . a:rhs . '<CR>' 
+                \ : a:rhs
 
-    for l:opt in ['defaults', 'noremap', 'command']
+    for l:opt in ['defaults', 'noremap', 'command', 'lua']
         silent! call remove(l:opts, l:opt)
     endfor
 
@@ -107,3 +110,22 @@ call keymap.set('', '<Space>e',   s:file_browser, ['defaults', 'command'])
 "PLUGIN:GIT ------------------------------------------------------------------
 
 call keymap.set('', 'gs', 'Git', [ 'defaults', 'command' ])
+
+"NVIM-EXCLUSIVE KEYMAPS -------------------------------------------------------
+
+if (v:progname == 'vim') | finish | endif
+
+"PLUGIN:TELESCOPE -------------------------------------------------------------
+
+let s:ts = 'lua require("telescope.builtin").'
+
+call keymap.set('n', 's.', s:ts . 'find_files()', [ 'defaults', 'command' ])
+call keymap.set('n', 's/', s:ts . 'live_grep()',  [ 'defaults', 'command' ])
+call keymap.set('n', 's?', s:ts . 'builtin()',    [ 'defaults', 'command' ])
+call keymap.set('n', 'sb', s:ts . 'buffers()',    [ 'defaults', 'command' ])
+call keymap.set('n', 'sc', s:ts . 'colorscheme({ enable_preview = true}) ', [ 'defaults', 'command' ])
+call keymap.set('n', 'sf', s:ts . 'git_files()',  [ 'defaults', 'command' ])
+call keymap.set('n', 'sh', s:ts . 'help_tags()',  [ 'defaults', 'command' ])
+call keymap.set('n', 'sm', s:ts . 'man_pages()',  [ 'defaults', 'command' ])
+call keymap.set('n', 'so', s:ts . 'old_files()',  [ 'defaults', 'command' ])
+call keymap.set('n', 'sq', s:ts . 'quickfix()',   [ 'defaults', 'command' ])
