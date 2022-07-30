@@ -97,9 +97,9 @@ call keymap.set('t', 'jj',    '<C-BSlash><C-n>')
 
 "PLUGIN:FILE-BROWSER ---------------------------------------------------------
 
-if (exists(':NvimTreeToggle'))
+if (exists('NvimTreeToggle'))
     let s:file_browser = 'NvimTreeToggle'
-elseif(exists(':NERDTreeToggleVCS'))
+elseif(exists('NERDTreeToggleVCS'))
     let s:file_browser = 'NERDTreeToggleVCS'
 else
     let s:file_browser = 'Lexplore'
