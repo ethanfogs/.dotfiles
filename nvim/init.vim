@@ -23,7 +23,6 @@ require("plugin.lualine")
 require("plugin.bufferline")
 require("plugin.indentline")
 require("plugin.toggleterm")
-require("plugin.scratchbuf")
 
 -------------------------------------------------------------------------------
 
