@@ -11,22 +11,36 @@ if(isdirectory(g:plug_head . '/plugged') == v:false)
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 end
 
-call plug#begin(g:plug_head . '/plugged')
+call plug#begin(g:plug_home)
+    Plug 'junegunn/vim-plug' "only for helptags, not involved with bootstrapping
 
     "PLUGINS COMPATIBLE WITH BOTH VIM AND NVIM
-    Plug 'junegunn/vim-plug'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-rhubarb'
     Plug 'tpope/vim-surround'
     Plug 'ryanoasis/vim-devicons'
 
+    "TODO: resolve TERM issue for vanilla vim - since these colorschemes dont
+    "       render properly, even with vim versions with &termguicolor support.
+    Plug 'lifepillar/vim-solarized8'
+    Plug 'chase/focuspoint-vim'
+    Plug 'mkarmona/materialbox'
+    Plug 'gregsexton/Atom'
+    Plug 'andreypopp/vim-colors-plain'
+    Plug 'KKPMW/distilled-vim'
+    Plug 'widatama/vim-phoenix'
+    Plug 'ewilazarus/preto'
+    Plug 'kadekillary/skull-vim'
+
     if (v:progname == 'vim')
+        "Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
         Plug 'preservim/nerdtree'
         Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
         Plug 'PhilRunninger/nerdtree-buffer-ops'
         Plug 'PhilRunninger/nerdtree-visual-selection'
         Plug 'RRethy/vim-illuminate'
+        "Plug 'chriskempson/base16-vim'
     else
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-lua/popup.nvim'
