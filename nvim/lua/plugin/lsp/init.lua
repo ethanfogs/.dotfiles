@@ -9,21 +9,24 @@ local lsp = {
 function lsp.handlers.on_attach(client, bufnr)
     local buf_set_n_keymap = function(bufnr, lhs, rhs)
         local opts = { noremap = true, silent = true, }
+        local rhs = "<Cmd>lua vim." .. rhs .. "<CR>"
         vim.api.nvim_buf_set_keymap(bufnr, "n", lhs, rhs, opts)
     end
 
-    buf_set_n_keymap(bufnr, "gC", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
-    buf_set_n_keymap(bufnr, "K", "<Cmd>lua vim.lsp.buf.hover()<CR>")
-    buf_set_n_keymap(bufnr, "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>")
-    buf_set_n_keymap(bufnr, "gR", "<Cmd>lua vim.lsp.buf.rename(<CR>)<CR>")
-    buf_set_n_keymap(bufnr, "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>")
-    buf_set_n_keymap(bufnr, "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>")
-    buf_set_n_keymap(bufnr, "gi", "<Cmd>lua vim.lsp.buf.implementation()<CR>")
-    buf_set_n_keymap(bufnr, "gj", "<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics({ border = 'rounded' })<CR>")
-    buf_set_n_keymap(bufnr, "gl", "<Cmd>lua vim.lsp.diagnostic.goto_next({ border = 'rounded' })<CR>")
-    buf_set_n_keymap(bufnr, "go", "<Cmd>lua diagnostic.open_float({ border = 'rounded' })<CR>")
-    buf_set_n_keymap(bufnr, "gr", "<Cmd>lua vim.lsp.buf.references()<CR>")
-    vim.api.nvim_create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
+    buf_set_n_keymap(bufnr, "gC", "lsp.buf.code_action()")
+    buf_set_n_keymap(bufnr, "K",  "lsp.buf.hover()")
+    buf_set_n_keymap(bufnr, "gD", "lsp.buf.declaration()")
+    buf_set_n_keymap(bufnr, "gR", "lsp.buf.rename()")
+    buf_set_n_keymap(bufnr, "gS", "lsp.buf.signature_help()")
+    buf_set_n_keymap(bufnr, "gd", "lsp.buf.definition()")
+    buf_set_n_keymap(bufnr, "gi", "lsp.buf.implementation()")
+    buf_set_n_keymap(bufnr, "gj", "lsp.diagnostic.show_line_diagnostics({ border = 'rounded' })")
+    buf_set_n_keymap(bufnr, "gl", "lsp.diagnostic.goto_next({ border = 'rounded' })")
+    buf_set_n_keymap(bufnr, "go", "diagnostic.open_float({ border = 'rounded' })")
+    buf_set_n_keymap(bufnr, "gr", "lsp.buf.references()")
+
+    local create_user_cmd = vim.api.nvim_create_user_command
+    create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
 end
 
 lsp.signs = {
