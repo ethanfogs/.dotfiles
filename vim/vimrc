@@ -1,7 +1,7 @@
+source $HOME/.vim/rc/plugin.vim
 source $HOME/.vim/rc/opt.vim
 source $HOME/.vim/rc/keymap.vim
 source $HOME/.vim/rc/autocmd.vim
-source $HOME/.vim/rc/plugin.vim
 
 if (v:progname == "vim")
     colorscheme industry
