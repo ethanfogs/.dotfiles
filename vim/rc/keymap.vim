@@ -1,20 +1,15 @@
-"GLOBAL `SET KEYMAP` WRAPPER ------------------------------------------- {{{ 1
+"GLOBAL `SET KEYMAP` WRAPPER ---------------------------------------------------
 let keymap = { 'default_opts': [ 'noremap', 'silent', ] }
 
-function keymap.set(mode, lhs, rhs, opts=self['default_opts']) dict
-    let l:opts = (type(a:opts) == v:t_dict)
-                \ ? a:opts->filter('v:val != v:false')->keys()
+function keymap.set(mode, lhs, rhs, opts=self[ 'default_opts' ]) dict
+    let l:opts = count(a:opts, 'defaults')
+                \ ? a:opts + self.default_opts
                 \ : a:opts
-
-    let l:opts = count(l:opts, 'defaults')
-                \ ? l:opts + self.default_opts
-                \ : l:opts
 
     let l:cmd = count(l:opts, 'noremap') ? 'noremap' : 'map'
     let l:cmd = (a:mode == "!") ? l:cmd . "!" : a:mode . l:cmd
 
     let l:rhs = a:rhs
-
     if(count(l:opts, 'lua'))
         let l:rhs = 'lua ' . l:rhs
         "add `command` to l:opts so the lua command can be wrapped in <Cmd><CR>
@@ -27,14 +22,14 @@ function keymap.set(mode, lhs, rhs, opts=self['default_opts']) dict
         silent! call remove(l:opts, l:opt)
     endfor
 
-    let l:cmd = len(l:opts)
+    let l:cmd = len(l:opts) > 0
                 \ ? l:cmd .' '. keys(l:opts)->map('"<". v:val .">"')->join()
                 \ : l:cmd
 
     execute([l:cmd, a:lhs, l:rhs]->join(' '))
-endfunction "}}} 1
+endfunction
 
-"NORMAL-MODE ----------------------------------------------------------- {{{ 1
+"NORMAL-MODE -------------------------------------------------------------------
 call keymap.set('n', 'Y', 'yg$')
 call keymap.set('n', 'V', 'vg$')
 call keymap.set('n', 'U', '<C-r>')
@@ -48,9 +43,7 @@ call keymap.set('n', '<Space>w', 'write', ['defaults', 'command', ])
 let s:makeprg_expr = 'if (!empty(&l:makeprg)) \| make \| endif'
 call keymap.set('', '<Space>m', s:makeprg_expr, ['defaults', 'command', ])
 
-"}}} 1
-
-"[NVO]-MODE ------------------------------------------------------------- {{{ 1
+"[NVO]-MODE ---------------------------------------------------------------------
 call keymap.set('', 'H',  'g0')
 call keymap.set('', 'L',  'g$')
 call keymap.set('', 'S',  '%')
@@ -77,15 +70,15 @@ call keymap.set('', ',,', 'za')
 call keymap.set('', '<Space>,', 'zA')
 
 call keymap.set('', '<Space>', '<C-w>') "`<Space>` => cancels op-pending state
+call keymap.set('v', '<Space>', '<C-[>') "`<Space>` => cancels op-pending state
 
 "[NVO]-MODE:LEADER-KEY::<Tab> //(tab nav)
 call keymap.set('', '<Tab>n', 'tabnew',      ['defaults', 'command'])
 call keymap.set('', '<Tab>j', 'tabprevious', ['defaults', 'command'])
 call keymap.set('', '<Tab>k', 'tabnext',     ['defaults', 'command'])
 call keymap.set('', '<Tab>x', 'tabclose',    ['defaults', 'command'])
-"}}} 1
 
-"OP-PENDING-MODE::MOTION ALIASES (`i` => `in`, `a` => `around`) --------- {{{ 1
+"OP-PENDING-MODE::MOTION ALIASES (`i` => `in`, `a` => `around`) -----------------
 call keymap.set('o', 'ic', 'i{')
 call keymap.set('o', 'ac', 'a{')
 call keymap.set('o', 'ia', 'i<')
@@ -93,59 +86,46 @@ call keymap.set('o', 'aa', 'a<')
 call keymap.set('o', 'iq', 'i"')
 call keymap.set('o', 'aq', 'a"')
 
-"}}} 1
-
-"[IC]-MODE -------------------------------------------------------------- {{{ 1
+"[IC]-MODE ----------------------------------------------------------------------
 call keymap.set('!', 'jj', '<C-c>')
 call keymap.set('!', '<',  '<><Left>')
 call keymap.set('!', '<>', '<>')
-"}}} 1
 
-"TERMINAL-MODE ---------------------------------------------------------- {{{ 1
+"TERMINAL-MODE ------------------------------------------------------------------
 call keymap.set('t', '<Esc>', '<C-BSlash><C-n>')
 call keymap.set('t', 'jj',    '<C-BSlash><C-n>', [ 'noremap' ])
 
-"}}} 1
+"PLUGIN:FILE-BROWSER -----------------------------------------------------------
 
-"PLUGIN:FILE-BROWSER --------------------------------------------------- {{{ 1
-
-if (exists(':NvimTreeToggle'))
+if (&runtimepath =~ ".*/nvim-tree")
     let s:file_browser = 'NvimTreeToggle'
-elseif(exists(':NERDTreeToggleVCS'))
+elseif(&runtimepath =~ ".*/nerdtree")
     let s:file_browser = 'NERDTreeToggleVCS'
 else
     let s:file_browser = 'Lexplore'
 endif
 
 call keymap.set('', '<Space>e',   s:file_browser, ['defaults', 'command'])
-"}}} 1
 
-"PLUGIN:GIT ------------------------------------------------------------- {{{ 1
+"PLUGIN:GIT ---------------------------------------------------------------------
 
 call keymap.set('', 'gs', 'Git', [ 'defaults', 'command' ])
 
-"}}} 1
-
-"NVIM-EXCLUSIVE KEYMAPS ------------------------------------------------ {{{ 1
+"NVIM-EXCLUSIVE KEYMAPS --------------------------------------------------------
 
 if (v:progname == 'vim') | finish | endif
 
-"1 }}}
-
 lua << EOF
--- {{{ 1
 
 local set_keymap = vim.api.nvim_set_keymap
 
--- PLUGIN:TELESCOPE ---------------------------------------------------- {{{ 2
+-- PLUGIN:TELESCOPE ------------------------------------------------------------
 telescope         = require('telescope')
 telescope.builtin = require('telescope.builtin')
 telescope.utils   = require('telescope.utils')
 telescope.actions = require('telescope.actions')
 
--- }}} 2
-
-set_keymap('', 's', '<Nop>', {}) -- to prevent invoking substitution operations {{{ 2
+set_keymap('', 's', '<Nop>', {}) -- to prevent invoking substitution operations
 telescope.keymaps = {
     ['a'] = 'autocommands()',
     ['b'] = 'buffers()',
@@ -182,12 +162,9 @@ telescope.keymaps = {
     ["/"] = 'search_history()',
     ["<Space>"] = 'resume()',
 }
---}}}2
 
 for lhs, rhs in pairs(telescope.keymaps) do
     local rhs = "<Cmd>lua require('telescope.builtin')." .. rhs .. "<CR>"
     set_keymap('n', 's' .. lhs, rhs, { noremap = true, silent = true })
 end
--- 1}}}
 EOF
-" vim: foldmethod=marker:
