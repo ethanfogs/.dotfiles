@@ -34,4 +34,4 @@ ts.setup({
     }
 })
 
--- telescope keymaps set $HOME/.config/nvim/rc/keymap.vim
+-- telescope keymaps set $HOME/.vim/rc/keymap.vim

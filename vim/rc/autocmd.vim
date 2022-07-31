@@ -14,15 +14,6 @@ augroup END
 
 "-----------------------------------------------------------------------------
 
-let ft_source_map = #{
-    \ vim:  'source %',
-    \ nvim: 'source %',
-    \ bash: '!source %',
-    \ sh:   '!source %',
-    \ zsh:  '!source %',
-    \ tmux: '!tmux source-file <afile>',
-\}
-
 augroup on_config_write
     autocmd!
     autocmd BufWritePost **/.{config,dotfiles}/**/*vim/**.{vim,lua} source <afile>

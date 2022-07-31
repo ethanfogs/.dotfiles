@@ -1,6 +1,6 @@
-let g:plug_home = $HOME . '/.local/share/' . v:progname . '/site/plugged'
+let s:plug_home = $HOME . '/.local/share/' . v:progname . '/site/plugged'
 
-if(!isdirectory(g:plug_home))
+if(!isdirectory(s:plug_home))
     let s:plug_init = (v:progname == "vim")
                 \ ? $HOME . '/.vim/autoload/plug.vim'
                 \ : stdpath('data') . '/site/autoload/plug.vim'
@@ -11,7 +11,7 @@ if(!isdirectory(g:plug_home))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 end
 
-call plug#begin(g:plug_home)
+call plug#begin(s:plug_home)
     Plug 'junegunn/vim-plug' "only for helptags, not involved with bootstrapping
 
     "PLUGINS COMPATIBLE WITH BOTH VIM AND NVIM
@@ -20,17 +20,21 @@ call plug#begin(g:plug_home)
     Plug 'tpope/vim-surround'
     Plug 'ryanoasis/vim-devicons'
 
-    "TODO: resolve TERM issue for vanilla vim - since these colorschemes dont
-    "       render properly, even with vim versions with &termguicolor support.
-    Plug 'lifepillar/vim-solarized8'
-    Plug 'chase/focuspoint-vim'
-    Plug 'mkarmona/materialbox'
-    Plug 'gregsexton/Atom'
-    Plug 'andreypopp/vim-colors-plain'
-    Plug 'KKPMW/distilled-vim'
-    Plug 'widatama/vim-phoenix'
-    Plug 'ewilazarus/preto'
-    Plug 'kadekillary/skull-vim'
+    if (has('termguicolors'))
+        Plug 'chrisbra/Colorizer'
+        "
+        "TODO: resolve TERM issue for vanilla vim - since these colorschemes dont
+        "       render properly, even with vim versions with &termguicolor support.
+        Plug 'lifepillar/vim-solarized8'
+        Plug 'chase/focuspoint-vim'
+        Plug 'mkarmona/materialbox'
+        Plug 'gregsexton/Atom'
+        Plug 'andreypopp/vim-colors-plain'
+        Plug 'KKPMW/distilled-vim'
+        Plug 'widatama/vim-phoenix'
+        Plug 'ewilazarus/preto'
+        Plug 'kadekillary/skull-vim'
+    endif
 
     if (v:progname == 'vim')
         "Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
@@ -42,16 +46,23 @@ call plug#begin(g:plug_home)
         Plug 'RRethy/vim-illuminate'
         "Plug 'chriskempson/base16-vim'
     else
+        "GENERAL HOUSEKEEPING & DEPS
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-lua/popup.nvim'
+
+        "LSP
         Plug 'neovim/nvim-lspconfig'
         Plug 'onsails/lspkind-nvim'
         Plug 'ray-x/lsp_signature.nvim'
         Plug 'williamboman/nvim-lsp-installer'
         Plug 'folke/lsp-colors.nvim'
+
+        "TREESITTER (LINTING)
         Plug 'nvim-treesitter/nvim-treesitter'
         Plug 'nvim-treesitter/nvim-treesitter-context'
-        Plug 'nvim-treesitter/playground'
+        " Plug 'nvim-treesitter/playground'
+
+        " CMP (AUTO-COMPLETIONS& POPUP SUGGESTIONS)
         Plug 'hrsh7th/nvim-cmp'
         Plug 'hrsh7th/cmp-buffer'
         Plug 'hrsh7th/cmp-cmdline'
@@ -60,23 +71,36 @@ call plug#begin(g:plug_home)
         Plug 'hrsh7th/cmp-path'
         Plug 'L3MON4D3/LuaSnip'
         Plug 'saadparwaiz1/cmp_luasnip'
+
+        "TELESCOPE (CONTENT BROWSER)
         Plug 'nvim-telescope/telescope-fzy-native.nvim'
         Plug 'nvim-telescope/telescope-media-files.nvim'
         Plug 'nvim-telescope/telescope-symbols.nvim'
         Plug 'nvim-telescope/telescope.nvim'
         Plug 'tom-anders/telescope-vim-bookmarks.nvim'
+        Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+
+        "POP-UP TERMINALS
         Plug 'akinsho/toggleterm.nvim'
+
+        "FILE BROWSER
+        Plug 'kyazdani42/nvim-tree.lua'
+
+        "FILE BROWSER
         Plug 'windwp/nvim-autopairs'
         Plug 'numToStr/Comment.nvim'
-        Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-        Plug 'kyazdani42/nvim-tree.lua'
+
+        "CODE AUTO-FORMATTER
         Plug 'jose-elias-alvarez/null-ls.nvim'
+
+        "INDENTATION GUIDE
         Plug 'lukas-reineke/indent-blankline.nvim'
+
+        "ICONS, STATUS-LINES & DIAGNOSTICS
         Plug 'nvim-lualine/lualine.nvim'
         Plug 'akinsho/bufferline.nvim'
         Plug 'nvim-pack/nvim-spectre'
         Plug 'kyazdani42/nvim-web-devicons'
         Plug 'lewis6991/gitsigns.nvim'
     endif
-
 call plug#end()
