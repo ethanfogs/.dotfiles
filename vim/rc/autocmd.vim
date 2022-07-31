@@ -25,7 +25,7 @@ let ft_source_map = #{
 
 augroup on_config_write
     autocmd!
-    autocmd BufWritePost **/.config/**.vim source %
+    autocmd BufWritePost **/.{config,dotfiles}/**/*vim/**.{vim,lua} source <afile>
 augroup END
 
 augroup onShellRcWrite
@@ -35,5 +35,12 @@ augroup END
 
 augroup onTmuxConfWrite
     autocmd!
-    autocmd BufWritePost **/.config/tmux/*.conf silent !tmux source-file <afile>
+    autocmd BufWritePost **/tmux/*.conf 
+                \ silent !tmux source-file $HOME/.config/tmux/tmux.conf
+augroup END
+
+augroup onShellScriptFileEnter
+    autocmd!
+    autocmd FileType bash,zsh,sh 
+        \ let &l:makeprg = executable(expand('<afile>:p')) ? './%' : '.\ ./%'
 augroup END
