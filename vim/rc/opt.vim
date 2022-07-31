@@ -49,14 +49,18 @@ let &eadirection = 'ver'
 let &splitbelow  = v:true
 let &splitright  = v:true
 
-let &wrap       = v:false
-let &foldmethod = 'indent'
+let &wrap        = v:false
 
 let &wildmenu    = v:true
 let &wildmode    = 'longest:full,full'
 let &wildoptions = 'pum'
 
 if has('termguicolors')
-    "not in nvim-exclusive block bc some later versions of vim have this opt
     let &termguicolors = v:true
+endif
+
+if (exists('*nvim_treesitter#foldexpr'))
+    let [ &foldmethod, &foldexpr ] = [ "expr", "nvim_treesitter#foldexpr()"]
+else
+    let &foldmethod = 'indent'
 endif
