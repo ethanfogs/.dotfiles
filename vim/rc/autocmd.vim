@@ -36,7 +36,16 @@ augroup onShellScriptFileEnter
         \ let &l:makeprg = executable(expand('<afile>:p')) ? './%' : '.\ ./%'
 augroup END
 
-augroup onTermExit
-    autocmd!
-    autocmd TermClose term://* bdelete
-augroup END
+if (exists('#TermClose'))
+    augroup onTermExit
+        autocmd!
+        autocmd TermClose term://* bdelete
+    augroup END
+endif
+
+if (&runtimepath =~ ".*/nvim-lspconfig")
+    augroup FormatOnBufWrite
+        autocmd!
+        autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+    augroup END
+endif
