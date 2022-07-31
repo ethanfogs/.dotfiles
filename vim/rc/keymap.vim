@@ -1,3 +1,4 @@
+"GLOBAL `SET KEYMAP` WRAPPER ------------------------------------------- {{{ 1
 let keymap = { 'default_opts': [ 'noremap', 'silent', ] }
 
 function keymap.set(mode, lhs, rhs, opts=self['default_opts']) dict
@@ -31,9 +32,9 @@ function keymap.set(mode, lhs, rhs, opts=self['default_opts']) dict
                 \ : l:cmd
 
     execute([l:cmd, a:lhs, l:rhs]->join(' '))
-endfunction
+endfunction "}}} 1
 
-"NORMAL-MODE -----------------------------------------------------------------
+"NORMAL-MODE ----------------------------------------------------------- {{{ 1
 call keymap.set('n', 'Y', 'yg$')
 call keymap.set('n', 'V', 'vg$')
 call keymap.set('n', 'U', '<C-r>')
@@ -43,9 +44,13 @@ call keymap.set('n', '<Space>t', exists(":ToggleTerm") ? 'ToggleTerm' : 'term', 
 call keymap.set('n', '<Space>T', 'vsplit\|terminal', ['defaults', 'command'])
 
 call keymap.set('n', '<Space>w', 'write', ['defaults', 'command', ])
-" call keymap.set('', '<Space>m', 'make', ['defaults', 'command', ])
 
-"[NVO]-MODE ------------------------------------------------------------------
+let s:makeprg_expr = 'if (!empty(&l:makeprg)) \| make \| endif'
+call keymap.set('', '<Space>m', s:makeprg_expr, ['defaults', 'command', ])
+
+"}}} 1
+
+"[NVO]-MODE ------------------------------------------------------------- {{{ 1
 call keymap.set('', 'H',  'g0')
 call keymap.set('', 'L',  'g$')
 call keymap.set('', 'S',  '%')
@@ -78,8 +83,9 @@ call keymap.set('', '<Tab>n', 'tabnew',      ['defaults', 'command'])
 call keymap.set('', '<Tab>j', 'tabprevious', ['defaults', 'command'])
 call keymap.set('', '<Tab>k', 'tabnext',     ['defaults', 'command'])
 call keymap.set('', '<Tab>x', 'tabclose',    ['defaults', 'command'])
+"}}} 1
 
-"OP-PENDING-MODE::MOTION ALIASES (`i` => `in`, `a` => `around`)
+"OP-PENDING-MODE::MOTION ALIASES (`i` => `in`, `a` => `around`) --------- {{{ 1
 call keymap.set('o', 'ic', 'i{')
 call keymap.set('o', 'ac', 'a{')
 call keymap.set('o', 'ia', 'i<')
@@ -87,16 +93,21 @@ call keymap.set('o', 'aa', 'a<')
 call keymap.set('o', 'iq', 'i"')
 call keymap.set('o', 'aq', 'a"')
 
-"[IC]-MODE ------------------------------------------------------------------- 
+"}}} 1
+
+"[IC]-MODE -------------------------------------------------------------- {{{ 1
 call keymap.set('!', 'jj', '<C-c>')
 call keymap.set('!', '<',  '<><Left>')
 call keymap.set('!', '<>', '<>')
+"}}} 1
 
-"TERMINAL-MODE ---------------------------------------------------------------
+"TERMINAL-MODE ---------------------------------------------------------- {{{ 1
 call keymap.set('t', '<Esc>', '<C-BSlash><C-n>')
 call keymap.set('t', 'jj',    '<C-BSlash><C-n>', [ 'noremap' ])
 
-"PLUGIN:FILE-BROWSER ---------------------------------------------------------
+"}}} 1
+
+"PLUGIN:FILE-BROWSER --------------------------------------------------- {{{ 1
 
 if (exists(':NvimTreeToggle'))
     let s:file_browser = 'NvimTreeToggle'
@@ -107,26 +118,34 @@ else
 endif
 
 call keymap.set('', '<Space>e',   s:file_browser, ['defaults', 'command'])
+"}}} 1
 
-"PLUGIN:GIT ------------------------------------------------------------------
+"PLUGIN:GIT ------------------------------------------------------------- {{{ 1
 
 call keymap.set('', 'gs', 'Git', [ 'defaults', 'command' ])
 
-"NVIM-EXCLUSIVE KEYMAPS -------------------------------------------------------
+"}}} 1
+
+"NVIM-EXCLUSIVE KEYMAPS ------------------------------------------------ {{{ 1
 
 if (v:progname == 'vim') | finish | endif
 
+"1 }}}
+
 lua << EOF
+-- {{{ 1
 
 local set_keymap = vim.api.nvim_set_keymap
-set_keymap('', 's', '<Nop>', {}) -- to prevent invoking substitution operations
 
--- PLUGIN:TELESCOPE -------------------------------------------------------------
+-- PLUGIN:TELESCOPE ---------------------------------------------------- {{{ 2
 telescope         = require('telescope')
 telescope.builtin = require('telescope.builtin')
 telescope.utils   = require('telescope.utils')
 telescope.actions = require('telescope.actions')
 
+-- }}} 2
+
+set_keymap('', 's', '<Nop>', {}) -- to prevent invoking substitution operations {{{ 2
 telescope.keymaps = {
     ['a'] = 'autocommands()',
     ['b'] = 'buffers()',
@@ -163,10 +182,12 @@ telescope.keymaps = {
     ["/"] = 'search_history()',
     ["<Space>"] = 'resume()',
 }
+--}}}2
 
 for lhs, rhs in pairs(telescope.keymaps) do
     local rhs = "<Cmd>lua require('telescope.builtin')." .. rhs .. "<CR>"
     set_keymap('n', 's' .. lhs, rhs, { noremap = true, silent = true })
 end
-
+-- 1}}}
 EOF
+" vim: foldmethod=marker:
