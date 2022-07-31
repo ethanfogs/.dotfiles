@@ -1,10 +1,11 @@
 local lsp = {
-    config = require("lspconfig"),
+    config    = require("lspconfig"),
     signature = require("lsp_signature"),
     handlers  = { capabilities = vim.lsp.protocol.make_client_capabilities() },
+    installer = require("nvim-lsp-installer")
 }
 
-require("nvim-lsp-installer").setup()
+lsp.installer.setup()
 
 lsp.signature.config = {
     debug = false,
@@ -46,7 +47,7 @@ function lsp.handlers.on_attach(client, bufnr)
     end
 
     buf_set_n_keymap(bufnr, "gC", "lsp.buf.code_action()")
-    buf_set_n_keymap(bufnr, "K",  "lsp.buf.hover()")
+    buf_set_n_keymap(bufnr, "K", "lsp.buf.hover()")
     buf_set_n_keymap(bufnr, "gD", "lsp.buf.declaration()")
     buf_set_n_keymap(bufnr, "gR", "lsp.buf.rename()")
     buf_set_n_keymap(bufnr, "gS", "lsp.buf.signature_help()")
@@ -56,9 +57,6 @@ function lsp.handlers.on_attach(client, bufnr)
     buf_set_n_keymap(bufnr, "gl", "lsp.diagnostic.goto_next({ border = 'rounded' })")
     buf_set_n_keymap(bufnr, "go", "diagnostic.open_float({ border = 'rounded' })")
     buf_set_n_keymap(bufnr, "gr", "lsp.buf.references()")
-
-    local create_user_cmd = vim.api.nvim_create_user_command
-    create_user_cmd("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
 end
 
 lsp.signs = {
@@ -101,13 +99,19 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 })
 
 lsp.handlers.capabilities = require("cmp_nvim_lsp")
-                                .update_capabilities(lsp.handlers.capabilities)
+    .update_capabilities(lsp.handlers.capabilities)
 
 lsp.servers = {
     'bashls', 'cssls', 'emmet_ls', 'eslint', 'golangci_lint_ls', 'gopls', 'html',
     'jsonls', 'jsonnet_ls', 'marksman', 'pylsp', 'pyright', 'quick_lint_js',
     'rust_analyzer', 'sqlls', 'sumneko_lua', 'tsserver', 'vimls'
 }
+
+for _, language_server in pairs(lsp.servers) do
+    if (not lsp.installer.get_server(language_server)) then
+        lsp.installer.install(language_server)
+    end
+end
 
 for _, ls in pairs(lsp.servers) do
     local import_status, opts = pcall(require, "plugin.lsp.settings." .. ls)
