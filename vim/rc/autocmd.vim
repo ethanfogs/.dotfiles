@@ -27,11 +27,16 @@ augroup END
 augroup onTmuxConfWrite
     autocmd!
     autocmd BufWritePost **/tmux/*.conf 
-                \ silent !tmux source-file $HOME/.config/tmux/tmux.conf
+                \ silent !tmux source-file **/tmux/*.conf
 augroup END
 
 augroup onShellScriptFileEnter
     autocmd!
     autocmd FileType bash,zsh,sh 
         \ let &l:makeprg = executable(expand('<afile>:p')) ? './%' : '.\ ./%'
+augroup END
+
+augroup onTermExit
+    autocmd!
+    autocmd TermClose term://* bdelete
 augroup END
