@@ -11,6 +11,8 @@ setopt nobeep
 setopt chaselinks #go to actual symlink dir rather in cd
 setopt incappendhistory
 
+bindkey "^K" vi-cmd-mode
+
 #------------------------------------------------------------------------------
 
 # ignore completions for macOS default $HOME directories that I never use
