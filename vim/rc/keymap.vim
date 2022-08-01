@@ -35,13 +35,14 @@ call keymap.set('n', 'V', 'vg$')
 call keymap.set('n', 'U', '<C-r>')
 
 call keymap.set('', '<Space>', '<C-w>')
+
+call keymap.set('n', '<BS>', '<C-o>')
+call keymap.set('n', '<S-BS>', '<C-i>')
+
 call keymap.set('n', '<Space>t', exists(":ToggleTerm") ? 'ToggleTerm' : 'term', ['defaults', 'command'])
 call keymap.set('n', '<Space>T', 'vsplit\|terminal', ['defaults', 'command'])
-
 call keymap.set('n', '<Space>w', 'write', ['defaults', 'command', ])
-
-let s:makeprg_expr = 'if (!empty(&l:makeprg)) \| make \| endif'
-call keymap.set('', '<Space>m', s:makeprg_expr, ['defaults', 'command', ])
+call keymap.set('', '<Space>m', 'if (!empty(&l:makeprg)) \| make \| endif', ['defaults', 'command', ])
 
 "[NVO]-MODE ---------------------------------------------------------------------
 call keymap.set('', 'H',  'g0')
