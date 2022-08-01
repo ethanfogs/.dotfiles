@@ -8,3 +8,4 @@ export XDG_CACHE_HOME=$HOME/.cache
 
 export EDITOR=$(command -v nvim || command -v vim)
 export BROWSER='firefox'
+[ $(command -v vimr) ] && export VISUAL='vimr'
