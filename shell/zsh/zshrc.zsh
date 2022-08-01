@@ -2,39 +2,43 @@ source $HOME/.config/shell/shrc.sh
 
 #------------------------------------------------------------------------------
 
-setopt dotglob extendedglob nomatch menucomplete
-unsetopt BEEP
+setopt dotglob
+setopt extendedglob
+setopt menucomplete
+setopt nomatch
+
+setopt nobeep
+setopt chaselinks #go to actual symlink dir rather in cd
+setopt incappendhistory
 
 #------------------------------------------------------------------------------
 
-if [ $(uname) = "Darwin" ]; then
-    FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
-    # ignore completions for macOS default $HOME directories that I never use
-    FIGNORE="sers:cache:ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
-    [ -d $XDG_DATA_HOME/zsh-autosuggestions ] \
-        && source $XDG_DATA_HOME/zsh-autosuggestions/zsh-autosuggestions.zsh
-fi
+# ignore completions for macOS default $HOME directories that I never use
+FIGNORE="sers:cache:ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
 
-# OH-MY-ZSH CONFIG ------------------------------------------------------------
+[[ $(command -v brew) ]] && FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
+
+# ZSH PLUGINS ------------------------------------------------------------
+
+zsh_plugins=(
+    # zsh-autocomplete #buggy when zsh-autosuggestions is also applied
+    zsh-autosuggestions
+)
+
+
+for plugin in $zsh_plugins; do
+    [ -d $XDG_DATA_HOME/$plugin ] && . "$XDG_DATA_HOME/$plugin/$plugin.zsh"
+done
+
+# OH-MY-ZSH CONFIG -----------------------------------------------------------
 
 autoload -Uz compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 
-ZSH=$XDG_DATA_HOME/zsh/plugins/oh-my-zsh
-[ ! -d $ZSH ] && return
+[ ! -d $XDG_DATA_HOME/oh-my-zsh ] && exit
 
-export ZSH
+export ZSH=$XDG_DATA_HOME/oh-my-zsh
 
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 ZSH_THEME="agnoster"
-plugins=(vi-mode)
+plugins=(vi-mode fzf)
 source $ZSH/oh-my-zsh.sh
-
-zstyle ':completion:*' menu select
-zmodload zsh/complist
-
-_comp_opts=(globdots)
-
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
