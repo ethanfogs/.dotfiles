@@ -38,7 +38,7 @@ autoload -Uz compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 export ZSH=$XDG_DATA_HOME/oh-my-zsh
 if [ ! -d $ZSH ]; then
     mkdir -p ~/.local/share
-    git clone https://github.com/ohmyzsh/ohmyzsh $ZSH
+    git clone --quiet https://github.com/ohmyzsh/ohmyzsh $ZSH
 fi
 
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
