@@ -27,7 +27,6 @@ zsh_plugins=(
     zsh-autosuggestions
 )
 
-
 for plugin in $zsh_plugins; do
     [ -d $XDG_DATA_HOME/$plugin ] && . "$XDG_DATA_HOME/$plugin/$plugin.zsh"
 done
@@ -36,11 +35,14 @@ done
 
 autoload -Uz compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 
-[ ! -d $XDG_DATA_HOME/oh-my-zsh ] && return
-
 export ZSH=$XDG_DATA_HOME/oh-my-zsh
+if [ ! -d $ZSH ]; then
+    mkdir -p ~/.local/share
+    git clone https://github.com/ohmyzsh/ohmyzsh $ZSH
+fi
 
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 ZSH_THEME="agnoster"
-plugins=(vi-mode fzf)
+plugins=(vi-mode); [ $(command -v fzf) ] &&  plugins+=(fzf)
+
 source $ZSH/oh-my-zsh.sh
