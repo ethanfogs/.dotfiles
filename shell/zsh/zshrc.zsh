@@ -48,7 +48,9 @@ ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
 
 ZSH_THEME="agnoster"
 
-plugins=(vi-mode); [ $(command -v fzf) ] && plugins+=(fzf)
+plugins=(vi-mode)
+[ $(command -v fzf) ] && plugins+=(fzf)
+[ $(command -v aws) ] && plugins+=(aws)
 
 source $ZSH/oh-my-zsh.sh
 
