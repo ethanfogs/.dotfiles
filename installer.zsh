@@ -1,6 +1,8 @@
 #!/bin/bash
 
-mkdir -p ~/.{config,cache,local/{bin,share,state}}
+mkdir -p ~/.{config,cache,local/{bin,share,state,env}}
+
+chmod 700 ~/.local/env
 
 [[ ! $PATH =~ ".*\.local/bin.*" ]] && path+=( $HOME/.local/{s,}bin )
 
