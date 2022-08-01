@@ -39,7 +39,7 @@ call keymap.set('', '<Space>', '<C-w>')
 call keymap.set('n', '<BS>', '<C-o>')
 call keymap.set('n', '<S-BS>', '<C-i>')
 
-call keymap.set('n', '<Space>t', exists(":ToggleTerm") ? 'ToggleTerm' : 'term', ['defaults', 'command'])
+call keymap.set('n', '<Space>t', (&runtimepath =~ ".*toggleterm") ? 'ToggleTerm' : 'term', ['defaults', 'command'])
 call keymap.set('n', '<Space>T', 'vsplit\|terminal', ['defaults', 'command'])
 call keymap.set('n', '<Space>w', 'write', ['defaults', 'command', ])
 call keymap.set('', '<Space>m', 'if (!empty(&l:makeprg)) \| make \| endif', ['defaults', 'command', ])
