@@ -27,7 +27,6 @@ zsh_plugins=(
     zsh-autosuggestions
 )
 
-
 for plugin in $zsh_plugins; do
     [ -d $XDG_DATA_HOME/$plugin ] && . "$XDG_DATA_HOME/$plugin/$plugin.zsh"
 done
