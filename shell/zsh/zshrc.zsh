@@ -34,7 +34,7 @@ done
 
 autoload -Uz compinit && compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 
-[ ! -d $XDG_DATA_HOME/oh-my-zsh ] && exit
+[ ! -d $XDG_DATA_HOME/oh-my-zsh ] && return
 
 export ZSH=$XDG_DATA_HOME/oh-my-zsh
 
