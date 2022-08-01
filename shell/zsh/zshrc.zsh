@@ -9,7 +9,6 @@ setopt nomatch
 
 setopt nobeep
 setopt chaselinks #go to actual symlink dir rather in cd
-#setopt incappendhistory
 
 bindkey "^K" vi-cmd-mode
 
@@ -19,19 +18,20 @@ bindkey "^K" vi-cmd-mode
 FIGNORE="sers:cache:ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
 
 if [[ $(command -v brew) ]]; then
-    export HOMEBREW_CASK_OPTS="--no-quarantine --appdir=~/Applications --force"
+    [ ! -d ~/Applications ] && mkdir -p ~/Applications
+    export HOMEBREW_CASK_OPTS="-f --no-quarantine --appdir=~/Applications"
     FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
 fi
 
 # ZSH PLUGINS ------------------------------------------------------------
 
 zsh_plugins=(
-    # zsh-autocomplete #buggy when zsh-autosuggestions is also applied
     zsh-autosuggestions
+    # zsh-autocomplete      # buggy when zsh-autosuggestions is also applied
 )
 
 for plugin in $zsh_plugins; do
-    [ -d $XDG_DATA_HOME/$plugin ] && . "$XDG_DATA_HOME/$plugin/$plugin.zsh"
+    [ -d $XDG_DATA_HOME/$plugin ] && source "$XDG_DATA_HOME/$plugin/$plugin.zsh"
 done
 
 # OH-MY-ZSH CONFIG -----------------------------------------------------------
@@ -45,7 +45,12 @@ if [ ! -d $ZSH ]; then
 fi
 
 ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+
 ZSH_THEME="agnoster"
-plugins=(vi-mode); [ $(command -v fzf) ] &&  plugins+=(fzf)
+
+plugins=(vi-mode); [ $(command -v fzf) ] && plugins+=(fzf)
 
 source $ZSH/oh-my-zsh.sh
+
+# delete this completion pattern - colides with some that oh-my-zsh imports 🙄
+[ $(command -v mcd) ] && compdef -d mcd
