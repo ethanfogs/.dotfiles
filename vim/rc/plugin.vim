@@ -20,20 +20,19 @@ call plug#begin(s:plug_home)
     Plug 'tpope/vim-surround'
     Plug 'ryanoasis/vim-devicons'
 
+    Plug 'chase/focuspoint-vim'
+    Plug 'KKPMW/distilled-vim'
+    Plug 'andreypopp/vim-colors-plain'
+    Plug 'ewilazarus/preto'
+    Plug 'kadekillary/skull-vim'
+
     if (has('termguicolors'))
         Plug 'chrisbra/Colorizer'
-        "
         "TODO: resolve TERM issue for vanilla vim - since these colorschemes dont
         "       render properly, even with vim versions with &termguicolor support.
         Plug 'lifepillar/vim-solarized8'
-        Plug 'chase/focuspoint-vim'
         Plug 'mkarmona/materialbox'
         Plug 'gregsexton/Atom'
-        Plug 'andreypopp/vim-colors-plain'
-        Plug 'KKPMW/distilled-vim'
-        Plug 'widatama/vim-phoenix'
-        Plug 'ewilazarus/preto'
-        Plug 'kadekillary/skull-vim'
     endif
 
     if (v:progname == 'vim')
