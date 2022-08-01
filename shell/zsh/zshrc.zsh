@@ -9,7 +9,7 @@ setopt nomatch
 
 setopt nobeep
 setopt chaselinks #go to actual symlink dir rather in cd
-setopt incappendhistory
+#setopt incappendhistory
 
 bindkey "^K" vi-cmd-mode
 
@@ -18,7 +18,10 @@ bindkey "^K" vi-cmd-mode
 # ignore completions for macOS default $HOME directories that I never use
 FIGNORE="sers:cache:ibrary:ublic:ictures:usic:ovies:esktop:ocuments:Trash"
 
-[[ $(command -v brew) ]] && FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
+if [[ $(command -v brew) ]]; then
+    export HOMEBREW_CASK_OPTS="--no-quarantine --appdir=~/Applications --force"
+    FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
+fi
 
 # ZSH PLUGINS ------------------------------------------------------------
 
