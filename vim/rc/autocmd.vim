@@ -36,7 +36,7 @@ augroup onShellScriptFileEnter
         \ let &l:makeprg = executable(expand('<afile>:p')) ? './%' : '.\ ./%'
 augroup END
 
-if (exists('#TermClose'))
+if (exists('##TermClose'))
     augroup onTermExit
         autocmd!
         autocmd TermClose term://* bdelete
