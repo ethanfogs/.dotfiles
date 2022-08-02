@@ -102,8 +102,8 @@ lsp.handlers.capabilities = require("cmp_nvim_lsp")
     .update_capabilities(lsp.handlers.capabilities)
 
 lsp.servers = {
-    'bashls', 'cssls', 'emmet_ls', 'eslint', 'golangci_lint_ls', 'gopls', 'html',
-    'jsonls', 'jsonnet_ls', 'marksman', 'pylsp', 'pyright', 'quick_lint_js',
+    'bashls', 'cssls', 'golangci_lint_ls', 'gopls', 'html',
+    'jsonls', 'jsonnet_ls', 'marksman', 'pylsp', 'pyright',
     'rust_analyzer', 'sqlls', 'sumneko_lua', 'tsserver', 'vimls'
 }
 
