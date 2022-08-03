@@ -12,11 +12,11 @@ fi
 completions+=(tmux fzf fd httpie ripgrep ag)
 completions+=(node npm yarn rust aws docker{,-compose,-machine} mongocli)
 for completion in $completions; do
-    [ $(command -v $completion) ] && plugins+=($completion)
-done && completions= && completion=
+    which $completion >/dev/null && plugins+=($completion)
+done; unset completions && unset completion
 
-[ $(command -v go) ] && plugins+=(golang gb)
-[ $(command -v bw) ] && plugins+=(rbw)
+which go >/dev/null && plugins+=(golang gb)
+which bw >/dev/null && plugins+=(rbw)
 
 ZSH_COMPDUMP=~/.cache/zsh/zcompdump-$SHORT_HOST-$ZSH_VERSION
 autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
@@ -30,7 +30,7 @@ plugins+=(vi-mode colored-man-pages gnu-utils compleat gitfast) #essentials
 
 ZSH_THEME="agnoster"
 
-source $ZSH/oh-my-zsh.sh && plugins=
+source $ZSH/oh-my-zsh.sh; unset plugins
 
-# delete this completion pattern - it colides with some that ohmyzsh imports
-[ $(command -v mcd) ] && compdef -d mcd
+#delete this completion pattern - it colides with some that ohmyzsh imports
+which mcd >/dev/null && compdef -d mcd
