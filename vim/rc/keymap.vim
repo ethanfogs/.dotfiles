@@ -39,10 +39,9 @@ call keymap.set('', '<Space>', '<C-w>')
 call keymap.set('n', '<BS>', '<C-o>')
 call keymap.set('n', '<S-BS>', '<C-i>')
 
-call keymap.set('n', '<Space>t', (&runtimepath =~ ".*toggleterm") ? 'ToggleTerm' : 'term', ['defaults', 'command'])
+call keymap.set('n', '<Space>t', (&rtp =~ ".*toggleterm") ? 'ToggleTerm' : 'term', ['defaults', 'command'])
 call keymap.set('n', '<Space>T', 'vsplit\|terminal', ['defaults', 'command'])
 call keymap.set('n', '<Space>w', 'write', ['defaults', 'command', ])
-call keymap.set('', '<Space>m', 'if (!empty(&l:makeprg)) \| make \| endif', ['defaults', 'command', ])
 
 "[NVO]-MODE ---------------------------------------------------------------------
 call keymap.set('', 'H',  'g0')
@@ -62,7 +61,6 @@ call keymap.set('', '<Bar>',    '<C-w>4<', [ 'defaults', 'nowait'])
 call keymap.set('', '<BSlash>', '<C-w>4>', [ 'defaults', 'nowait'])
 
 "[NVO]-MODE::VIM-COMMAND ALIASES
-call keymap.set('', '<Space>;', '@:')
 call keymap.set('', '<Space>/', 'let @/=""', ['defaults', 'command'])
 
 "[NVO]-MODE::FOLDING-OPERATION ALIASES
