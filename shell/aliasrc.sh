@@ -43,9 +43,14 @@ alias gP="git pull"
 #------------------------------------------------------------------------------
 
 alias su='/usr/bin/su -l'
-
-alias sysadminctl='sudo /usr/sbin/sysadminctl'
 alias reboot='sudo /sbin/reboot'
+
+if [ $(uname) = "Darwin" ]; then
+    alias sysadminctl='sudo /usr/sbin/sysadminctl'
+elif [ $(uname) = "Linux" ]; then
+    alias apt='sudo apt -y'
+    alias apt-get='sudo apt-get -y'
+fi
 
 #------------------------------------------------------------------------------
 # vim: filetype=bash:
