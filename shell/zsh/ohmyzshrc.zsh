@@ -12,8 +12,9 @@ fi
 completions+=(tmux fzf fd httpie ripgrep ag)
 completions+=(node npm yarn rust aws docker{,-compose,-machine} mongocli)
 for completion in $completions; do
-    [ $(command -v $completion) ] && plugins+=($completion)
-done && completions= && completion=
+    which $completion > /dev/null && plugins+=($completion)
+done;
+unset completions && unset completion
 
 [ $(command -v go) ] && plugins+=(golang gb)
 [ $(command -v bw) ] && plugins+=(rbw)

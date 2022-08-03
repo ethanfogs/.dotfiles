@@ -14,7 +14,8 @@ for plugin in $plugins; do
 
     source ~/.local/share/${plugin/*\/}/${plugin/*\/}.zsh 2> /dev/null \
         || source ~/.local/share/${plugin/*\/}/${plugin/*\/}.plugin.zsh
-done && zsh_plugins= && plugin=
+done
+unset plugins && unset plugin
 
 if [ ! $(command -v brew) ] && [ $(uname) = "Darwin" ]; then
     git clone -q https://github.com/Homebrew/brew ~/.local/homebrew
