@@ -24,3 +24,5 @@ for link in ${links[@]}; do
     ln -sfv $link $HOME/.$ln_name
     [ -h $HOME/.$ln_name/$ln_name ] && unlink $HOME/.$ln_name/$ln_name
 done
+
+exec zsh
