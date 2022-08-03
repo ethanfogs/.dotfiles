@@ -4,7 +4,8 @@ source $HOME/.vim/rc/keymap.vim
 source $HOME/.vim/rc/autocmd.vim
 
 if (v:progname == "vim")
-    colorscheme industry
+    let s:favColorSchemes = [ 'focuspoint', 'plain', 'industry' ]
+    execute 'colorscheme ' . s:favColorSchemes[rand() % len(s:favColorSchemes)]
     finish
 endif
 
@@ -21,6 +22,8 @@ require("plugin.nvim-tree")
 require("plugin.statuslines")
 require("plugin.indentline")
 require("plugin.toggleterm")
+
+function echo(i) print((type(i) == "table") and vim.inspect(i) or i) end
 
 -------------------------------------------------------------------------------
 
