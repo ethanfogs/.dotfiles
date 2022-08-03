@@ -25,4 +25,10 @@ for link in ${links[@]}; do
     [ -h $HOME/.$ln_name/$ln_name ] && unlink $HOME/.$ln_name/$ln_name
 done
 
-reset
+if [ ${SHELL/*\/} = "zsh" ]; then
+    source ~/.zshenv
+    source ~/.zshrc
+elif [ ${SHELL/*\/} = "bash" ]; then
+    source ~/.bash_profile
+    source ~/.bashrc
+fi
