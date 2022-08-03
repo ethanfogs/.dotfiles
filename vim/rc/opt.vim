@@ -44,8 +44,6 @@ let &scroll      = 5
 let &scrolloff   = 7
 let &showmode    = v:false
 
-let &equalalways = v:true
-let &eadirection = 'ver'
 let &splitbelow  = v:true
 let &splitright  = v:true
 
