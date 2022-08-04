@@ -2,7 +2,8 @@
 let keymap = { 'default_opts': ['noremap', 'silent'] }
 
 function keymap.set(mode, lhs, rhs, ...) dict
-    let opts = flatten([get(a:, 1, self.default_opts)])
+    let opts = get(a:, 1, self.default_opts)
+    let opts = type(opts) == type('') ? [opts] : opts
     let opts = opts + (count(opts, 'defaults') ? self.default_opts : [])
 
     let remap_cmd = count(opts, 'noremap') ? 'noremap' : 'map'
