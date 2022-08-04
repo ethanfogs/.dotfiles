@@ -1,25 +1,24 @@
 # OHMYZSH CONFIG -------------------------------------------------------------
 
-ZSH=~/.local/share/ohmyzsh
-
+export ZSH=~/.local/share/oh-my-zsh
 if [ ! -d $ZSH ]; then
-    git clone --quiet https://github.com/ohmyzsh/ohmyzsh $ZSH
+    git clone -q https://github.com/ohmyzsh/ohmyzsh $ZSH
     source $0
 fi
 
 # COMPLETIONS ----------------------------------------------------------------
 
-completions+=(tmux fzf fd httpie ripgrep ag)
-completions+=(node npm yarn rust aws docker{,-compose,-machine} mongocli)
-for completion in $completions; do
-    which $completion >/dev/null && plugins+=($completion)
-done; unset completions && unset completion
+omz_completions+=(tmux fzf fd httpie ripgrep ag)
+omz_ompletions+=(node npm yarn rust aws docker{,-compose,-machine} mongocli)
+for completion in $omz_completions; do
+  which $completion >/dev/null && plugins+=($completion)
+done; unset omz_completions && unset completion
 
 which go >/dev/null && plugins+=(golang gb)
 which bw >/dev/null && plugins+=(rbw)
 
-ZSH_COMPDUMP=~/.cache/zsh/zcompdump-$SHORT_HOST-$ZSH_VERSION
-autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
+ZSH_COMPDUMP=~/.cache/zsh/zcompdump
+autoload -Uz compinit && compinit -d $ZSH_COMPDUMP
 
 # PLUGINS --------------------------------------------------------------------
 
@@ -31,6 +30,3 @@ plugins+=(vi-mode colored-man-pages gnu-utils compleat gitfast) #essentials
 ZSH_THEME="agnoster"
 
 source $ZSH/oh-my-zsh.sh; unset plugins
-
-#delete this completion pattern - it colides with some that ohmyzsh imports
-which mcd >/dev/null && compdef -d mcd

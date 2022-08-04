@@ -1,7 +1,7 @@
 # FILE-SYSTEM - READING -------------------------------------------------------
 
-[[ $(command -v bat) ]]  && alias cat='bat'
-[[ $(command -v tree) ]] && alias tree='tree -C'
+which bat  >/dev/null && alias cat='bat'
+which tree >/dev/null && alias tree='tree -C'
 
 # FILE-SYSTEM - WRITING -------------------------------------------------------
 
@@ -38,7 +38,7 @@ alias gP="git pull"
 
 #------------------------------------------------------------------------------
 
-[[ $(command -v python3) ]] && alias python='python3'
+which python3 >/dev/null && alias python='python3'
 
 #------------------------------------------------------------------------------
 

@@ -1,11 +1,10 @@
 mkdir -p ~/.{config,cache,local/{bin,share,state,env}}
+chmod 700 ~/.local/env 2> /dev/null || rm -rf ~/.local/env
 
-chmod 700 ~/.local/env
+echo $PATH | grep $HOME/.local/bin || PATH="$PATH:$HOME/.local/sbin:$HOME/.local/bin"
 
-[[ ! $PATH =~ ".*\.local/bin.*" ]] && path+=( $HOME/.local/{s,}bin )
-
-for dir in $PWD/*; do
-    [[ ! $dir =~ ".*\.git.*" ]] && ln -sfv $dir $HOME/.config/$(basename $dir);
+for dir in $(ls); do
+    ln -sfv $dir $HOME/.config/$(basename $dir);
 done
 
 links=(
