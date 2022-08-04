@@ -1,8 +1,6 @@
 # TMUX ON SHELL START-UP ------------------------------------------------------
 
-if which tmux >/dev/null && [ -z $TMUX ] && [ -z $SSH_CLIENT ]; then
-  exec tmux
-fi
+which tmux >/dev/null && [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ] && exec tmux
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
