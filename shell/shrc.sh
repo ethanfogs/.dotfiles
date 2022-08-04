@@ -10,7 +10,7 @@ source $HOME/.config/shell/aliasrc.sh
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
 
-# export SHARE_HISTORY
+export SHARE_HISTORY
 export HIST_VERIFY
 export HISTFILE="$HOME/.local/share/${SHELL/*\//}/${SHELL/*\//}_history"
 

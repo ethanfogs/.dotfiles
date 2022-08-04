@@ -1,5 +1,4 @@
-echo $PATH | grep $HOME/.local/bin || path=( {/usr/,~/.}local/{s,}bin $path )
-export path
+echo $PATH | grep $HOME/.local/bin >/dev/null || path+=({/usr/,~/.}local/{s,}bin)
 
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_BIN_HOME=$HOME/.local/bin
@@ -10,5 +9,4 @@ export XDG_CACHE_HOME=$HOME/.cache
 EDITOR=/usr/bin/vim && which nvim >/dev/null && EDITOR=nvim
 export EDITOR
 export BROWSER='firefox'
-
 which vimr >/dev/null && export VISUAL='vimr'

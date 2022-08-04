@@ -1,17 +1,16 @@
-augroup on_config_write
+augroup onVimrcWrite
     autocmd!
     autocmd BufWritePost $HOME/*{config,dotfiles}/**/*vim/**.{vim,lua} source %
 augroup END
 
 augroup onShellRcWrite
     autocmd!
-    autocmd BufWritePost **/.config/shell/**.*sh silent !source %
+    autocmd BufWritePost **/*{config,dotfiles}/shell/**.*sh silent !source %
 augroup END
 
 augroup onTmuxConfWrite
     autocmd!
-    autocmd BufWritePost **/tmux/*.conf 
-                \ silent !tmux source-file %
+    autocmd BufWritePost **/*{config,dotfiles}/*.conf silent !tmux source-file %
 augroup END
 
 if (exists('##TermClose'))

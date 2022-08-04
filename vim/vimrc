@@ -3,9 +3,8 @@ source $HOME/.vim/rc/opt.vim
 source $HOME/.vim/rc/keymap.vim
 source $HOME/.vim/rc/autocmd.vim
 
-if (v:progname == "vim")
-    let s:favColorSchemes = [ 'focuspoint', 'plain', 'industry' ]
-    execute 'colorscheme ' . s:favColorSchemes[rand() % len(s:favColorSchemes)]
+if (v:progname == 'vim' || !isdirectory($VIMRUNTIME . '/lua'))
+    execute 'colorscheme ' . has('##focuspoint') ? 'focuspoint' : 'industry'
     finish
 endif
 

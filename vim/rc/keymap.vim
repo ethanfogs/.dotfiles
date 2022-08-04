@@ -1,49 +1,37 @@
 "GLOBAL `SET KEYMAP` WRAPPER ---------------------------------------------------
-let keymap = { 'default_opts': [ 'noremap', 'silent', ] }
+let keymap = { 'default_opts': ['noremap', 'silent'] }
 
-function keymap.set(mode, lhs, rhs, opts=self[ 'default_opts' ]) dict
-    let l:opts = count(a:opts, 'defaults')
-                \ ? a:opts + self.default_opts
-                \ : a:opts
+function keymap.set(mode, lhs, rhs, ...) dict
+    let opts = flatten([get(a:, 1, self.default_opts)])
+    let opts = opts + (count(opts, 'defaults') ? self.default_opts : [])
 
-    let l:cmd = count(l:opts, 'noremap') ? 'noremap' : 'map'
-    let l:cmd = (a:mode == "!") ? l:cmd . "!" : a:mode . l:cmd
+    let remap_cmd = count(opts, 'noremap') ? 'noremap' : 'map'
+    let remap_cmd = (a:mode == "!") ? remap_cmd . '!' :  a:mode . remap_cmd
 
-    let l:rhs = a:rhs
-    if(count(l:opts, 'lua'))
-        let l:rhs = 'lua ' . l:rhs
-        "add `command` to l:opts so the lua command can be wrapped in <Cmd><CR>
-        if !count(l:opts, 'command') | call add(l:opts, 'command') | endif
+    let [lhs, rhs] = [a:lhs, (count(a:rhs, 'lua') ? 'lua ' : '') . a:rhs]
+    if count(opts, 'command') || count(opts, 'lua')
+        let rhs = join(['<Cmd>', rhs, '<CR>'], '')
     endif
-
-    let l:rhs = count(l:opts, 'command') ? '<Cmd>' . l:rhs . '<CR>' : l:rhs
-
-    for l:opt in ['defaults', 'noremap', 'command', 'lua']
-        silent! call remove(l:opts, l:opt)
-    endfor
-
-    let l:cmd = len(l:opts) > 0
-                \ ? l:cmd .' '. keys(l:opts)->map('"<". v:val .">"')->join()
-                \ : l:cmd
-
-    execute([l:cmd, a:lhs, l:rhs]->join(' '))
+    call filter(opts, {_, opt -> count(['noremap','lua','command','defaults'], opt) == 0})
+    let opts = join(map(uniq(opts), {_,opt -> join(['<', opt, '>'], '')}),'')
+    execute (join([remap_cmd, opts, lhs, rhs]))
 endfunction
 
-"NORMAL-MODE -------------------------------------------------------------------
+"NORMAL-MODE ------------------------------------------------------------------
 call keymap.set('n', 'Y', 'yg$')
-call keymap.set('n', 'V', 'vg$')
 call keymap.set('n', 'U', '<C-r>')
-
-call keymap.set('', '<Space>', '<C-w>')
 
 call keymap.set('n', '<BS>', '<C-o>')
 call keymap.set('n', '<S-BS>', '<C-i>')
 
-call keymap.set('n', '<Space>t', (&rtp =~ ".*toggleterm") ? 'ToggleTerm' : 'term', ['defaults', 'command'])
+call keymap.set('', '<Space>', '<C-w>')
 call keymap.set('n', '<Space>T', 'vsplit\|terminal', ['defaults', 'command'])
-call keymap.set('n', '<Space>w', 'write', ['defaults', 'command', ])
+call keymap.set('n', '<Space>w', 'w', ['noremap', 'command', 'silent' ])
 
-"[NVO]-MODE ---------------------------------------------------------------------
+let s:term_cmd = (&runtimepath =~ ".*/toggleterm") ? 'ToggleTerm' : 'term'
+call keymap.set('n', '<Space>t', s:term_cmd, ['defaults', 'command'])
+
+"[NVO]-MODE -------------------------------------------------------------------
 call keymap.set('', 'H',  'g0')
 call keymap.set('', 'L',  'g$')
 call keymap.set('', 'S',  '%')
@@ -80,15 +68,13 @@ call keymap.set('', '<Tab>x', 'tabclose',    ['defaults', 'command'])
 "OP-PENDING-MODE::MOTION ALIASES (`i` => `in`, `a` => `around`) -----------------
 call keymap.set('o', 'ic', 'i{')
 call keymap.set('o', 'ac', 'a{')
-call keymap.set('o', 'ia', 'i<')
+call keymap.set('o', 'ia', "i<")
 call keymap.set('o', 'aa', 'a<')
 call keymap.set('o', 'iq', 'i"')
 call keymap.set('o', 'aq', 'a"')
 
 "[IC]-MODE ----------------------------------------------------------------------
 call keymap.set('!', 'jj', '<C-c>')
-call keymap.set('!', '<',  '<><Left>')
-call keymap.set('!', '<>', '<>')
 
 "TERMINAL-MODE ------------------------------------------------------------------
 call keymap.set('t', '<Esc>', '<C-BSlash><C-n>')
