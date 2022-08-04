@@ -19,18 +19,19 @@ endif
 
 "{ [UX, BACKEND] }------------------------------------------------------------
 
+let &autoread = 1"changes to a file are shown in real-time
+
 if(has('clipboard'))
-  let &clipboard = 'unnamed,unnamedplus'
+  let &clipboard = 'unnamed' . has('mac') ? ',unnamedplus' : ''
 endif
 
-let &autoread  = 1    "changes to a file are shown in real-time
 let &undofile  = 1
 let &undodir   = $HOME . '/.local/state/' . v:progname . '/undo'
 
 if(has('shada'))
-    let &shadafile = $HOME . '/.local/share/'   . v:progname . '/' . 'shada'
+  let &shadafile = $HOME . '/.local/share/'   . v:progname . '/' . 'shada'
 elseif(has('viminfo'))
-    let &viminfofile = $HOME . '/.local/share/' . v:progname . '/' . 'viminfo'
+  let &viminfofile = $HOME . '/.local/share/' . v:progname . '/' . 'viminfo'
 endif
 
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }------------------------------------------
@@ -39,7 +40,6 @@ let &path           = '.,**'
 let &ignorecase     = 1
 let &smartcase      = 1
 let &fileignorecase = 1
-
 "{ VISUAL-UI }-----------------------------------------------------------------
 
 let &incsearch   = 1
@@ -60,12 +60,8 @@ let &wildmenu    = 1
 let &wildmode    = 'longest:full,full'
 let &wildoptions = 'pum'
 
-if has('termguicolors')
-    let &termguicolors = 1
-endif
+let &foldmethod = 'indent'
 
-if (exists('*nvim_treesitter#foldexpr'))
-    let [ &foldmethod, &foldexpr ] = [ "expr", "nvim_treesitter#foldexpr()"]
-else
-    let &foldmethod = 'indent'
+if has('termguicolors')
+  let &termguicolors = 1
 endif

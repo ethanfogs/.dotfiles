@@ -21,4 +21,4 @@ function scratch_buf.new(...) dict
   call execute('new ' . self.dir . '/' . fname . (empty(ftype) ? '' : '.' . ftype))
 endfunction
 
-command! -nargs=* ScratchBuf call ScratchBuf.new(<f-args>)
+command! -nargs=* ScratchBuf call scratch_buf.new(<f-args>)

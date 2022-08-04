@@ -1,4 +1,9 @@
-vim.cmd('source $HOME/.vim/vimrc')
+require('rc.plugin')
+require('rc.opt')
+require('rc.keymap')
+require('rc.autocmd')
+
+-------------------------------------------------------------------------------
 
 require("plugin.icons")
 require("plugin.lsp") -- this sources lua/plugin/lsp/init.lua
@@ -11,6 +16,8 @@ require("plugin.nvim-tree")
 require("plugin.statuslines")
 require("plugin.indentline")
 require("plugin.toggleterm")
+
+-------------------------------------------------------------------------------
 
 function echo(i) print((type(i) == "table") and vim.inspect(i) or i) end
 

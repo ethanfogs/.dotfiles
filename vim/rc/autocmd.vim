@@ -1,28 +1,18 @@
-augroup onVimrcWrite
-    autocmd!
-    autocmd BufWritePost $HOME/*{config,dotfiles}/**/*vim/**.{vim,lua} source %
+augroup onBufChange
+  autocmd!
+  autocmd VimEnter,BufEnter * set number
+  autocmd BufLeave * set nonumber
 augroup END
 
-augroup onShellRcWrite
-    autocmd!
-    autocmd BufWritePost **/*{config,dotfiles}/shell/**.*sh silent !source %
-augroup END
-
-augroup onTmuxConfWrite
-    autocmd!
-    autocmd BufWritePost **/*{config,dotfiles}/*.conf silent !tmux source-file %
+augroup onConfigFileWrite
+ autocmd!
+  autocmd BufWritePost $HOME/*{config,dotfiles}/**/*vim/**.{vim,lua} source %
+  autocmd BufWritePost $HOME/*{config,dotfiles}/shell/**.*sh silent !source %
+  autocmd BufWritePost $HOME/*{config,dotfiles}/tmux/*.conf silent !tmux source-file %
 augroup END
 
 if (exists('##TermClose'))
-    augroup onTermExit
-        autocmd!
-        autocmd TermClose term://* bdelete
-    augroup END
-endif
-
-if (&runtimepath =~ ".*/nvim-lspconfig")
-    augroup FormatOnBufWrite
-        autocmd!
-        autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
-    augroup END
+  augroup onTermExit
+    autocmd! TermClose term://* bdelete
+  augroup END
 endif
