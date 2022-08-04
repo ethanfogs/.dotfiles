@@ -1,21 +1,24 @@
-let ScratchBuf = {}
-let ScratchBuf.dir = $HOME . '/.cache/' . v:progname . '/scratchbuf'
-
-call mkdir(ScratchBuf.dir, 'p')
-
-let ScratchBuf.ftype2fextn = #{
-    \ markdown:        'md',
-    \ javascript:      'js',
-    \ javascriptreact: 'jsx',
-    \ python:          'py',
-    \ rust:            'rs',
-    \ typescript:      'ts',
-    \ typescriptreact: 'tsx',
+let scratch_buf = {
+\ 'dir': $HOME . '/.cache/' . v:progname . '/scratchbuf'
 \}
 
-function ScratchBuf.new(fname=strftime('%m-%d-%y_%H-%M-%S'), ftype=input('FILETYPE: ', '', 'filetype')) dict
-    let l:ftype = has_key(self.ftype2fextn, a:ftype) ? self.ftype2fextn[a:ftype] : a:ftype
-    call execute('new ' . self.dir . '/' . a:fname . (empty(l:ftype) ? '' : '.' . l:ftype))
+call mkdir(scratch_buf.dir, 'p')
+
+let scratch_buf.ftype2fextn = {
+  \ 'markdown':        'md',
+  \ 'javascript':      'js',
+  \ 'javascriptreact': 'jsx',
+  \ 'python':          'py',
+  \ 'rust':            'rs',
+  \ 'typescript':      'ts',
+  \ 'typescriptreact': 'tsx',
+\}
+
+function scratch_buf.new(...) dict
+  let fname = get(a:, 1, strftime('%m-%d-%y_%H-%M-%S'))
+  let ftype = get(a:, 2, input('FILETYPE: ', '', 'filetype'))
+  let ftype = has_key(self.ftype2fextn, ftype) ? self.ftype2fextn[ftype] : ftype
+  call execute('new ' . self.dir . '/' . fname . (empty(ftype) ? '' : '.' . ftype))
 endfunction
 
 command! -nargs=* ScratchBuf call ScratchBuf.new(<f-args>)

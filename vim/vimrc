@@ -2,31 +2,3 @@ source $HOME/.vim/rc/plugin.vim
 source $HOME/.vim/rc/opt.vim
 source $HOME/.vim/rc/keymap.vim
 source $HOME/.vim/rc/autocmd.vim
-
-if (v:progname == 'vim' || !isdirectory($VIMRUNTIME . '/lua'))
-    execute 'colorscheme ' . has('##focuspoint') ? 'focuspoint' : 'industry'
-    finish
-endif
-
-lua << EOF
-
-require("plugin.icons")
-require("plugin.lsp") -- this sources lua/plugin/lsp/init.lua
-require("plugin.telescope")
-require("plugin.treesitter")
-require("plugin.cmp")
-require("plugin.autopairs")
-require("plugin.comment")
-require("plugin.nvim-tree")
-require("plugin.statuslines")
-require("plugin.indentline")
-require("plugin.toggleterm")
-
-function echo(i) print((type(i) == "table") and vim.inspect(i) or i) end
-
--------------------------------------------------------------------------------
-
-local favColorSchemes = { 'focuspoint', 'materialbox', 'solarized8_high', }
-vim.cmd('colorscheme ' .. favColorSchemes[math.random(#favColorSchemes)])
-
-EOF
