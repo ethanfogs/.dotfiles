@@ -14,7 +14,9 @@ links=(
 )
 
 for link in $links; do
-  ln -sv ~/.config/$link ~/.$(basename $link | sed 's/\..*//g')
+  linkname=$(basename $link | sed 's/\..*//g')
+  [ -f ~/.$linkname ] || [ -d ~/.$linkname ] && rm -rf ~/.$linkname
+  ln -sv ~/.config/$link ~/.$linkname
 done
 
 exec $SHELL
