@@ -6,11 +6,11 @@ for dir in $(ls); do
 done
 
 links=(
-  shell/bash/bashrc.bash
-  shell/bash/bash_profile.bash
-  shell/zsh/zshenv.zsh
-  shell/zsh/zshrc.zsh
-  vim
+  shell/bash/bashrc.bash       
+  shell/bash/bash_profile.bash 
+  shell/zsh/zshenv.zsh         
+  shell/zsh/zshrc.zsh          
+  vim                          
 )
 
 for link in $links; do
