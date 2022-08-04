@@ -6,17 +6,15 @@ for dir in $(ls); do
 done
 
 links=(
-  shell/bash/bashrc.bash
-  shell/bash/bash_profile.bash
-  shell/zsh/zshenv.zsh
-  shell/zsh/zshrc.zsh
-  vim
+  shell/bash/bashrc.bash       
+  shell/bash/bash_profile.bash 
+  shell/zsh/zshenv.zsh         
+  shell/zsh/zshrc.zsh          
+  vim                          
 )
 
 for link in $links; do
-  linkname=$(basename $link | sed 's/\..*//g')
-  [ -h ~/.$linkname ] && unlink $linkname
-  ln -sv ~/.config/$link ~/.$linkname
+  ln -sv ~/.config/$link ~/.$(basename $link | sed 's/\..*//g')
 done
 
 exec $SHELL
