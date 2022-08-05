@@ -10,7 +10,7 @@ source "$HOME/.config/shell/aliasrc.sh"
 
 # ----------------------------------------------------------------------------
 
-CURRENT_SHELL="$(basename $(ps -p $$ -oargs= | tr -d '-'))"
+CURRENT_SHELL=$(basename $(ps -p $$ -oargs= | tr -d '-'))
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
 

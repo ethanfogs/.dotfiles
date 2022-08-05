@@ -7,10 +7,10 @@ which tree >/dev/null && alias tree='tree -C'
 
 # FILE-SYSTEM - WRITING -------------------------------------------------------
 
-alias mkdir='builtin mkdir -p'
+alias mkdir='/bin/mkdir -p'
 
 mcd(){
-  builtin mkdir -p "$1" && cd "$1" || return 1
+  /bin/mkdir -p "$1" && cd "$1" || return 1
 }
 
 chx(){
@@ -20,7 +20,7 @@ chx(){
 
 # TEXT EDITOR -----------------------------------------------------------------
 
-which $EDITOR >/dev/null && alias e='$EDITOR' || alias e='vim'
+alias e='vim' && which "$EDITOR" >/dev/null && alias e=$EDITOR
 
 # GIT -------------------------------------------------------------------------
 

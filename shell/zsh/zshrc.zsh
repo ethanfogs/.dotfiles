@@ -31,6 +31,7 @@ setopt nullglob cshnullglob  #if no completion for current context, dont throw e
 setopt menucomplete #tab completion on first tab hit
 setopt chaselinks   #go to actual symlink dir rather in cd
 setopt nobeep
+setopt histappend
 
 bindkey "^H" vi-cmd-mode
 bindkey "^K" up-history
