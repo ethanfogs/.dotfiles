@@ -2,6 +2,7 @@ if [ $(uname -s) = "Darwin" ]; then
   if ! which brew >/dev/null; then
     git clone -q https://github.com/Homebrew/brew ~/.local/homebrew
     ~/.local/homebrew/bin install bash-completions@2
+    source ~/.bash_profile
   fi
   source $HOME/.local/etc/profile.d/bash_completion.sh
 fi
