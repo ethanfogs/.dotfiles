@@ -17,8 +17,8 @@ if [ $(uname) = "Darwin" ]; then
   if ! which brew >/dev/null; then
     mkdir -p ~/.local/share/zsh/site-functions
     git clone -q https://github.com/Homebrew/brew ~/.local/homebrew
-    ln -svf ~/.local/homebrew/bin/brew ~/.local/bin/brew
-    ln -svf ~/.local/homebrew/completions/zsh/_brew ~/.local/share/zsh/site-functions/_brew
+    ln -svf ~/.local/homebrew/bin/brew ~/.local/bin/
+    ln -svf ~/.local/homebrew/completions/zsh/_brew ~/.local/share/zsh/site-functions/
     source ~/.zprofile
   fi
   fpath+=(~/.local/share/zsh/site-functions)
