@@ -14,11 +14,6 @@ if [ $(uname -s) = "Darwin" ]; then
 
   source $HOME/.local/etc/profile.d/bash_completion.sh
 
-  # for completion in $HOME/.local/etc/bash_completion.d/*; do
-  #   source $completion 2> /dev/null
-  # done; unset completion
-fi
-
 # OH-MY-BASH ------------------------------------------------------------------
 
 export OSH=$HOME/.local/share/oh-my-bash
