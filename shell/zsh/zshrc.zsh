@@ -37,8 +37,6 @@ setopt menucomplete # tab completion on first tab hit
 setopt chaselinks   # go to actual symlink dir rather in cd
 setopt nobeep
 
-#569JNRXZghikms
-
 bindkey "^H" vi-cmd-mode
 bindkey "^K" up-history
 bindkey "^J" down-history

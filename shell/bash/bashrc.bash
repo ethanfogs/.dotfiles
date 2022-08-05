@@ -7,25 +7,32 @@ shopt -s cmdhist histappend histverify
 shopt -s checkwinsize dotglob extglob nocaseglob nocasematch nullglob
 
 if [ $(uname -s) = "Darwin" ]; then
-    for comp_file in $(brew --prefix)/etc/profile/d.bash_completion.d/*; do
-        source $comp_file
-    done
+  if ! which brew >/dev/null; then
+    git clone -q https://github.com/Homebrew/brew ~/.local/homebrew
+    ~/.local/homebrew/bin install bash-completions@2
+  fi
+
+  source $HOME/.local/etc/profile.d/bash_completion.sh
+
+  # for completion in $HOME/.local/etc/bash_completion.d/*; do
+  #   source $completion 2> /dev/null
+  # done; unset completion
 fi
 
 # OH-MY-BASH ------------------------------------------------------------------
 
-OSH=$XDG_DATA_HOME/bash/plugins/oh-my-bash
-[ ! -d $OSH ] && return
-
-export OSH
+export OSH=$HOME/.local/share/oh-my-bash
+if [ ! -d $OSH ]; then
+  mkdir -p ~/.local/share
+  git clone -q https://github.com/ohmybash/oh-my-bash ~/.local/share/oh-my-bash
+fi
 
 OSH_THEME="powerline"
 ENABLE_CORRECTION="true"
-HIST_STAMPS="mm-dd-yyyy"
+# HIST_STAMPS="mm-dd-yyyy"
 
 OMB_USE_SUDO=true
 
-completions=(git)
 plugins=(git)
 
 source $OSH/oh-my-bash.sh
