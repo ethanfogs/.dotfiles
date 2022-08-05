@@ -3,7 +3,6 @@
 mkdir -p ~/.{config,cache,local/{bin,share,state}}
 
 for dir in *; do
-  [ "$dir" = ".git" ] && continue
   [ -h ~/.config/$dir ] && unlink ~/.config/$dir
   ln -sfv $dir ~/.config/$dir
 done
@@ -19,10 +18,9 @@ rc_links=(
 )
 
 for rc_link in "${rc_links[@]}"; do
-  linkname="$(basename $rc_link | sed 's/\..*//g')"
+  linkname=$(basename $rc_link | sed 's/\..*//g')
   [ -h ~/.$linkname ] && unlink ~/.$linkname
   ln -sfv ~/.config/$rc_link ~/.$linkname
-  # [ -h ~/.config/$linkname/$linkname ] && unlink ~/.config/$linkname/$linkname 
 done; unset rc_links; unset rc_link; unset linkname
 
-exec "$(basename "$(ps -p $$ -oargs= | tr -d '-')")"
+exec $(ps -p $$ -oargs= | tr -d '-') #returns name of the current shell
