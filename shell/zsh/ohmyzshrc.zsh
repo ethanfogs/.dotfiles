@@ -2,8 +2,8 @@
 
 export ZSH=~/.local/share/oh-my-zsh
 if [ ! -d $ZSH ]; then
-    git clone -q https://github.com/ohmyzsh/ohmyzsh $ZSH
-    source $0
+  mkdir -p $ZSH
+  git clone https://github.com/ohmyzsh/ohmyzsh $ZSH
 fi
 
 # COMPLETIONS ----------------------------------------------------------------

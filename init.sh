@@ -1,32 +1,28 @@
-mkdir -p ~/.{config,cache,local/{bin,share,state,env}}
-chmod 700 ~/.local/env || rm -rf ~/.local/env
+#!/usr/bin/env bash
 
-for dir in $(ls); do
+mkdir -p ~/.{config,cache,local/{bin,share,state}}
+
+for dir in *; do
+  [ "$dir" = ".git" ] && continue
   [ -h ~/.config/$dir ] && unlink ~/.config/$dir
-  if [ -f ~/.config/$dir ] || [ -d ~/.config/$dir ]; then
-    rm -rf ~/.config/$dir
-  fi
-  ln -sv $(pwd)/$dir ~/.config/$(basename $dir)
+  ln -sfv $dir ~/.config/$dir
 done
 
-links=(
+rc_links=(
   shell/profile.sh
-  shell/bash/bashrc.bash       
-  shell/bash/bash_profile.bash 
-  shell/zsh/zprofile.zsh         
-  shell/zsh/zshrc.zsh          
-  vim                          
+  shell/bash/bashrc.bash
+  shell/bash/bash_profile.bash
+  shell/zsh/zprofile.zsh
+  shell/zsh/zshrc.zsh
+  shell/inputrc
+  vim
 )
 
-for link in ${links[@]}; do
-  linkname=$(basename $link | sed 's/\..*//g')
+for rc_link in "${rc_links[@]}"; do
+  linkname="$(basename $rc_link | sed 's/\..*//g')"
   [ -h ~/.$linkname ] && unlink ~/.$linkname
-  if [ -d ~/.$linkname ] || [ -f ~/.$linkname ]; then 
-    rm -rf ~/.$linkname
-  fi
-  ln -sv ~/.config/$link ~/.$linkname
-done
+  ln -sfv ~/.config/$rc_link ~/.$linkname
+  # [ -h ~/.config/$linkname/$linkname ] && unlink ~/.config/$linkname/$linkname 
+done; unset rc_links; unset rc_link; unset linkname
 
-exec $SHELL
-
-# vim: filetype=sh
+exec "$(basename "$(ps -p $$ -oargs= | tr -d '-')")"

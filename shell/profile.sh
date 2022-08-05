@@ -1,4 +1,6 @@
-export PATH="$HOME/.local/sbin:$HOME/.local/bin:$PATH"
+#!/bin/sh
+
+export PATH=$HOME/.local/sbin:$HOME/.local/bin:$PATH
 
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_BIN_HOME=$HOME/.local/bin

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # FILE-SYSTEM - READING -------------------------------------------------------
 
 which bat  >/dev/null && alias cat='bat'
@@ -5,23 +7,24 @@ which tree >/dev/null && alias tree='tree -C'
 
 # FILE-SYSTEM - WRITING -------------------------------------------------------
 
-alias mkdir='mkdir -p'
+alias mkdir='builtin mkdir -p'
 
 mcd(){
-    /bin/mkdir -p $1 && cd $1
+  builtin mkdir -p "$1" && cd "$1" || return 1
 }
 
 chx(){
-    [ -x $1 ] && chmod -x $1 || chmod +x $1
+  [ -z "$1" ] && return 1
+  [ -x "$1" ] && chmod -x "$1" || chmod +x "$1"
 }
 
 # TEXT EDITOR -----------------------------------------------------------------
 
-alias e=${EDITOR:-/usr/bin/vim}
+which $EDITOR >/dev/null && alias e='$EDITOR' || alias e='vim'
 
 # GIT -------------------------------------------------------------------------
 
-alias gss='[[ $(git status) ]] && $EDITOR -c "Git | bd 1"'
+alias gss='git status >/dev/null && $EDITOR -c "Git | bd 1"'
 alias gs="git status --short"
 alias gl="git log --oneline --graph"
 alias gb="git branch -a"
@@ -42,15 +45,13 @@ which python3 >/dev/null && alias python='python3'
 
 #------------------------------------------------------------------------------
 
-alias su='/usr/bin/su -l'
+
+which su >/dev/null && alias su='/usr/bin/su -l'
 alias reboot='sudo /sbin/reboot'
 
-if [ $(uname) = "Darwin" ]; then
-    alias sysadminctl='sudo /usr/sbin/sysadminctl'
-elif [ $(uname) = "Linux" ]; then
-    alias apt='sudo apt -y'
-    alias apt-get='sudo apt-get -y'
+if [ "$(uname)" = "Darwin" ]; then
+  alias sysadminctl='sudo /usr/sbin/sysadminctl'
+elif [ "$(uname)" = "Linux" ]; then
+  alias apt='sudo apt -y'
+  alias apt-get='sudo apt-get -y'
 fi
-
-#------------------------------------------------------------------------------
-# vim: filetype=bash:
