@@ -4,7 +4,7 @@ mkdir -p ~/.{config,cache,local/{bin,share,state}}
 
 for dir in *; do
   [ -h ~/.config/$dir ] && unlink ~/.config/$dir
-  ln -sfv $dir ~/.config/$dir
+  ln -sfv $(pwd)/$dir ~/.config/$dir
 done
 
 rc_links=(
