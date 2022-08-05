@@ -93,7 +93,7 @@ end
 
 lsp.signature = require("lsp_signature")
 lsp.signature.config = {
-  debug = true,
+  debug = false,
   log_path = "debug_log_file_path",
   verbose = false,
   bind = true,
