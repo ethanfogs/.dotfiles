@@ -2,6 +2,8 @@
 
 # FILE-SYSTEM - READING -------------------------------------------------------
 
+alias la='/bin/ls -AFGh'
+
 which bat  >/dev/null && alias cat='bat'
 which tree >/dev/null && alias tree='tree -C'
 
