@@ -21,13 +21,8 @@ call plug#begin(s:plug_home)
   Plug 'ryanoasis/vim-devicons'
 
   Plug 'chase/focuspoint-vim'
-  Plug 'KKPMW/distilled-vim'
-  Plug 'andreypopp/vim-colors-plain'
-  Plug 'ewilazarus/preto'
-  Plug 'kadekillary/skull-vim'
 
   if (has('termguicolors'))
-    Plug 'chrisbra/Colorizer'
     "TODO: resolve TERM issue for vanilla vim - since these colorschemes dont
     "       render properly, even with vim versions with &termguicolor support.
     Plug 'lifepillar/vim-solarized8'
@@ -36,14 +31,12 @@ call plug#begin(s:plug_home)
   endif
 
   if (v:progname == 'vim')
-  "Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
     Plug 'preservim/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'PhilRunninger/nerdtree-buffer-ops'
     Plug 'PhilRunninger/nerdtree-visual-selection'
     Plug 'RRethy/vim-illuminate'
-    "Plug 'chriskempson/base16-vim'
   else
     "GENERAL HOUSEKEEPING & DEPS
     Plug 'nvim-lua/plenary.nvim'
@@ -98,7 +91,7 @@ call plug#begin(s:plug_home)
     "ICONS, STATUS-LINES & DIAGNOSTICS
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'akinsho/bufferline.nvim'
-    Plug 'nvim-pack/nvim-spectre'
+    " Plug 'nvim-pack/nvim-spectre'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'lewis6991/gitsigns.nvim'
   endif
