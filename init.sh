@@ -21,7 +21,7 @@ links=(
 for link in ${links[@]}; do
   linkname=$(basename $link | sed 's/\..*//g')
   [ -h ~/.$linkname ] && unlink ~/.$linkname
-  if [ -d ~/.$linkname || -f ~/.$linkname ]; then 
+  if [ -d ~/.$linkname ] || [ -f ~/.$linkname ]; then 
     rm -rf ~/.$linkname
   fi
   ln -sv ~/.config/$link ~/.$linkname
