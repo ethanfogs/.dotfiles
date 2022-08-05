@@ -4,7 +4,7 @@ chmod 700 ~/.local/env || rm -rf ~/.local/env
 for dir in $(ls); do
   [ -h ~/.config/$dir ] && unlink ~/.config/$dir
   [ -f ~/.config/$dir ] || [ -d ~/.config/$dir ] && unlink ~/.config/$dir
-  [ -f ~/.config/$dir ] || [ -d ~/.config/$dir ] && unlink ~/.config/$dir
+  [ -f ~/.config/$dir ] || [ -d ~/.config/$dir ] && rm -rf ~/.config/$dir
   ln -sv $(pwd)/$dir ~/.config/$(basename $dir);
 done
 
@@ -20,7 +20,7 @@ links=(
 for link in $links; do
   linkname=$(basename $link | sed 's/\..*//g')
   [ -h ~/.$linkname ] && unlink ~/.$linkname
-  [ -f ~/.$linkname ] || [ -f ~/.$linkname ] && ~/.$linkname
+  [ -f ~/.$linkname ] || [ -f ~/.$linkname ] && rm -rf ~/.$linkname
   ln -sv ~/.config/$link ~/.$linkname
 done
 
