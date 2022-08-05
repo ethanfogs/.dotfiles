@@ -3,7 +3,7 @@ chmod 700 ~/.local/env || rm -rf ~/.local/env
 
 for dir in $(ls); do
   [ -h ~/.config/$dir ] && unlink ~/.config/$dir
-  if [ -f ~/.config/$dir || -d ~/.config/$dir ]; then
+  if [ -f ~/.config/$dir ] || [ -d ~/.config/$dir ]; then
     rm -rf ~/.config/$dir
   fi
   ln -sv $(pwd)/$dir ~/.config/$(basename $dir)
