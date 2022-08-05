@@ -22,7 +22,7 @@ endif
 let &autoread = 1"changes to a file are shown in real-time
 
 if(has('clipboard'))
-  let &clipboard = 'unnamed' . has('mac') ? ',unnamedplus' : ''
+  let &clipboard = 'unnamed'
 endif
 
 let &undofile  = 1
