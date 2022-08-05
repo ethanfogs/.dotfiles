@@ -4,7 +4,11 @@ if [ $(uname -s) = "Darwin" ]; then
     ~/.local/homebrew/bin install bash-completions@2
     source ~/.bash_profile
   fi
-  source $HOME/.local/etc/profile.d/bash_completion.sh
+  if [ -d ~/.local/share/bash-completion ]; then
+    for completion in ~/.local/share/bash-completion/*; do
+      [ -f $completion ] && source $completion
+    done; unset completion
+  fi
 fi
 
 source $HOME/.config/shell/bash/ohmybashrc.bash

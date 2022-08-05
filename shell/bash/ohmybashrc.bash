@@ -1,7 +1,6 @@
 export OSH=$HOME/.local/share/oh-my-bash
 if [ ! -d $OSH ]; then
   mkdir -p ~/.local/share
-  FUCK BASH
   git clone -q https://github.com/ohmybash/oh-my-bash ~/.local/share/oh-my-bash
 fi
 
