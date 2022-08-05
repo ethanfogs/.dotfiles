@@ -14,7 +14,7 @@ CURRENT_SHELL=$(basename $(ps -p $$ -oargs= | tr -d '-'))
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
 
-export SHARE_HISTORY
+# export SHARE_HISTORY
 export HIST_VERIFY
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT=""
