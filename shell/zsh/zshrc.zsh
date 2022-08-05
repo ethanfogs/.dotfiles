@@ -19,7 +19,6 @@ if [ $(uname) = "Darwin" ]; then
     git clone -q https://github.com/Homebrew/brew ~/.local/homebrew
     ln -svf ~/.local/homebrew/bin/brew ~/.local/bin/brew
     ln -svf ~/.local/homebrew/completions/zsh/_brew ~/.local/share/zsh/site-functions/_brew
-    exec $SHELL
   fi
   fpath+=(~/.local/share/zsh/site-functions)
   autoload -Uz compinit; compinit -d ~/.cache/zsh/zcompdump
