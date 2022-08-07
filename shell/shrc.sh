@@ -1,24 +1,24 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # TMUX ON SHELL START-UP ------------------------------------------------------
 
-which tmux >/dev/null && [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ] && exec tmux
+if which tmux >/dev/null && [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ]; then
+  tmux -f ~/.config/tmux/tmux.conf
+fi
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
-source "$HOME/.config/shell/aliasrc.sh"
+. "$HOME/.config/shell/aliasrc.sh"
 
 # ----------------------------------------------------------------------------
 
-CURRENT_SHELL=$(basename $(ps -p $$ -oargs= | tr -d '-'))
+CURRENT_SHELL="$(basename "$(ps -p $$ -oargs= | tr -d '-')")"
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
 
-# export SHARE_HISTORY
-export HIST_VERIFY
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT=""
-export HISTFILE=$HOME/.local/share/${CURRENT_SHELL}/${CURRENT_SHELL}_history
+export HISTFILE="$HOME/.local/share/${CURRENT_SHELL}/${CURRENT_SHELL}_history"
 export LESSHISTFILE=/dev/null
 
 #------------------------------------------------------------------------------
@@ -26,8 +26,9 @@ export LESSHISTFILE=/dev/null
 FIGNORE="pplications:esktop:Trash:ibrary:ovies:usic:ictures:ublic:terminfo"
 
 #------------------------------------------------------------------------------
+
 if [ "$(uname)" = "Darwin" ] && ! which brew >/dev/null; then
-  mkdir -p ~/.local/{share,bin}
+  mkdir -p ~/.local/share ~/.local/bin
   git clone https://github.com/Homebrew/brew ~/.local/homebrew
   ln -sfv ~/.local/homebrew/bin/brew ~/.local/bin/
   if [ "${CURRENT_SHELL}" = "zsh" ]; then

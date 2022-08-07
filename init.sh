@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 mkdir -p ~/.config ~/.cache ~/.local/share ~/.local/state ~/.local/bin
 

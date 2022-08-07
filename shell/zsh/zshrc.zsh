@@ -11,8 +11,8 @@ for plugin in $plugins; do
     git clone https://github.com/$plugin ~/.local/share/${plugin/*\/}
   fi
 
-  source ~/.local/share/${plugin/*\/}/${plugin/*\/}.zsh 2>/dev/null \
-    || source ~/.local/share/${plugin/*\/}/${plugin/*\/}.plugin.zsh
+  . ~/.local/share/${plugin/*\/}/${plugin/*\/}.zsh 2>/dev/null \
+    || . ~/.local/share/${plugin/*\/}/${plugin/*\/}.plugin.zsh
 done
 unset plugin && unset plugins
 
@@ -26,15 +26,15 @@ fi
 
 #-----------------------------------------------------------------------------
 
-source $HOME/.config/shell/zsh/ohmyzshrc.zsh
-source $HOME/.config/shell/shrc.sh
+. $HOME/.config/shell/zsh/ohmyzshrc.zsh
+. $HOME/.config/shell/shrc.sh
 
 setopt dotglob extendedglob
 setopt nullglob cshnullglob  #if no completion for current context, dont throw error
 setopt menucomplete          #tab completion on first tab hit
 setopt chaselinks            #go to actual symlink dir rather in cd
+setopt histverify sharehistory histappend incappendhistory noextendedhistory
 setopt nobeep
-setopt histappend
 
 bindkey "^H" vi-cmd-mode
 bindkey "^K" up-history

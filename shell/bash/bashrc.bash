@@ -2,14 +2,14 @@
 
 if [ -d ~/.local/share/bash-completion ]; then
   for completion in $HOME/.local/share/bash-completion/*; do
-    [ -f $completion ] && source $completion 2> /dev/null
+    [ -f $completion ] && . $completion 2> /dev/null
   done; unset completion
 fi
 
 #------------------------------------------------------------------------------
 
-source $HOME/.config/shell/bash/ohmybashrc.bash
-source $HOME/.config/shell/shrc.sh
+. $HOME/.config/shell/bash/ohmybashrc.bash
+. $HOME/.config/shell/shrc.sh
 
 #------------------------------------------------------------------------------
 

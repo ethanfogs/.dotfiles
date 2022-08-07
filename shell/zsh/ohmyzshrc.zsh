@@ -30,4 +30,4 @@ plugins+=(vi-mode colored-man-pages gnu-utils compleat gitfast) #essentials
 
 ZSH_THEME="agnoster"
 
-source $ZSH/oh-my-zsh.sh; unset plugins
+. $ZSH/oh-my-zsh.sh; unset plugins

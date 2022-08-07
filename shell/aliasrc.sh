@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # FILE-SYSTEM - READING -------------------------------------------------------
 
@@ -17,12 +17,12 @@ mcd(){
 
 chx(){
   [ -z "$1" ] && return 1
-  [ -x "$1" ] && chmod -x "$1" || chmod +x "$1"
+  if [ -x "$1" ]; then chmod -x "$1"; else chmod +x "$1"; fi
 }
 
 # TEXT EDITOR -----------------------------------------------------------------
 
-alias e='vim' && which "$EDITOR" >/dev/null && alias e=$EDITOR
+which "$EDITOR" >/dev/null && alias e='$EDITOR'
 
 # GIT -------------------------------------------------------------------------
 
