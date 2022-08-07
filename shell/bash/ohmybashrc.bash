@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 export OSH=$HOME/.local/share/oh-my-bash
 if [ ! -d $OSH ]; then
   mkdir -p ~/.local/share

@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # OHMYZSH CONFIG -------------------------------------------------------------
 
 export ZSH=~/.local/share/oh-my-zsh
