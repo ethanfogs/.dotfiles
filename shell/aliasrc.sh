@@ -5,7 +5,7 @@
 alias la='/bin/ls -AFGh'
 
 which bat  >/dev/null && alias cat='bat'
-which tree >/dev/null && alias tree='tree -C'
+which tree >/dev/null && alias t='tree -C' && alias tree='tree -C'
 
 # FILE-SYSTEM - WRITING -------------------------------------------------------
 
@@ -46,7 +46,6 @@ alias gP="git pull"
 which python3 >/dev/null && alias python='python3'
 
 #------------------------------------------------------------------------------
-
 
 which su >/dev/null && alias su='/usr/bin/su -l'
 alias reboot='sudo /sbin/reboot'

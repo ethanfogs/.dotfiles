@@ -26,8 +26,8 @@ fi
 
 #-----------------------------------------------------------------------------
 
-. $HOME/.config/shell/zsh/ohmyzshrc.zsh
-. $HOME/.config/shell/shrc.sh
+. $HOME/.config/shell/zsh/ohmyzshrc.zsh 2>/dev/null
+. $HOME/.config/shell/shrc.sh 2>/dev/null
 
 setopt dotglob extendedglob
 setopt nullglob cshnullglob  #if no completion for current context, dont throw error

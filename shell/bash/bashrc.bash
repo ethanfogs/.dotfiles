@@ -2,20 +2,20 @@
 
 if [ -d ~/.local/share/bash-completion ]; then
   for completion in $HOME/.local/share/bash-completion/*; do
-    [ -f $completion ] && . $completion 2> /dev/null
+    [ -f "$completion" ] && . "$completion" 2> /dev/null
   done; unset completion
 fi
 
 #------------------------------------------------------------------------------
 
-. $HOME/.config/shell/bash/ohmybashrc.bash
-. $HOME/.config/shell/shrc.sh
+. $HOME/.config/shell/bash/ohmybashrc.bash 2>/dev/null
+. $HOME/.config/shell/shrc.sh 2>/dev/null
 
 #------------------------------------------------------------------------------
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export MAILCHECK=0
-export TMPDIR=$HOME/.cache/bash
+export TMPDIR="$HOME/.cache/bash"
 
 shopt -s cmdhist histappend histverify
 shopt -s checkwinsize

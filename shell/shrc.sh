@@ -8,7 +8,7 @@ fi
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
-. "$HOME/.config/shell/aliasrc.sh"
+. "$HOME/.config/shell/aliasrc.sh" 2> /dev/null
 
 # ----------------------------------------------------------------------------
 
@@ -18,6 +18,7 @@ CURRENT_SHELL="$(basename "$(ps -p $$ -oargs= | tr -d '-')")"
 
 export HISTCONTROL=ignoredups
 export HISTTIMEFORMAT=""
+mkdir -p "$HOME/.local/share/${CURRENT_SHELL}"
 export HISTFILE="$HOME/.local/share/${CURRENT_SHELL}/${CURRENT_SHELL}_history"
 export LESSHISTFILE=/dev/null
 
