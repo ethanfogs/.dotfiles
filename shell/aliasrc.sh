@@ -2,7 +2,9 @@
 
 # FILE-SYSTEM - READING -------------------------------------------------------
 
-alias la='/bin/ls -AFGh'
+alias l='/bin/ls  -laFGh'
+alias la='/bin/ls -aFGh'
+alias ll='/bin/ls -laFGh'
 
 which bat  >/dev/null && alias cat='bat'
 which tree >/dev/null && alias t='tree -C' && alias tree='tree -C'
@@ -12,11 +14,10 @@ which tree >/dev/null && alias t='tree -C' && alias tree='tree -C'
 alias mkdir='/bin/mkdir -p'
 
 mcd(){
-  /bin/mkdir -p "$1" && cd "$1" || return 1
+  /bin/mkdir -p "$1" && cd "$1"
 }
 
 chx(){
-  [ -z "$1" ] && return 1
   if [ -x "$1" ]; then chmod -x "$1"; else chmod +x "$1"; fi
 }
 
@@ -47,7 +48,7 @@ which python3 >/dev/null && alias python='python3'
 
 #------------------------------------------------------------------------------
 
-which su >/dev/null && alias su='/usr/bin/su -l'
+alias su='/usr/bin/su -l'
 alias reboot='sudo /sbin/reboot'
 
 if [ "$(uname)" = "Darwin" ]; then
