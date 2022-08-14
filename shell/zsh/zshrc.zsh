@@ -1,40 +1,31 @@
 #!/usr/bin/env zsh
 
-plugins=(
-  zsh-users/zsh-autosuggestions
-  zsh-users/zsh-syntax-highlighting
-  hlissner/zsh-autopair
-)
+# ============================================================================
 
-for plugin in $plugins; do
-  if [ ! -d ~/.local/share/${plugin/*\/} ]; then
-    git clone https://github.com/$plugin ~/.local/share/${plugin/*\/}
-  fi
+. ~/.config/shell/zsh/ohmyzshrc.zsh
+. ~/.config/shell/shrc.sh
 
-  . ~/.local/share/${plugin/*\/}/${plugin/*\/}.zsh 2>/dev/null \
-    || . ~/.local/share/${plugin/*\/}/${plugin/*\/}.plugin.zsh
-done
-unset plugin && unset plugins
+# ============================================================================
 
-if [ "$(uname)" = "Darwin" ] && which brew >/dev/null; then
-  if [ ! $(echo $FPATH | grep $HOME/.local/share/zsh/site-functions) ]; then
-    fpath+=($HOME/.local/share/zsh/site-functions)
-  fi
-  autoload -Uz compinit; compinit -d ~/.cache/zsh/zcompdump
-  export HOMEBREW_CASK_OPTS="-f --no-quarantine --appdir=~/Applications"
+if ! echo $FPATH | grep ~/.local/share/zsh/site-functions >/dev/null; then
+  fpath=(~/.local/share/zsh/site-functions $fpath)
+  autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
 fi
 
-#-----------------------------------------------------------------------------
+# ============================================================================
 
-. $HOME/.config/shell/zsh/ohmyzshrc.zsh 2>/dev/null
-. $HOME/.config/shell/shrc.sh 2>/dev/null
-
-setopt dotglob extendedglob
-setopt nullglob cshnullglob  #if no completion for current context, dont throw error
-setopt menucomplete          #tab completion on first tab hit
-setopt chaselinks            #go to actual symlink dir rather in cd
-setopt histverify sharehistory histappend incappendhistory noextendedhistory
+setopt dotglob
+setopt extendedglob
+setopt menucomplete #tab completion on first tab hit
+setopt chaselinks   #go to actual symlink dir rather in cd
+setopt histverify
+setopt sharehistory
+setopt histappend
+setopt incappendhistory
+setopt noextendedhistory #no timestamping prepending history entries
 setopt nobeep
+
+# ============================================================================
 
 bindkey "^H" vi-cmd-mode
 bindkey "^K" up-history
