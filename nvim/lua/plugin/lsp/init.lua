@@ -25,24 +25,24 @@ function lsp.handlers.on_attach(client, bufnr)
   buf_set_n_keymap(bufnr, "gr", "lsp.buf.references()")
 end
 
--- lsp.signs = {
---   { name = "DiagnosticSignError", text = "❌" },
---   { name = "DiagnosticSignWarn", text = "⚠" },
---   { name = "DiagnosticSignHint", text = "💡" },
---   { name = "DiagnosticSignInfo", text = "ℹ️" },
--- }
---
--- for _, sign in pairs(lsp.signs) do
---   vim.fn.sign_define(sign.name, {
---     texthl = sign.name,
---     text = sign.text,
---     numhl = "",
---   })
--- end
+lsp.signs = {
+  -- { name = "DiagnosticSignError", text = "❌" },
+  -- { name = "DiagnosticSignWarn", text = "⚠" },
+  -- { name = "DiagnosticSignHint", text = "💡" },
+  -- { name = "DiagnosticSignInfo", text = "ℹ️" },
+}
+
+for _, sign in pairs(lsp.signs) do
+  vim.fn.sign_define(sign.name, {
+    texthl = sign.name,
+    text = sign.text,
+    numhl = "",
+  })
+end
 
 vim.diagnostic.config({
   virtual_text = false,
-  -- signs = { active = vim.lsp.signs },
+  signs = { active = vim.lsp.signs },
   update_in_insert = true,
   underline = true,
   severity_sort = true,
@@ -68,9 +68,8 @@ lsp.handlers.capabilities = require("cmp_nvim_lsp")
     .update_capabilities(lsp.handlers.capabilities)
 
 lsp.servers = {
-  'bashls', 'cssls', 'gopls', 'html',
-  'jsonls', 'jsonnet_ls', 'marksman', 'pylsp', 'pyright',
-  'rust_analyzer', 'sqlls', 'sumneko_lua', 'tsserver', 'vimls'
+  'bashls', 'cssls', 'gopls', 'html', 'jsonls', 'jsonnet_ls', 'marksman',
+  'pylsp', 'pyright', 'sqlls', 'sumneko_lua', 'tsserver', 'vimls'
 }
 
 lsp.installer.setup()

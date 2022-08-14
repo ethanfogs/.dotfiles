@@ -29,7 +29,7 @@ let &undofile  = 1
 let &undodir   = $HOME . '/.local/state/' . v:progname . '/undo'
 
 if(has('shada'))
-  let &shadafile = $HOME . '/.local/share/'   . v:progname . '/' . 'shada'
+  let &shadafile   = $HOME . '/.local/share/' . v:progname . '/' . 'shada'
 elseif(has('viminfo'))
   let &viminfofile = $HOME . '/.local/share/' . v:progname . '/' . 'viminfo'
 endif
