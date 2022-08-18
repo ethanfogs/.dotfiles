@@ -2,12 +2,7 @@ vim.cmd('source $HOME/.vim/rc/keymap.vim')
 
 -- PLUGIN:TELESCOPE ------------------------------------------------------------
 
-local set_keymap = vim.api.nvim_set_keymap
-
--- PLUGIN:TELESCOPE ------------------------------------------------------------
-local telescope = require('telescope')
-
-telescope.keymaps = {
+local telescope_keymaps = {
   ['a'] = 'autocommands()',
   ['b'] = 'buffers()',
   ['B'] = 'builtin()',
@@ -44,7 +39,7 @@ telescope.keymaps = {
   ["<Space>"] = 'resume()',
 }
 
-for lhs, rhs in pairs(telescope.keymaps) do
+for lhs, rhs in pairs(telescope_keymaps) do
   local rhs = "<Cmd>lua require('telescope.builtin')." .. rhs .. "<CR>"
-  set_keymap('n', 's' .. lhs, rhs, { noremap = true, silent = true })
+  vim.api.nvim_set_keymap('n', 's' .. lhs, rhs, { noremap = true, silent = true })
 end

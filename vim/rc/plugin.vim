@@ -52,7 +52,7 @@ call plug#begin(s:plug_home)
     "TREESITTER (LINTING)
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-treesitter/nvim-treesitter-context'
-    " Plug 'nvim-treesitter/playground'
+    Plug 'nvim-treesitter/playground'
 
     " CMP (AUTO-COMPLETIONS& POPUP SUGGESTIONS)
     Plug 'hrsh7th/nvim-cmp'
@@ -91,7 +91,7 @@ call plug#begin(s:plug_home)
     "ICONS, STATUS-LINES & DIAGNOSTICS
     Plug 'nvim-lualine/lualine.nvim'
     Plug 'akinsho/bufferline.nvim'
-    " Plug 'nvim-pack/nvim-spectre'
+    Plug 'nvim-pack/nvim-spectre'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'lewis6991/gitsigns.nvim'
   endif

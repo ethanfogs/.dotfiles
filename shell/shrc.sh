@@ -8,7 +8,7 @@ fi
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
-. ~/.config/shell/aliasrc.sh
+[ -r ~/.config/shell/aliasrc.sh ] && . ~/.config/shell/aliasrc.sh
 
 # ----------------------------------------------------------------------------
 
@@ -31,7 +31,7 @@ FIGNORE="pplications:esktop:Trash:ibrary:ovies:usic:ictures:ublic:terminfo"
 if [ "$(uname)" = "Darwin" ] && ! which brew >/dev/null; then
   mkdir -p ~/.local/share ~/.local/bin
   git clone https://github.com/Homebrew/brew ~/.local/homebrew
-  ln -sfv ~/.local/homebrew/bin/brew ~/.local/bin/
+  ln -sfv ~/.local/homebrew/bin/brew ~/.local/bin/brew
 fi
 
 #------------------------------------------------------------------------------

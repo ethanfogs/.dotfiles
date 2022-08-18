@@ -2,8 +2,8 @@
 
 # ============================================================================
 
-. ~/.config/shell/zsh/ohmyzshrc.zsh
-. ~/.config/shell/shrc.sh
+[ -r ~/.config/shell/zsh/ohmyzshrc.zsh ] && . ~/.config/shell/zsh/ohmyzshrc.zsh
+[ -r ~/.config/shell/shrc.sh ]           && . ~/.config/shell/shrc.sh
 
 # ============================================================================
 
