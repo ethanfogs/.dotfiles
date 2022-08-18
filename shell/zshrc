@@ -1,0 +1,64 @@
+#!/usr/bin/env zsh
+
+#-----------------------------------------------------------------------------
+
+[ -r $HOME/.shrc ] && . $HOME/.shrc
+
+#-----------------------------------------------------------------------------
+
+completions=(
+  zsh-users/zsh-completions
+)
+
+[ "$(uname)" = "Darwin" ] && completions+=(
+  nilsonholger/osx-zsh-completions
+)
+
+for completion in $completions; do
+  if [ ! -d $HOME/.local/share/zsh/completions/${completion#*/} ]; then
+    git clone https://github.com/$completion $HOME/.local/share/zsh/completions/${completion#*/}
+    ln -sfv $HOME/.local/share/zsh/completions/${completion#*/}/**/_* $HOME/.local/share/zsh/site-functions/
+  fi
+done
+unset completion
+unset completions
+
+fpath=($(echo $HOME/.local/share/zsh/site-functions $fpath | xargs -n1 | uniq))
+autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
+
+#-----------------------------------------------------------------------------
+
+plugins=(
+  zsh-users/zsh-autosuggestions
+  zsh-users/zsh-syntax-highlighting
+  hlissner/zsh-autopair
+)
+
+for plugin in $plugins; do
+  if [ ! -d $HOME/.local/share/zsh/plugins/${plugin#*/} ]; then
+    git clone https://github.com/$plugin $HOME/.local/share/zsh/plugins/${plugin#*/}
+  fi
+  . $HOME/.local/share/zsh/plugins/${plugin#*/}/${plugin#*/}.zsh 2>/dev/null \
+    || . $HOME/.local/share/zsh/plugins/${plugin#*/}/zsh-*.plugin.zsh
+done
+unset plugin
+unset plugins
+
+#-----------------------------------------------------------------------------
+
+setopt dotglob
+setopt extendedglob
+setopt menucomplete #tab completion on first tab hit
+setopt chaselinks   #go to actual symlink dir rather in cd
+setopt histverify
+setopt sharehistory
+setopt histappend
+setopt incappendhistory
+setopt noextendedhistory #no timestamping prepending history entries
+setopt nobeep
+
+#-----------------------------------------------------------------------------
+
+bindkey "^H" vi-cmd-mode
+bindkey "^K" up-history
+bindkey "^J" down-history

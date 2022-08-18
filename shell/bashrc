@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+[ -r ~/.shrc ] && . ~/.shrc
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
+export MAILCHECK=0
+
+shopt -s cmdhist histappend histverify
+shopt -s checkwinsize
+shopt -s dotglob
+shopt -s extglob
+shopt -s nocaseglob
+shopt -s nocasematch
+shopt -s nullglob
+shopt -s hostcomplete
+shopt -s autocd
+shopt -s progcomp_alias
+
+bind 'set editing-mode vi'
+bind 'set blink-matching-paren on'
+bind 'set mark-symlinked-directories on'
+bind 'set colored-completion-prefix on'
+bind 'set history-preserve-point on'
+bind 'set match-hidden-files on'
+bind 'set skip-completed-text on'
+bind 'set visible-stats on'
+bind 'set colored-stats on'
+
+bind '"\C-l": clear-screen'
+bind '"\C-j": next-history'
+bind '"\C-k": previous-history'
+
+bind 'set show-all-if-ambiguous on'
+bind 'set show-all-if-unmodified on'
+bind 'set completion-ignore-case on'
+
+bind '"\t": menu-complete'
+bind '"\e[Z": menu-complete-backward'

@@ -1,18 +1,13 @@
-#!/bin/sh
-
-# TMUX ON SHELL START-UP ------------------------------------------------------
-
-if which tmux >/dev/null && [ -z "$TMUX" ] && [ -z "$SSH_CLIENT" ]; then
-  tmux -f ~/.config/tmux/tmux.conf
-fi
+#!/usr/bin/env bash
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
-. ~/.config/shell/aliasrc.sh
+[ -r $HOME/.env ]     && . $HOME/.env
+[ -r $HOME/.aliases ] && . $HOME/.aliases
 
 # ----------------------------------------------------------------------------
 
-CURRENT_SHELL="$(basename "$(ps -p $$ -oargs= | tr -d '-')")"
+CURRENT_SHELL=$(ps -p $$ -oargs= | sed -E "s#.*[-/]##")
 
 # HISTORY MANAGEMENT ----------------------------------------------------------
 
@@ -22,17 +17,14 @@ mkdir -p "$HOME/.local/share/$CURRENT_SHELL"
 export HISTFILE="$HOME/.local/share/$CURRENT_SHELL/${CURRENT_SHELL}_history"
 export LESSHISTFILE=/dev/null
 
-#------------------------------------------------------------------------------
+# PROMPT ------------------------------------------------------------------------------
 
-FIGNORE="pplications:esktop:Trash:ibrary:ovies:usic:ictures:ublic:terminfo"
+# if ! which starship >/dev/null; then
+#   curl "https://starship.rs/install.sh" -sSO --create-dirs --output-dir "$HOME/.cache/starship" \
+#     && sh $HOME/.cache/starship/install.sh --force --bin-dir $HOME/.local/bin >/dev/null
+# fi
 
-#------------------------------------------------------------------------------
-
-if [ "$(uname)" = "Darwin" ] && ! which brew >/dev/null; then
-  mkdir -p ~/.local/share ~/.local/bin
-  git clone https://github.com/Homebrew/brew ~/.local/homebrew
-  ln -sfv ~/.local/homebrew/bin/brew ~/.local/bin/
-fi
+which starship >/dev/null && eval "$(starship init $CURRENT_SHELL)"
 
 #------------------------------------------------------------------------------
 
@@ -45,5 +37,7 @@ if which fzf >/dev/null; then
   export FZF_DEFAULT_OPTS="--multi --cycle --reverse --border=rounded \
                             --preview='[ -f {} ] && cat {}'"
 fi
+
+#------------------------------------------------------------------------------
 
 unset CURRENT_SHELL

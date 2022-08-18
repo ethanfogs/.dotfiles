@@ -23,7 +23,7 @@ call s:keymap.set('n', '<BS>', '<C-o>')
 call s:keymap.set('n', '<S-BS>', '<C-i>')
 
 call s:keymap.set('', '<Space>', '<C-w>')
-call s:keymap.set('n', '<Space>w', 'w', ['defaults', 'command',])
+call s:keymap.set('n', '<Space>w', 'write', ['defaults', 'command',])
 
 let s:term_cmd = (&runtimepath =~ ".*/toggleterm") ? 'ToggleTerm' : 'terminal'
 call s:keymap.set('n', '<Space>t', s:term_cmd, ['defaults', 'command',])

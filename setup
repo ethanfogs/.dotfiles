@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# rsync -arLv --exclude={${0#*/},".*"} . ~/.config/
+
+find * ! -type d ! -name "${0##*/}" ! -name ".*" -exec ln -sfv $(pwd)/{} ~/.config/{} \;
+
+dot_links=(
+  shell/*
+  x11/*
+  vim
+)
+
+for dot_link in "${dot_links[@]}"; do
+  [ -h "$HOME/.${dot_link##*/}" ] && unlink "$HOME/.${dot_link##*/}"
+  ln -sfv "$HOME/.config/$dot_link" "$HOME/.${dot_link##*/}"
+done
+
+# reset
