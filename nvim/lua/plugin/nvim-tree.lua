@@ -1,8 +1,13 @@
-local nvim_tree = require('nvim-tree')
+local import_status, nvim_tree = pcall(require, "nvim-tree")
+if (not import_status) then
+  print("[import failed] nvim_tree")
+  return
+end
+
 local nvim_tree_config = require("nvim-tree.config")
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
-nvim_tree.setup {
+nvim_tree.config = {
   hijack_directories = { enable = false, },
   -- update_to_buf_dir = { enable = false, },
   --disable_netrw = true,
@@ -118,3 +123,7 @@ nvim_tree.setup {
     relativenumber = false,
   },
 }
+
+nvim_tree.setup(nvim_tree.config)
+
+vim.api.nvim_set_keymap("", "<Space>e", "<Cmd>NvimTreeToggle<CR>", { noremap = true, silent = true })
