@@ -1,23 +1,34 @@
-pcall(require, "rc.plugin")
-pcall(require, "rc.opt")
-pcall(require, "rc.keymap")
-pcall(require, "rc.autocmd")
-pcall(require, "rc.funcs")
+local rc_files = {
+  "rc.opt",
+  "rc.keymap",
+  "rc.autocmd",
+  "rc.funcs",
+  "rc.plugin",
+}
 
 -------------------------------------------------------------------------------
 
-pcall(require, "plugin.icons")
-pcall(require, "plugin.lsp") -- this sources lua/plugin/lsp/init.lua
-pcall(require, "plugin.telescope")
-pcall(require, "plugin.treesitter")
-pcall(require, "plugin.cmp")
-pcall(require, "plugin.autopairs")
-pcall(require, "plugin.comment")
-pcall(require, "plugin.nvim-tree")
-pcall(require, "plugin.statuslines")
-pcall(require, "plugin.indentline")
-pcall(require, "plugin.toggleterm")
-pcall(require, "plugin.scratchbuf")
+local plugin_configs = {
+  "plugin.icons",
+  "plugin.web_devicons",
+  "plugin.gitsigns",
+  "plugin.lsp",
+  "plugin.telescope",
+  "plugin.treesitter",
+  "plugin.cmp",
+  "plugin.autopairs",
+  "plugin.comment",
+  "plugin.nvim-tree",
+  "plugin.statuslines",
+  "plugin.indentline",
+  "plugin.toggleterm",
+  "plugin.scratchbuf",
+}
+
+for _, file in pairs(vim.tbl_flatten({ rc_files, plugin_configs })) do
+  local import_status = pcall(require, file)
+  if (not import_status) then print("{init.lua} [import failed]", file) end
+end
 
 -------------------------------------------------------------------------------
 

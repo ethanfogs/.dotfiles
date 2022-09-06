@@ -14,7 +14,8 @@ let &expandtab   = 1    "convert tabs to spaces
 let &tabstop     = 2    "tabs go by intervals of 2 spaces
 let &softtabstop = 2
 if(exists('&vartabstop'))
-    let &vartabstop  = 2
+  let &vartabstop  = 2
+  let &varsofttabstop  = 2
 endif
 
 "{ [UX, BACKEND] }------------------------------------------------------------
@@ -40,6 +41,7 @@ let &path           = '.,**'
 let &ignorecase     = 1
 let &smartcase      = 1
 let &fileignorecase = 1
+
 "{ VISUAL-UI }-----------------------------------------------------------------
 
 let &incsearch   = 1
@@ -62,6 +64,6 @@ let &wildoptions = 'pum'
 
 let &foldmethod = 'indent'
 
-if has('termguicolors')
+if exists('&termguicolors')
   let &termguicolors = 1
 endif
