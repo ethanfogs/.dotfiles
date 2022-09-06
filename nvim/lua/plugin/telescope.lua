@@ -38,7 +38,3 @@ telescope.setup({
     }
   }
 })
-
-
-
--- telescope keymaps set $HOME/.vim/rc/keymap.vim
