@@ -1,9 +1,4 @@
-local import_status, nvim_tree = pcall(require, "nvim-tree")
-if (not import_status) then
-  print("[import failed] nvim_tree")
-  return
-end
-
+local nvim_tree = require("nvim-tree")
 local nvim_tree_config = require("nvim-tree.config")
 local tree_cb = nvim_tree_config.nvim_tree_callback
 

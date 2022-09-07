@@ -1,42 +1,40 @@
-let s:plug_home = $HOME . '/.local/share/' . v:progname . '/site/plugged'
+let s:plug = {}
+let s:plug.data = '~/.local/share/' . v:progname . '/site/plugged'
+let s:plug.autoload  = ((v:progname == 'nvim') ? stdpath('data') . '/site' : $HOME . '/.vim') . '/autoload'
 
-if(!isdirectory(s:plug_home))
-  let s:plug_init = (v:progname == "vim")
-              \ ? $HOME . '/.vim/autoload/plug.vim'
-              \ : stdpath('data') . '/site/autoload/plug.vim'
+if(!filereadable(s:plug.autoload . '/plug.vim'))
+  let s:plug.uri =  'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  call system('curl -sSfLO --create-dirs --output-dir ' . s:plug.autoload . ' ' . s:plug.uri)
+  let s:plug.sync = 1
+endif
 
-  silent execute '!curl -fLo ' . 
-    \ s:plug_init . ' --create-dirs ' . 
-    \ 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-end
+"-----------------------------------------------------------------------------
 
-call plug#begin(s:plug_home)
+call plug#begin(s:plug.data)
   Plug 'junegunn/vim-plug' "only for helptags, not involved with bootstrapping
 
   "PLUGINS COMPATIBLE WITH BOTH VIM AND NVIM
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-rhubarb'
   Plug 'tpope/vim-surround'
-  Plug 'ryanoasis/vim-devicons'
 
   Plug 'chase/focuspoint-vim'
 
+  Plug 'RRethy/vim-illuminate'
+
   if (has('termguicolors'))
-    "TODO: resolve TERM issue for vanilla vim - since these colorschemes dont
-    "       render properly, even with vim versions with &termguicolor support.
     Plug 'lifepillar/vim-solarized8'
     Plug 'mkarmona/materialbox'
     Plug 'gregsexton/Atom'
   endif
 
-  if (v:progname == 'vim')
+  if (v:progname == 'vim' || v:progname == 'vi')
+    Plug 'ryanoasis/vim-devicons'
     Plug 'preservim/nerdtree'
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'PhilRunninger/nerdtree-buffer-ops'
     Plug 'PhilRunninger/nerdtree-visual-selection'
-    Plug 'RRethy/vim-illuminate'
   else
     "GENERAL HOUSEKEEPING & DEPS
     Plug 'nvim-lua/plenary.nvim'
@@ -52,7 +50,7 @@ call plug#begin(s:plug_home)
     "TREESITTER (LINTING)
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'nvim-treesitter/nvim-treesitter-context'
-    Plug 'nvim-treesitter/playground'
+    " Plug 'nvim-treesitter/playground'
 
     " CMP (AUTO-COMPLETIONS& POPUP SUGGESTIONS)
     Plug 'hrsh7th/nvim-cmp'
@@ -65,12 +63,15 @@ call plug#begin(s:plug_home)
     Plug 'saadparwaiz1/cmp_luasnip'
 
     "TELESCOPE (CONTENT BROWSER)
-    Plug 'nvim-telescope/telescope-fzy-native.nvim'
-    Plug 'nvim-telescope/telescope-media-files.nvim'
-    Plug 'nvim-telescope/telescope-symbols.nvim'
     Plug 'nvim-telescope/telescope.nvim'
-    Plug 'tom-anders/telescope-vim-bookmarks.nvim'
+    Plug 'nvim-telescope/telescope-fzy-native.nvim'
+    Plug 'nvim-telescope/telescope-symbols.nvim'
+    " Plug 'tom-anders/telescope-vim-bookmarks.nvim'
     Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+
+    if (has('linux'))
+      Plug 'nvim-telescope/telescope-media-files.nvim'
+    endif
 
     "POP-UP TERMINALS
     Plug 'akinsho/toggleterm.nvim'
@@ -96,3 +97,7 @@ call plug#begin(s:plug_home)
     Plug 'lewis6991/gitsigns.nvim'
   endif
 call plug#end()
+
+if (get(s:plug, 'sync', 0))
+  PlugInstall --sync | PlugUpdate
+endif

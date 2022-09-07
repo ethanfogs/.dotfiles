@@ -1,8 +1,4 @@
-local import_status, web_devicons = pcall(require, 'nvim-web-devicons')
-if (not import_status) then
-  print("[import failed] nvim-web-devicons")
-  return
-end
+local web_devicons = require('nvim-web-devicons')
 
 web_devicons.set_icon({
   sh = {

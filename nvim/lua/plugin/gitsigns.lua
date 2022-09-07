@@ -1,8 +1,4 @@
-local import_status, gitsigns = pcall(require, "gitsigns")
-if (not import_status) then
-  print("[import failed] gitsigns")
-  return
-end
+local gitsigns = require("gitsigns")
 
 gitsigns.config = {
   signs = {

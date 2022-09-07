@@ -1,8 +1,4 @@
-local import_status, toggleterm = pcall(require, "toggleterm")
-if (not import_status) then
-  print("[import failed] toggleterm")
-  return
-end
+local toggleterm = require("toggleterm")
 
 toggleterm.config = {
   size = 20,

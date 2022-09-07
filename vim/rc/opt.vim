@@ -1,5 +1,8 @@
 "{ GENERAL HOUSEKEEPING }------------------------------------------------------
 
+syntax on
+filetype on
+
 let &backup   = 0
 let &swapfile = 0
 
@@ -37,7 +40,7 @@ endif
 
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }------------------------------------------
 
-let &path           = '.,**'
+let &path           .= (&path =~ fnameescape(',.**')) ? '' : '.,**'
 let &ignorecase     = 1
 let &smartcase      = 1
 let &fileignorecase = 1

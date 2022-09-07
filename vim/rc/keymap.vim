@@ -54,9 +54,3 @@ tnoremap <Esc> <C-BSlash><C-n>
 tnoremap jj <C-BSlash><C-n>
 
 noremap <Space>e <Cmd>Lexplore<CR>
-
-"PLUGIN:GIT ==================================================================
-
-if(&runtimepath =~ ".*fugitive.*")
-  noremap <silent> gs <Cmd>Git<CR>
-endif

@@ -19,15 +19,15 @@ local plugin_configs = {
   "plugin.autopairs",
   "plugin.comment",
   "plugin.nvim-tree",
+  "plugin.toggleterm",
   "plugin.statuslines",
   "plugin.indentline",
-  "plugin.toggleterm",
+  "plugin.illuminate",
   "plugin.scratchbuf",
 }
 
 for _, file in pairs(vim.tbl_flatten({ rc_files, plugin_configs })) do
-  local import_status = pcall(require, file)
-  if (not import_status) then print("{init.lua} [import failed]", file) end
+  if (not pcall(require, file)) then print("{init.lua} [import failed]", file) end
 end
 
 -------------------------------------------------------------------------------
