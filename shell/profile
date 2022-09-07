@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-# export PATH="$HOME/.local/sbin:$HOME/.local/bin:${PATH//$HOME?.local?bin}"
-export PATH="$HOME/.local/sbin:$HOME/.local/bin:$(sed -E "s#$HOME/.local/s?bin:?##g" <(echo $PATH))"
-
-#echo $HOME/.local/sbin:$HOME/.local/bin ${PATH//:/ } | xargs -n1 | uniq | sed "s/\s*/:/g"
+PATH="$HOME/.local/sbin:$HOME/.local/bin:$PATH)"
 
 export XDG_CONFIG_HOME=~/.config
 export XDG_DATA_HOME=~/.local/share
@@ -22,11 +19,13 @@ export BROWSER='firefox'
 #-----------------------------------------------------------------------------
 
 if [ "$(uname)" = "Darwin" ]; then
-  export PATH="$HOME/.local/homebrew/bin:${PATH//$HOME?.local?homebrew?bin}"
+  PATH="$HOME/.local/homebrew/bin:$PATH"
   export HOMEBREW_CASK_OPTS='--appdir=~/Applications --no-quarantine --force'
   if [ ! -x "$HOME/.local/homebrew/bin/brew" ]; then
-    git clone https://github.com/Homebrew/brew "$HOME/.local/homebrew"
-    brew update --force --quiet
-    brew completions link --quiet
+    git clone https://github.com/Homebrew/brew "$HOME/.local/homebrew" \
+      && brew update --force --quiet \
+      && brew completions link --quiet
   fi
 fi
+
+export PATH="$(echo "${PATH//:/"\n"}" | uniq | tr '\n' ':')"

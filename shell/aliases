@@ -2,7 +2,7 @@
 
 # FILE-SYSTEM - READING -------------------------------------------------------
 
-alias l='/bin/ls  -laFGh'
+alias l='/bin/ls  -lFGh'
 alias la='/bin/ls -aFGh'
 alias ll='/bin/ls -laFGh'
 
@@ -44,7 +44,7 @@ alias gP="git pull"
 
 #------------------------------------------------------------------------------
 
-which python3 >/dev/null && alias python='python3'
+which python3 >/dev/null && py='python3' && alias python='python3'
 
 #------------------------------------------------------------------------------
 
@@ -53,7 +53,9 @@ alias reboot='sudo /sbin/reboot'
 
 if [ "$(uname)" = "Darwin" ]; then
   alias sysadminctl='sudo /usr/sbin/sysadminctl'
-elif [ "$(uname)" = "Linux" ]; then
+  alias launchctl='sudo /bin/launchctl'
+  alias diskutil='sudo /usr/sbin/diskutil'
+elif [ "$(uname)" = "Linux" ] && [ ! $USER = "root" ]; then
   alias apt='sudo apt -y'
   alias apt-get='sudo apt-get -y'
 fi

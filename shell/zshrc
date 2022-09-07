@@ -6,6 +6,10 @@
 
 #-----------------------------------------------------------------------------
 
+ZSH_DATA_HOME=$HOME/.local/share/zsh
+
+#-----------------------------------------------------------------------------
+
 completions=(
   zsh-users/zsh-completions
 )
@@ -14,16 +18,18 @@ completions=(
   nilsonholger/osx-zsh-completions
 )
 
+ZSH_COMP_HOME=$ZSH_DATA_HOME/completions
 for completion in $completions; do
-  if [ ! -d $HOME/.local/share/zsh/completions/${completion#*/} ]; then
-    git clone https://github.com/$completion $HOME/.local/share/zsh/completions/${completion#*/}
-    ln -sfv $HOME/.local/share/zsh/completions/${completion#*/}/**/_* $HOME/.local/share/zsh/site-functions/
+  if [ ! -d $ZSH_COMP_HOME/${completion#*/} ]; then
+    git clone https://github.com/$completion $ZSH_COMP_HOME/${completion#*/}
+    ln -sfv $ZSH_COMP_HOME/${completion#*/}/**/_* $ZSH_DATA_HOME/site-functions/
   fi
 done
 unset completion
 unset completions
+unset ZSH_COMP_HOME
 
-fpath=($(echo $HOME/.local/share/zsh/site-functions $fpath | xargs -n1 | uniq))
+fpath=($(echo $ZSH_DATA_HOME/site-functions $fpath | xargs -n1 | uniq))
 autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
 
 #-----------------------------------------------------------------------------
@@ -34,15 +40,16 @@ plugins=(
   hlissner/zsh-autopair
 )
 
+ZSH_PLUGIN_HOME=$ZSH_DATA_HOME/plugins
 for plugin in $plugins; do
-  if [ ! -d $HOME/.local/share/zsh/plugins/${plugin#*/} ]; then
-    git clone https://github.com/$plugin $HOME/.local/share/zsh/plugins/${plugin#*/}
+  if [ ! -d $ZSH_PLUGIN_HOME/${plugin#*/} ]; then
+    git clone https://github.com/$plugin $ZSH_PLUGIN_HOME/${plugin#*/}
   fi
-  . $HOME/.local/share/zsh/plugins/${plugin#*/}/${plugin#*/}.zsh 2>/dev/null \
-    || . $HOME/.local/share/zsh/plugins/${plugin#*/}/zsh-*.plugin.zsh
+  . $ZSH_PLUGIN_HOME/${plugin#*/}/zsh-*.plugin.zsh
 done
 unset plugin
 unset plugins
+unset ZSH_PLUGIN_HOME
 
 #-----------------------------------------------------------------------------
 
@@ -62,3 +69,7 @@ setopt nobeep
 bindkey "^H" vi-cmd-mode
 bindkey "^K" up-history
 bindkey "^J" down-history
+
+#-----------------------------------------------------------------------------
+
+unset ZSH_DATA_HOME
