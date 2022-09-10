@@ -16,4 +16,4 @@ toggleterm.config = {
 toggleterm.setup(toggleterm.config)
 
 vim.o.hidden = true -- required for persisting terminal sessions
-vim.api.nvim_set_keymap("", "<Space>t", "<Cmd>ToggleTerm<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("", "<Space>t", "<Cmd>ToggleTerm<CR>", { noremap = true })

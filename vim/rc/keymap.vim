@@ -36,8 +36,8 @@ noremap , z
 noremap ,, za
 noremap <Space>, zA
 
-onoremap <nowait> <Space> <Esc>
-vnoremap <nowait> <Space> <Esc>
+onoremap <nowait> <Space> <C-[>
+vnoremap <nowait> <Space> <C-[>
 
 onoremap ic i{|vnoremap ic i{
 onoremap ac a{|vnoremap ac a{

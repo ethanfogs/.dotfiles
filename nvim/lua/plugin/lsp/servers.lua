@@ -7,6 +7,12 @@ lsp_servers.tsserver = {
   }
 }
 
+lsp_servers.bashls = {
+  filetype = {
+    "bash", "sh", "zsh",
+  }
+}
+
 lsp_servers.sumneko_lua = {
   settings = {
     Lua = {
@@ -16,6 +22,7 @@ lsp_servers.sumneko_lua = {
       workspace = {
         library = {
           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+          [vim.fn.expand("$VIMRUNTIME/lua/vim")] = true,
           [vim.fn.stdpath("config") .. "/lua"] = true,
           [vim.fn.getcwd()] = true,
         },
