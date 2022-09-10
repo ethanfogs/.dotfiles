@@ -44,7 +44,7 @@ alias gP="git pull"
 
 #------------------------------------------------------------------------------
 
-which python3 >/dev/null && py='python3' && alias python='python3'
+which python3 >/dev/null && alias py='python3' && alias python='python3'
 
 #------------------------------------------------------------------------------
 
@@ -55,7 +55,7 @@ if [ "$(uname)" = "Darwin" ]; then
   alias sysadminctl='sudo /usr/sbin/sysadminctl'
   alias launchctl='sudo /bin/launchctl'
   alias diskutil='sudo /usr/sbin/diskutil'
-elif [ "$(uname)" = "Linux" ] && [ ! $USER = "root" ]; then
+elif [ "$(uname)" = "Linux" ] && [ ! "$USER" = "root" ]; then
   alias apt='sudo apt -y'
   alias apt-get='sudo apt-get -y'
 fi

@@ -2,8 +2,8 @@
 
 # RC\SOURCE FILES -------------------------------------------------------------
 
-[ -r $HOME/.env ]     && . $HOME/.env
-[ -r $HOME/.aliases ] && . $HOME/.aliases
+[ -r ~/.env ]     && . ~/.env
+[ -r ~/.aliases ] && . ~/.aliases
 
 # ----------------------------------------------------------------------------
 
@@ -13,18 +13,18 @@ CURRENT_SHELL=$(ps -p $$ -oargs= | sed -E "s#.*[-/]##")
 
 export HISTCONTROL=both
 export HISTTIMEFORMAT=""
-mkdir -p "$HOME/.local/share/$CURRENT_SHELL"
-export HISTFILE="$HOME/.local/share/$CURRENT_SHELL/${CURRENT_SHELL}_history"
+mkdir -p ~/.local/share/"$CURRENT_SHELL"
+export HISTFILE=~/.local/share/"$CURRENT_SHELL"/"$CURRENT_SHELL"_history
 export LESSHISTFILE=/dev/null
 
-# PROMPT ------------------------------------------------------------------------------
+# PROMPT ---------------------------------------------------------------------
 
 # if ! which starship >/dev/null; then
 #   curl "https://starship.rs/install.sh" -sSO --create-dirs --output-dir "$HOME/.cache/starship" \
 #     && sh $HOME/.cache/starship/install.sh --force --bin-dir $HOME/.local/bin >/dev/null
 # fi
 
-which starship >/dev/null && eval "$(starship init $CURRENT_SHELL)"
+which starship >/dev/null && eval "$(starship init "$CURRENT_SHELL")"
 
 #------------------------------------------------------------------------------
 
