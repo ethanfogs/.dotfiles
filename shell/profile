@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-PATH="$HOME/.local/sbin:$HOME/.local/bin:$PATH)"
+PATH="$HOME/.local/sbin:$HOME/.local/bin:$PATH"
+
+#-----------------------------------------------------------------------------
 
 export XDG_CONFIG_HOME=~/.config
 export XDG_DATA_HOME=~/.local/share
@@ -28,4 +30,7 @@ if [ "$(uname)" = "Darwin" ]; then
   fi
 fi
 
-export PATH="$(echo "${PATH//:/"\n"}" | uniq | tr '\n' ':')"
+#-----------------------------------------------------------------------------
+
+PATH="$(echo "${PATH//:/"\n"}" | uniq | tr '\n' ':')"
+export PATH

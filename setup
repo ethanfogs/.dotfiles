@@ -5,8 +5,8 @@
 
 for rc_dir in *; do
   [ "$rc_dir" == "${0##*/}" ] && continue
-  [ -h ~/.config/"$rc_dir" ] && unlink ~/.config/"$rc_dir"
-  [ -d ~/.config/"$rc_dir" ] && rm -rf ~/.config/"$rc_dir"
+  [ -h ~/.config/"$rc_dir" ]  && unlink ~/.config/"$rc_dir"
+  [ -d ~/.config/"$rc_dir" ]  && rm -rf ~/.config/"$rc_dir"
   ln -sfv "$(pwd)"/"$rc_dir" ~/.config/"$rc_dir"
 done
 
@@ -25,4 +25,5 @@ for dot_link in "${dot_links[@]}"; do
 done
 
 # ----------------------------------------------------------------------------
+
 # reset
