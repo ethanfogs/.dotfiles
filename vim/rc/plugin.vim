@@ -26,6 +26,7 @@ call plug#begin(s:plug.data)
     Plug 'lifepillar/vim-solarized8'
     Plug 'mkarmona/materialbox'
     Plug 'gregsexton/Atom'
+    Plug 'catppuccin/nvim', {'as': 'catppuccin'}
   endif
 
   if (v:progname == 'vim' || v:progname == 'vi')
