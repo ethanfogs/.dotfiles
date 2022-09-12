@@ -1,5 +1,5 @@
 let scratch_buf = {
-\ 'dir': $HOME . '/.cache/' . v:progname . '/scratchbuf'
+  \ 'dir': $HOME . '/.cache/' . v:progname . '/scratchbuf'
 \}
 
 call mkdir(scratch_buf.dir, 'p')
