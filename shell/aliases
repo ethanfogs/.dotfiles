@@ -1,21 +1,34 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-# FILE-SYSTEM - READING -------------------------------------------------------
+# ----------------------------------------------------------------------------
 
+alias l='/bin/ls  -lFGh'
 alias l='/bin/ls  -lFGh'
 alias la='/bin/ls -aFGh'
 alias ll='/bin/ls -laFGh'
 
 which bat  >/dev/null && alias cat='bat'
-which tree >/dev/null && alias t='tree -C' && alias tree='tree -C'
+which tree >/dev/null && alias tree='tree -C' && alias t='tree'
 
-# FILE-SYSTEM - WRITING -------------------------------------------------------
+# ----------------------------------------------------------------------------
+
+alias ..='cd ..'
+
+cfg(){
+  local CFG_HOME="$HOME/.dotfiles/main"
+  [ -d "$CFG_HOME" ] || local CFG_HOME="$HOME/.config"
+  [ -d "$CFG_HOME" ] && cd "$CFG_HOME" || return 1
+}
+
+# ----------------------------------------------------------------------------
 
 alias mkdir='/bin/mkdir -p'
 
 mcd(){
-  /bin/mkdir -p "$1" && cd "$1"
+  mkdir "$1" && cd "$1" || return 1
 }
+
+which compdef >/dev/null && compdef -d mcd
 
 chx(){
   if [ -x "$1" ]; then chmod -x "$1"; else chmod +x "$1"; fi
@@ -23,7 +36,7 @@ chx(){
 
 # TEXT EDITOR -----------------------------------------------------------------
 
-which "$EDITOR" >/dev/null && alias e='$EDITOR'
+alias e='${EDITOR:-vim}'
 
 # GIT -------------------------------------------------------------------------
 
@@ -31,31 +44,52 @@ alias gss='git status >/dev/null && $EDITOR -c "Git | bd 1"'
 alias gs="git status --short"
 alias gl="git log --oneline --graph"
 alias gb="git branch -a"
-alias gco="git checkout -b"
 alias gch="git checkout"
 alias ga="git add"
-alias gA="git add ."
-alias gd="git diff --minimal"
-alias gst="git stash"
 alias gc="git commit"
-alias gC="git add . && git commit"
 alias gp="git push"
 alias gP="git pull"
 
 #------------------------------------------------------------------------------
 
-which python3 >/dev/null && alias py='python3' && alias python='python3'
+which python3 >/dev/null && alias python='python3' && alias py='python'
 
 #------------------------------------------------------------------------------
 
-alias su='/usr/bin/su -l'
-alias reboot='sudo /sbin/reboot'
+alias su="/usr/bin/su -l"
+
+sudo_aliases=(
+  'reboot'
+)
 
 if [ "$(uname)" = "Darwin" ]; then
-  alias sysadminctl='sudo /usr/sbin/sysadminctl'
-  alias launchctl='sudo /bin/launchctl'
-  alias diskutil='sudo /usr/sbin/diskutil'
-elif [ "$(uname)" = "Linux" ] && [ ! "$USER" = "root" ]; then
-  alias apt='sudo apt -y'
-  alias apt-get='sudo apt-get -y'
+  sudo_aliases+=(
+    'sysadminctl'
+    'launchctl'
+    'diskutil'
+  )
 fi
+
+if [ "$(uname)" = "Linux" ]; then
+  alias apt='apt -y'
+  alias apt-get='apt-get -y'
+
+  sudo_aliases+=(
+    'apt'
+    'apt-get'
+  )
+fi
+
+if [ ! "$(whoami)" = "root" ]; then
+  for sudo_alias in "${sudo_aliases[@]}"; do
+    value="$(alias "$sudo_alias" 2>/dev/null | sed -E "s#.*'(sudo)* *(.*)'#\2#")"
+    value="${value:-$(which "$sudo_alias" 2>/dev/null)}"
+    [ -n "$value" ] && alias '$sudo_alias'='sudo $value'
+  done
+fi
+
+unset sudo_aliases
+unset sudo_alias
+unset value
+
+# ----------------------------------------------------------------------------
