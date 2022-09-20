@@ -53,6 +53,7 @@ unset ZSH_PLUGIN_HOME
 
 #-----------------------------------------------------------------------------
 
+setopt autocd
 setopt dotglob
 setopt extendedglob
 setopt menucomplete #tab completion on first tab hit
