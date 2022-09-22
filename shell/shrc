@@ -12,10 +12,13 @@ CURRENT_SHELL=$(ps -p $$ -oargs= | sed -E "s#.*[-/]##")
 
 # HISTORY MANAGEMENT ---------------------------------------------------------
 
-export HISTCONTROL=both
-export HISTTIMEFORMAT=""
-mkdir -p ~/.local/share/"$CURRENT_SHELL"
-export HISTFILE=~/.local/share/"$CURRENT_SHELL"/"$CURRENT_SHELL"_history
+export HISTCONTROL=ignoredups:erasedups
+export HISTSIZE=1000
+# export HISTTIMEFORMAT=""
+
+mkdir -p ~/.cache/"$CURRENT_SHELL"
+export HISTFILE=~/.cache/$CURRENT_SHELL/history
+
 export LESSHISTFILE=/dev/null
 
 # PROMPT ---------------------------------------------------------------------

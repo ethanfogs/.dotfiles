@@ -3,7 +3,6 @@
 # ----------------------------------------------------------------------------
 
 alias l='/bin/ls  -lFGh'
-alias l='/bin/ls  -lFGh'
 alias la='/bin/ls -aFGh'
 alias ll='/bin/ls -laFGh'
 
@@ -28,8 +27,6 @@ mcd(){
   mkdir "$1" && cd "$1" || return 1
 }
 
-which compdef >/dev/null && compdef -d mcd
-
 chx(){
   if [ -x "$1" ]; then chmod -x "$1"; else chmod +x "$1"; fi
 }
@@ -50,46 +47,18 @@ alias gc="git commit"
 alias gp="git push"
 alias gP="git pull"
 
-#------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 
-which python3 >/dev/null && alias python='python3' && alias py='python'
+which python3 >/dev/null && alias python='python3'
 
-#------------------------------------------------------------------------------
+# SYSTEM ADMINISTRATION ------------------------------------------------------
 
-alias su="/usr/bin/su -l"
-
-sudo_aliases=(
-  'reboot'
-)
-
-if [ "$(uname)" = "Darwin" ]; then
-  sudo_aliases+=(
-    'sysadminctl'
-    'launchctl'
-    'diskutil'
-  )
-fi
-
-if [ "$(uname)" = "Linux" ]; then
-  alias apt='apt -y'
-  alias apt-get='apt-get -y'
-
-  sudo_aliases+=(
-    'apt'
-    'apt-get'
-  )
-fi
-
-if [ ! "$(whoami)" = "root" ]; then
-  for sudo_alias in "${sudo_aliases[@]}"; do
-    value="$(alias "$sudo_alias" 2>/dev/null | sed -E "s#.*'(sudo)* *(.*)'#\2#")"
-    value="${value:-$(which "$sudo_alias" 2>/dev/null)}"
-    [ -n "$value" ] && alias '$sudo_alias'='sudo $value'
-  done
-fi
-
-unset sudo_aliases
-unset sudo_alias
-unset value
+which su          >/dev/null && alias su='/usr/bin/su -l'
+which reboot      >/dev/null && alias reboot='sudo reboot'
+which apt         >/dev/null && alias apt='sudo apt -y'
+which apt-get     >/dev/null && alias apt-get='sudo apt-get -y'
+which sysadminctl >/dev/null && alias sysadminctl='sudo sysadminctl'
+which launchctl   >/dev/null && alias launchctl='sudo launchctl'
+which diskuti     >/dev/null && alias diskuti='sudo diskuti'
 
 # ----------------------------------------------------------------------------

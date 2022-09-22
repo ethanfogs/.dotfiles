@@ -2,6 +2,8 @@
 
 [ -r ~/.shrc ] && . ~/.shrc
 
+# SHELL OPTS -----------------------------------------------------------------
+
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export MAILCHECK=0
 
@@ -18,21 +20,31 @@ shopt -s hostcomplete
 shopt -s autocd
 shopt -s progcomp_alias
 
-bind 'set editing-mode vi'
-# bind 'set blink-matching-paren on'
+# READLINE -------------------------------------------------------------------
+
+# bind 'set editing-mode vi'
+
 bind 'set mark-symlinked-directories on'
 bind 'set colored-completion-prefix on'
-bind 'set history-preserve-point on'
 bind 'set match-hidden-files on'
-bind 'set skip-completed-text on'
+
 bind 'set visible-stats on'
 bind 'set colored-stats on'
+
+bind 'set history-preserve-point on'
+
+# COMPLETION -----------------------------------------------------------------
+bind 'set skip-completed-text on'
 bind 'set show-all-if-ambiguous on'
 bind 'set show-all-if-unmodified on'
 bind 'set completion-ignore-case on'
 
+# KEYBINDS -------------------------------------------------------------------
+
 bind '"\C-l": clear-screen'
-bind '"\C-j": next-history'
-bind '"\C-k": previous-history'
-bind '"\t": menu-complete'
-bind '"\e[Z": menu-complete-backward'
+
+bind '"\C-k": history-substring-search-backward'
+bind '"\C-j": history-substring-search-forward'
+
+bind '"\t": menu-complete'            #\t => <Tab>
+bind '"\e[Z": menu-complete-backward' #\t => <S-Tab>
