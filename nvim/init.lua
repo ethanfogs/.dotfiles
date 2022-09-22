@@ -1,42 +1,25 @@
-local rc_files = {
-  "rc.opt",
-  "rc.keymap",
-  "rc.autocmd",
-  "rc.funcs",
-  "rc.plugin",
-}
+vim.cmd('source ~/.vim/vimrc')
 
 -------------------------------------------------------------------------------
 
 local plugin_configs = {
+  "plugin.bufferline",
+  "plugin.cmp",
+  "plugin.dashboard",
   "plugin.icons",
-  "plugin.web_devicons",
-  "plugin.gitsigns",
+  "plugin.illuminate",
+  "plugin.indentline",
   "plugin.lsp",
+  "plugin.lualine",
   "plugin.telescope",
   "plugin.treesitter",
-  "plugin.cmp",
-  "plugin.autopairs",
-  "plugin.comment",
-  "plugin.nvim-tree",
-  "plugin.toggleterm",
-  "plugin.lualine",
-  "plugin.bufferline",
-  "plugin.indentline",
-  "plugin.illuminate",
-  "plugin.scratchbuf",
+  "plugin.web_devicons",
 }
 
-for _, file in pairs(vim.tbl_flatten({ rc_files, plugin_configs })) do
+for _, file in pairs(plugin_configs) do
   if (not pcall(require, file)) then print("{init.lua} [import failed]", file) end
 end
 
 -------------------------------------------------------------------------------
 
-local favColorSchemes = {
-  "focuspoint",
-  "materialbox",
-  "solarized8_high",
-}
-
-vim.cmd("colorscheme " .. favColorSchemes[math.random(#favColorSchemes)])
+function _G.echo(input) print(vim.inspect(input)) end
