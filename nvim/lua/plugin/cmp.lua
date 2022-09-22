@@ -1,4 +1,4 @@
-local cmp     = require('cmp')
+local cmp = require("cmp")
 local luasnip = require('luasnip')
 
 require('luasnip/loaders/from_vscode').lazy_load()
@@ -11,7 +11,7 @@ cmp.config_opts = {
 function cmp.mapping.smart_select_prev(fallback)
   if (cmp.visible()) then
     cmp.select_prev_item()
-  elseif luasnip.jumpable(-1) then
+  elseif (luasnip.jumpable(-1)) then
     luasnip.jump(-1)
   else
     fallback()

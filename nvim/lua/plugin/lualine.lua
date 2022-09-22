@@ -1,10 +1,8 @@
--- LUALINE (STATUS-LINE) -----------------------------------------------------
-
 local lualine = require("lualine")
-local set_hl = vim.api.nvim_set_hl
 
 ------------------------------------------------------------------------------
 
+local set_hl = vim.api.nvim_set_hl
 set_hl(0, "SLGitIcon", { fg = "#E8AB53", bg = "#303030" })
 set_hl(0, "SLBranchName", { fg = "#D4D4D4", bg = "#303030", bold = false })
 set_hl(0, "SLProgress", { fg = "#D7BA7D", bg = "#252525" })

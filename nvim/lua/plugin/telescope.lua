@@ -1,13 +1,14 @@
 local telescope = require("telescope")
-telescope.builtin = require("telescope.builtin")
+-- telescope.symbols = require("telescope")
 
-telescope.config = {}
+------------------------------------------------------------------------------
 
-telescope.config.defaults = {
-  entry_prefix = "",
-  selection_caret = "",
+local defaults = {
+  entry_prefix = "", selection_caret = "",
+  -- path_display = { "smart" },
+  path_display = {},
   sorting_strategy = "ascending",
-  file_ignore_patterns = { "node_modules/", },
+  file_ignore_patterns = { "node_modules/", ".git/", ".cache/" },
   winblend = 7,
   dynamic_preview_title = true,
   layout_strategy = 'horizontal',
@@ -17,7 +18,7 @@ telescope.config.defaults = {
   },
 }
 
-telescope.config.defaults.mappings = {
+local mappings = {
   n = {
     ["u"]      = "preview_scrolling_up",
     ["d"]      = "preview_scrolling_down",
@@ -40,61 +41,97 @@ telescope.config.defaults.mappings = {
   }
 }
 
-telescope.setup(telescope.config)
-
-------------------------------------------------------------------------------
-
-telescope.keymaps = {
-  ["a"] = telescope.builtin.autocommands,
-  ["b"] = telescope.builtin.buffers,
-  ["B"] = telescope.builtin.builtin,
-  ["d"] = telescope.builtin.lsp_definitions,
-  ["D"] = telescope.builtin.lsp_document_symbols,
-  ["F"] = telescope.builtin.git_files,
-  ["h"] = telescope.builtin.help_tags,
-  ["H"] = telescope.builtin.highlights,
-  ["g"] = telescope.builtin.git_status,
-  ["G"] = telescope.builtin.grep_string,
-  ["i"] = telescope.builtin.lsp_implementations,
-  ["I"] = telescope.builtin.lsp_incoming_calls,
-  ["j"] = telescope.builtin.jumplist,
-  ["k"] = telescope.builtin.keymaps,
-  ["l"] = telescope.builtin.live_grep,
-  ["L"] = telescope.builtin.loclist,
-  ["m"] = telescope.builtin.man_pages,
-  ["o"] = telescope.builtin.old_files,
-  ["O"] = telescope.builtin.lsp_outgoing_calls,
-  ["q"] = telescope.builtin.quickfix,
-  ["Q"] = telescope.builtin.quickfixhistory,
-  ["r"] = telescope.builtin.lsp_references,
-  ["R"] = telescope.builtin.reloader,
-  ["s"] = telescope.builtin.git_stash,
-  ["S"] = telescope.builtin.spell_suggest,
-  ["t"] = telescope.builtin.treesitter,
-  ["w"] = telescope.builtin.lsp_dynamic_workspace_symbols,
-  [";"] = telescope.builtin.commands,
-  ["?"] = telescope.builtin.builtin,
-  ["'"] = telescope.builtin.registers,
-  ["/"] = telescope.builtin.search_history,
-  ["<Space>"] = telescope.builtin.resume,
+local builtin = require("telescope.builtin")
+local keymaps = {
+  a = builtin.autocommands,
+  b = builtin.buffers,
+  B = builtin.builtin,
+  c = function() builtin.colorscheme({ enable_preview = true }) end,
+  d = builtin.lsp_definitions,
+  D = builtin.lsp_document_symbols,
+  F = builtin.git_files,
+  h = builtin.help_tags,
+  g = builtin.git_status,
+  i = builtin.lsp_implementations,
+  k = builtin.keymaps,
+  l = builtin.live_grep,
+  m = builtin.man_pages,
+  o = builtin.oldfiles,
+  q = builtin.quickfix,
+  r = builtin.lsp_references,
+  s = builtin.git_stash,
+  S = builtin.spell_suggest,
+  t = builtin.treesitter,
+  w = builtin.lsp_dynamic_workspace_symbols,
+  ["/"] = builtin.grep_string,
+  ["?"] = builtin.builtin,
+  ["'"] = builtin.registers,
+  ["<Space>"] = builtin.resume,
 }
 
-telescope.keymaps.f = function()
+keymaps.f = function()
   local args = { follow = true, hidden = true, }
-  if (string.match(vim.fn.getcwd(), "nvim") ~= nil) then
-    args["search_dirs"] = { ".", "~/.vim" }
+  if (string.match(vim.fn.getcwd(), "nvim$") ~= nil) then
+    args["search_dirs"] = { ".", "../vim" }
   end
-  telescope.builtin.find_files(args)
+  builtin.find_files(args)
 end
 
-telescope.keymaps.c = function()
-  telescope.builtin.colorscheme({ enable_preview = true })
+if (pcall(telescope.load_extension, "file_browser")) then
+
+  local file_browser = telescope.extensions.file_browser
+
+  keymaps.e = function()
+    local args = { hidden = true, follow = true }
+    file_browser.file_browser(args)
+  end
+
+  file_browser.mappings = {
+    n = {
+      C = file_browser.actions.change_cwd,
+      D = file_browser.actions.remove,
+      M = file_browser.actions.move,
+      n = file_browser.actions.create,
+      R = file_browser.actions.rename,
+      S = file_browser.actions.create,
+      ["~"] = file_browser.actions.goto_home_dir,
+      ["."] = file_browser.actions.toggle_hidden,
+    },
+    i = {
+      ["<C-a>"] = file_browser.actions.toggle_hidden,
+      ["<C-d>"] = file_browser.actions.remove,
+      ["<C-h>"] = file_browser.actions.goto_home_dir,
+      ["<C-m>"] = file_browser.actions.move,
+      ["<C-r>"] = file_browser.actions.rename,
+      ["<C-y>"] = file_browser.actions.copy,
+    }
+  }
+
+  for mode, _mappings in pairs(file_browser.mappings) do
+    mappings[mode] = vim.tbl_extend("keep", mappings[mode], _mappings)
+  end
 end
 
 ------------------------------------------------------------------------------
 
-telescope.keymaps.leader_key = "s"
+telescope.keymap = {
+  opts = { noremap = true },
+  leader_key = "s",
+}
 
-for lhs, rhs in pairs(telescope.keymaps) do
-  vim.keymap.set("n", "s" .. lhs, rhs, { noremap = true, silent = true })
+function telescope.keymap:set(lhs, rhs)
+  vim.keymap.set("n", self.leader_key .. lhs, rhs, self.opts)
 end
+
+for lhs, rhs in pairs(keymaps) do telescope.keymap:set(lhs, rhs) end
+
+------------------------------------------------------------------------------
+
+defaults.mappings = mappings
+telescope.config = {
+  defaults = defaults,
+}
+
+telescope.setup(telescope.config)
+--]]
+--]]

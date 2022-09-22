@@ -9,12 +9,8 @@ lsp.configs = {
   "signature",
 }
 
-local import_status
 for _, config in pairs(lsp.configs) do
-  import_status, lsp[config] = pcall(require, "plugin.lsp." .. config)
-  if (not import_status) then
-    print("{plugin.lsp.init} [import failed ] plugin.lsp." .. config)
-  end
+  lsp[config] = require("plugin.lsp." .. config)
 end
 
 ------------------------------------------------------------------------------
@@ -38,7 +34,7 @@ lsp.mappings = {
 ------------------------------------------------------------------------------
 
 lsp.on_attach = function(client)
-  local opts = { buffer = 0, noremap = true, silent = true }
+  local opts = { buffer = 0, noremap = true }
   for mode, mappings in pairs(lsp.mappings) do
     for lhs, rhs in pairs(mappings) do vim.keymap.set(mode, lhs, rhs, opts) end
   end
@@ -52,3 +48,12 @@ for _, ls in pairs(lsp.installer.get_installed_servers()) do
     capabilities = lsp.handlers.capabilities
   }, lsp.servers[ls.name] or {}))
 end
+
+------------------------------------------------------------------------------
+
+vim.api.nvim_create_augroup("FormatOnWrite", { clear = true })
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  group = "FormatOnWrite",
+  pattern = "*",
+  callback = vim.lsp.buf.formatting_sync
+})
