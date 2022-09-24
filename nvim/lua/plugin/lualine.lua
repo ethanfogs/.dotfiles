@@ -9,6 +9,8 @@ set_hl(0, "SLProgress", { fg = "#D7BA7D", bg = "#252525" })
 set_hl(0, "SLProgress", { fg = "#D4D4D4", bg = "#303030" })
 set_hl(0, "SLSeparator", { fg = "#808080", bg = "#252525" })
 
+------------------------------------------------------------------------------
+
 local mode_color = {
   n = "#569cd6",
   i = "#6a9955",
@@ -35,7 +37,6 @@ local mode_color = {
 }
 
 local mode = {
-  -- mode component
   function() return "▊" end,
   color = function()
     -- auto change color according to neovims mode
@@ -47,6 +48,10 @@ local mode = {
 
 local hide_in_width = function() return vim.fn.winwidth(0) > 80 end
 
+------------------------------------------------------------------------------
+
+local icons = require("plugin.icons")
+
 local diagnostics = {
   "diagnostics",
   sources = { "nvim_diagnostic" },
@@ -56,14 +61,18 @@ local diagnostics = {
     warn = icons.diagnostics.Warning .. " "
   },
   colored = false,
-  update_in_insert = false,
+  update_in_insert = true,
   always_visible = true,
 }
 
 local diff = {
   "diff",
   colored = false,
-  symbols = { added = icons.git.Add .. " ", modified = icons.git.Mod .. " ", removed = icons.git.Remove .. " " }, -- changes diff symbols
+  symbols = { -- changes diff symbols
+    added = icons.git.Add .. " ",
+    modified = icons.git.Mod .. " ",
+    removed = icons.git.Remove .. " "
+  },
   cond = hide_in_width,
   separator = "%#SLSeparator#" .. "│ " .. "%*",
 }
@@ -95,13 +104,7 @@ local progress = {
   -- padding = 0,
 }
 
-local current_signature = function()
-  if pcall(require, "lsp_signature") then return end
-  local sig = require("lsp_signature").status_line(30)
-  return "%#SLSeparator#" .. sig.hint .. "%*"
-end
-
-
+--[[
 local progress = function() --cool function for progress bars
   local current_line = vim.fn.line "."
   local total_lines = vim.fn.line "$"
@@ -111,30 +114,34 @@ local progress = function() --cool function for progress bars
   -- return chars[index]
   return "%#SLProgress#" .. chars[index] .. "%*"
 end
+--]]
+
+local current_signature = function()
+  if (pcall(require, "lsp_signature")) then
+    return "%#SLSeparator#" .. require("lsp_signature").status_line(30) .. "%*"
+  end
+end
+
 
 local spaces = {
-  function()
-    return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
-  end,
+  function() return "spaces: " .. vim.bo.shiftwidth end,
   padding = 0,
   separator = "%#SLSeparator#" .. " │" .. "%*",
 }
 
 local location = {
   "location",
-  color = function()
-    return { fg = "#252525", bg = mode_color[vim.fn.mode()] }
-  end,
+  color = function() return { fg = "#252525", bg = mode_color[vim.fn.mode()] } end,
 }
 
-lualine.setup({
+lualine.config = {
   options = {
     globalstatus = false,
     icons_enabled = true,
     theme = "auto",
     component_separators = { left = "", right = "" },
     section_separators = { left = '', right = '' },
-    --disabled_filetypes = { "alpha", "dashboard" },
+    --disabled_filetypes = { "dashboard", },
     always_divide_middle = true,
   },
   sections = {
@@ -164,4 +171,8 @@ lualine.setup({
   },
   tabline = {},
   extensions = {},
-})
+}
+
+-- lualine.after = "base16-vim"
+
+lualine.setup(lualine.config)

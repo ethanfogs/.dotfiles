@@ -2,9 +2,8 @@ local db = require('dashboard')
 
 ------------------------------------------------------------------------------
 
-vim.api.nvim_create_augroup("dashboard_filetype", { clear = true })
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  group = "dashboard_filetype",
+  group = vim.api.nvim_create_augroup("dashboard_filetype", { clear = true }),
   pattern = { "dashboard" },
   callback = function() vim.o.foldenable = false end,
 })

@@ -16,7 +16,7 @@ alias ..='cd ..'
 cfg(){
   local CFG_HOME="$HOME/.dotfiles/main"
   [ -d "$CFG_HOME" ] || local CFG_HOME="$HOME/.config"
-  [ -d "$CFG_HOME" ] && cd "$CFG_HOME" || return 1
+  [ -d "$CFG_HOME" ] && cd "$CFG_HOME/${1:-}" || return 1
 }
 
 # ----------------------------------------------------------------------------

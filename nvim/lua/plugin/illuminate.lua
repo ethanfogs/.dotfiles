@@ -1,1 +1,1 @@
-local illuminate = require("illuminate")
+vim.cmd('source ~/.vim/plugin/illuminate.vim')

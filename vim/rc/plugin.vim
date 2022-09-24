@@ -1,104 +1,78 @@
-let b:lasttick = b:changedtick
-
 let s:plug = {}
-let s:plug.data = $HOME . '/.local/share/' . v:progname . '/site/plugged'
-let s:plug.head  = ((v:progname == 'nvim') ? stdpath('data') . '/site' : $HOME . '/.vim') . '/autoload'
+let s:plug.data = $HOME . '/.local/share/' . v:progname . '/site/plugins'
+let s:plug.head = $HOME . '/.local/share/' . v:progname . '/site/autoload'
 
-if(!filereadable(s:plug.head . '/plug.vim'))
-  let s:plug.uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  call system('curl -sSfLO --create-dirs --output-dir ' . s:plug.head . ' ' . s:plug.uri)
+let &runtimepath .= (&runtimepath =~ s:plug.head) ? '' : ',' . s:plug.head
+
+if(!filereadable(s:plug.autoload . '/plug.vim'))
+  let s:plug.uri =  'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  call system('curl -sSfLO --create-dirs --output-dir ' . s:plug.autoload . ' ' . s:plug.uri)
   let s:plug.sync = 1
 endif
 
 "-----------------------------------------------------------------------------
 
 call plug#begin(s:plug.data)
+
   Plug 'junegunn/vim-plug' "only for helptags, not involved with bootstrapping
 
-  "PLUGINS COMPATIBLE WITH BOTH VIM AND NVIM
-  Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-rhubarb'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-commentary'
+  " GIT PLUGINS
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-rhubarb'
 
-  Plug 'preservim/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-  " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-  " Plug 'PhilRunninger/nerdtree-buffer-ops'
-  " Plug 'PhilRunninger/nerdtree-visual-selection'
+  " FILE-BROWSER
+    Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+    Plug 'Xuyuanp/nerdtree-git-plugin'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'scrooloose/nerdtree-project-plugin'
+    " Plug 'PhilRunninger/nerdtree-buffer-ops'
+    " Plug 'PhilRunninger/nerdtree-visual-selection'
 
-  Plug 'RRethy/vim-illuminate'
+  " USER-INTERACTIVE BASED PLUGINS
+    Plug 'tpope/vim-commentary'
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-repeat'
 
-  Plug 'jiangmiao/auto-pairs'
+  " VISUAL BASED PLUGINS
+    Plug 'RRethy/vim-illuminate'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'chrisbra/Colorizer'
 
-  Plug 'airblade/vim-gitgutter'
-
-  Plug 'chriskempson/base16-vim'
-  Plug 'chase/focuspoint-vim'
-  " if (has('termguicolors'))
-    Plug 'lifepillar/vim-solarized8'
-    Plug 'mkarmona/materialbox'
-    Plug 'gregsexton/Atom'
-  " endif
-
-  if(v:progname == 'vim' || v:progname == 'vi')
+  " VISUAL BASED PLUGINS
     Plug 'ryanoasis/vim-devicons'
     Plug 'vim-airline/vim-airline'
-    Plug 'wellle/context.vim'
-  else
 
-    "GENERAL HOUSEKEEPING & DEPS
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'nvim-lua/popup.nvim'
+    " COLORSCHEMES
+      " Plug 'chriskempson/base16-vim'
+      " Plug 'chase/focuspoint-vim'
+      " Plug 'lifepillar/vim-solarized8'
+      " Plug 'mkarmona/materialbox'
+      " Plug 'gregsexton/Atom'
 
-    "LSP
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'onsails/lspkind-nvim' " lsp pictograms
-    Plug 'ray-x/lsp_signature.nvim'
-    Plug 'williamboman/nvim-lsp-installer'
-    Plug 'folke/lsp-colors.nvim' " colorscheme support for lsp buffers
-    Plug 'nvim-pack/nvim-spectre'
+    " VIM LSP
+      Plug 'prabirshrestha/vim-lsp'
+      Plug 'mattn/vim-lsp-settings'
 
-    "TREESITTER (LINTING)
-    Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdateSync' }
-    Plug 'nvim-treesitter/nvim-treesitter-context'
-    " Plug 'nvim-treesitter/playground'
+    " AUTO-COMPLETIONS
+      Plug 'prabirshrestha/asyncomplete.vim'
+      Plug 'prabirshrestha/asyncomplete-lsp.vim'
+      " Plug 'Shougo/ddc.vim'
 
-    " CMP (AUTO-COMPLETIONS& POPUP SUGGESTIONS)
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/cmp-cmdline'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-nvim-lua'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'L3MON4D3/LuaSnip'
-    Plug 'saadparwaiz1/cmp_luasnip'
+    " TREESITTER EQUIVELANT FOR VIM
+      Plug 'wellle/context.vim'
 
-    "TELESCOPE (CONTENT BROWSER)
-    Plug 'nvim-telescope/telescope.nvim'
-    Plug 'nvim-telescope/telescope-fzy-native.nvim'
-    Plug 'nvim-telescope/telescope-symbols.nvim'
-    Plug 'nvim-telescope/telescope-file-browser.nvim'
-    Plug 'nvim-telescope/telescope-project.nvim'
-
-    if (has('linux'))
-      Plug 'nvim-telescope/telescope-media-files.nvim'
-    endif
-
-    " Plug 'akinsho/toggleterm.nvim'
-
-    "CODE AUTO-FORMATTER
-    Plug 'jose-elias-alvarez/null-ls.nvim'
-
-    Plug 'kyazdani42/nvim-web-devicons'
-
-    "INDENTATION GUIDE
-    Plug 'lukas-reineke/indent-blankline.nvim'
-
-    " Plug 'glepnir/dashboard-nvim'
-
-    "ICONS & STATUS-LINES
-    Plug 'nvim-lualine/lualine.nvim'
-    Plug 'akinsho/bufferline.nvim'
-  endif
+    " DEBUGGING
+      Plug 'puremourning/vimspector'
 call plug#end()
+
+" ----------------------------------------------------------------------------
+
+function s:open_plugin_github_repo(repo=trim(expand('<cWORD>'), '[''"]'))
+  if(a:repo !~ '\w\+\/\w\+') | return | endif
+  if(system('curl https://api.github.com/repos/' . a:repo) !~ "Not Found")
+    call system('open https://github.com/' . a:repo)
+  endif
+endfunction
+
+nnoremap <buffer> <C-]> <Cmd>call <SID>open_plugin_github_repo()<CR>

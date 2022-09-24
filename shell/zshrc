@@ -22,15 +22,21 @@ ZSH_COMP_HOME=$ZSH_DATA_HOME/completions
 for completion in $completions; do
   if [ ! -d $ZSH_COMP_HOME/${completion#*/} ]; then
     git clone https://github.com/$completion $ZSH_COMP_HOME/${completion#*/}
-    ln -sfv $ZSH_COMP_HOME/${completion#*/}/**/_* $ZSH_DATA_HOME/site-functions/
+    # ln -sfv $ZSH_COMP_HOME/${completion#*/}/**/_* $ZSH_DATA_HOME/site-functions/
+    rsync $ZSH_COMP_HOME/${completion#*/}/**/_* $ZSH_DATA_HOME/site-functions/
   fi
 done
 unset completion
 unset completions
 unset ZSH_COMP_HOME
 
-fpath=($(echo $ZSH_DATA_HOME/site-functions $fpath | xargs -n1 | uniq))
+which brew >/dev/null && FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
+FPATH="$ZSH_DATA_HOME/site-functions:$FPATH"
+
+FPATH="$(echo "${FPATH//:/"\n"}" | uniq | tr '\n' ':')"
 autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
+
+which mcd 2>&1 >/dev/null && compdef -d mcd
 
 #-----------------------------------------------------------------------------
 
@@ -54,22 +60,35 @@ unset ZSH_PLUGIN_HOME
 #-----------------------------------------------------------------------------
 
 setopt autocd
+setopt chaselinks   # go to actual symlink dir rather in cd
+
 setopt dotglob
 setopt extendedglob
-setopt menucomplete #tab completion on first tab hit
-setopt chaselinks   #go to actual symlink dir rather in cd
+
+setopt menucomplete # tab completion on first tab hit
+
 setopt histverify
 setopt sharehistory
 setopt histappend
 setopt incappendhistory
 setopt noextendedhistory #no timestamping prepending history entries
-setopt nobeep
+
+# setopt nobeep
+
+# setopt EXTENDED_HISTORY
+# setopt HIST_EXPIRE_DUPS_FIRST
+# setopt HIST_IGNORE_DUPS
+# setopt HIST_IGNORE_ALL_DUPS
+# setopt HIST_IGNORE_SPACE
+# setopt HIST_FIND_NO_DUPS
+# setopt HIST_SAVE_NO_DUPS
+# setopt HIST_BEEP
 
 #-----------------------------------------------------------------------------
 
 bindkey "^H" vi-cmd-mode
-bindkey "^K" up-history
-bindkey "^J" down-history
+bindkey "^K" up-line-or-search
+bindkey "^J" down-line-or-search
 
 #-----------------------------------------------------------------------------
 

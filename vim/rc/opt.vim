@@ -1,9 +1,7 @@
-"{ GENERAL HOUSEKEEPING }-----------------------------------------------------
+"{ GENERAL HOUSEKEEPING }------------------------------------------------------
 
 syntax on
 filetype on
-
-let &compatible = 0
 
 let &backup   = 0
 let &swapfile = 0
@@ -25,34 +23,32 @@ endif
 
 "{ [UX, BACKEND] }------------------------------------------------------------
 
-let &autoread = 1   " changes to a file are shown in real-time
+let &autoread = 1   "changes to a file are shown in real-time
 
 if(has('clipboard'))
   let &clipboard = 'unnamed'
 endif
 
 let &undofile  = 1
-let &undodir   =  $HOME . '/.cache/' . v:progname . '/undo'
+let &undodir   = $HOME . '/.local/state/' . v:progname . '/undo'
 
 if(has('shada'))
-  let &shadafile   = $HOME . '/.cache/' . v:progname . '/shada'
+  let &shadafile   = $HOME . '/.local/share/' . v:progname . '/shada'
 elseif(has('viminfo'))
-  let &viminfofile = $HOME . '/.cache/' . v:progname . '/viminfo'
+  let &viminfofile = $HOME . '/.local/share/' . v:progname . '/viminfo'
 endif
 
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }------------------------------------------
 
-let &path .= (&path =~ '\V.,**') ? '' : ',.,**'
-
+let &path           .= (&path =~ fnameescape(',.**')) ? '' : '.,**'
 let &ignorecase     = 1
 let &smartcase      = 1
 let &fileignorecase = 1
 
 "{ VISUAL-UI }-----------------------------------------------------------------
 
-let &background = 'dark'
-
 let &incsearch   = 1
+let &number      = 1
 let &showtabline = 2
 let &colorcolumn = 79
 let &cursorline  = 1

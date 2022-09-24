@@ -1,4 +1,4 @@
-local lsp = require("vim.lsp.buf")
+local lsp        = require("vim.lsp.buf")
 local diagnostic = require("vim.diagnostic")
 
 lsp.configs = {
@@ -43,17 +43,16 @@ end
 ------------------------------------------------------------------------------
 
 for _, ls in pairs(lsp.installer.get_installed_servers()) do
-  require("lspconfig")[ls.name].setup(vim.tbl_extend("force", {
-    on_attach    = lsp.on_attach,
-    capabilities = lsp.handlers.capabilities
-  }, lsp.servers[ls.name] or {}))
+  local opts = lsp.servers[ls.name] or {}
+  opts.on_attach = lsp.on_attach
+  opts.capabilities = lsp.handlers.capabilities
+  require("lspconfig")[ls.name].setup(opts)
 end
 
 ------------------------------------------------------------------------------
 
-vim.api.nvim_create_augroup("FormatOnWrite", { clear = true })
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  group = "FormatOnWrite",
+  group = vim.api.nvim_create_augroup("FormatOnWrite", { clear = true }),
   pattern = "*",
   callback = vim.lsp.buf.formatting_sync
 })

@@ -4,21 +4,31 @@
 
 # SHELL OPTS -----------------------------------------------------------------
 
-export BASH_SILENCE_DEPRECATION_WARNING=1
-export MAILCHECK=0
+# export MAILCHECK=0
 
-shopt -s cmdhist
+# shopt -s dirspell # attempts to infer misspelled dir on `word-expansion`
+shopt -s cdspell # attempts to infer misspelled dir for `cd`
+shopt -s cmdhist # save multi-line commands as a single history entry
+
 shopt -s histappend
-shopt -s histverify
+
 shopt -s checkwinsize
+
 shopt -s dotglob
 shopt -s extglob
 shopt -s nocaseglob
 shopt -s nocasematch
 shopt -s nullglob
+
 shopt -s hostcomplete
-shopt -s autocd
-shopt -s progcomp_alias
+
+shopt -u sourcepath # `source` uses items in $PATH as arguments
+
+if [ $(($BASH_VERSINFO > 3)) = 0 ]; then
+  shopt -s globstar # `**` performs recursive dir searches on filename expansion
+  shopt -s autocd
+  shopt -s progcomp_alias
+fi
 
 # READLINE -------------------------------------------------------------------
 
@@ -41,7 +51,7 @@ bind 'set completion-ignore-case on'
 
 # KEYBINDS -------------------------------------------------------------------
 
-bind '"\C-l": clear-screen'
+# bind '"\C-l": clear-screen'
 
 bind '"\C-k": history-substring-search-backward'
 bind '"\C-j": history-substring-search-forward'

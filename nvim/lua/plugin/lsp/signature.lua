@@ -1,6 +1,6 @@
 local lsp_signature = require("lsp_signature")
 
-lsp_signature.config = {
+local config = {
   debug = false,
   log_path = "debug_log_file_path",
   verbose = false,
@@ -10,7 +10,6 @@ lsp_signature.config = {
   floating_window_above_cur_line = false,
   fix_pos = false,
   hint_enable = true,
-  hint_prefix = icons.misc.Squirrel .. " ",
   hint_scheme = "Comment",
   use_lspsaga = false,
   hi_parameter = "LspSignatureActiveParameter",
@@ -29,5 +28,10 @@ lsp_signature.config = {
   toggle_key = nil,
 }
 
-lsp_signature.setup(lsp_signature.config)
-lsp_signature.on_attach(lsp_signature.config)
+local import_status, icons = pcall(require, "plugin.icons")
+if(import_status) then
+  config.hint_prefix = icons.misc.Squirrel .. " "
+end
+
+lsp_signature.setup(config)
+lsp_signature.on_attach(config)

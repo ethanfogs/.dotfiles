@@ -1,4 +1,4 @@
-icons = {
+return {
   kind = {
     Class = "",
     Color = "",
@@ -95,5 +95,3 @@ icons = {
     Watch = "",
   },
 }
-
-return icons

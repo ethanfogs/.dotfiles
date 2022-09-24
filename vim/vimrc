@@ -1,45 +1,38 @@
-let $VIM_CONFIG_HOME = fnamemodify($MYVIMRC, ':h')
-let $VIM_CACHE_HOME  = $HOME . '/.cache/'       . v:progname
-let $VIM_DATA_HOME   = $HOME . '/.local/share/' . v:progname
+source $HOME/.vim/rc/opt.vim
+source $HOME/.vim/rc/keymap.vim
+source $HOME/.vim/rc/autocmd.vim
+source $HOME/.vim/rc/plugin.vim
 
 " ----------------------------------------------------------------------------
 
-let s:rcs =<< trim END
-  ~/.vim/rc/opt.vim
-  ~/.vim/rc/keymap.vim
-  ~/.vim/rc/autocmd.vim
-  ~/.vim/rc/plugin.vim
-END
+source ~/.vim/rc/opt.vim
+source ~/.vim/rc/keymap.vim
+source ~/.vim/rc/autocmd.vim
+source ~/.vim/rc/plugin.vim
 
-
-let s:plugin_configs =<< trim END
-  ~/.vim/plugin/scratchbuf.vim
-  ~/.vim/plugin/toggle_term.vim
-  ~/.vim/plugin/nerdtree.vim
-  ~/.vim/plugin/fugitive.vim
-  ~/.vim/plugin/gitgutter.vim
-END
-
-for s:src in s:rcs + s:plugin_configs
-  try
-    execute('source ' . s:src)
-  catch
-    echo expand('<sfile>:') . 'failed loading ' . s:src
-  endtry
-endfor
+source ~/.vim/plugin/scratchbuf.vim
+source ~/.vim/plugin/nerdtree.vim
+source ~/.vim/plugin/fugitive.vim
+source ~/.vim/plugin/gitgutter.vim
 
 " ----------------------------------------------------------------------------
 
-let s:fav_colorschemes =<< trim END
-  atom
-  base16-onedark
-  focuspoint
-  materialbox
-  solarized8_high
-END
+if(v:progname != 'vim' || v:progname != 'vi')
+  finish
+endif
 
-try
-  execute('colorscheme ' . s:fav_colorschemes[rand() % len(s:fav_colorschemes)])
-catch
-  echo expand('<sfile>:') . ': setting colorscheme failed'
-endtry
+" ----------------------------------------------------------------------------
+
+let s:colorschemes = [
+  \  'atom',
+  \  'base16-flat',
+  \  'base16-materia',
+  \  'base16-material',
+  \  'base16-onedark',
+  \  'base16-solarflare',
+  \  'focuspoint',
+  \  'materialbox',
+  \  'solarized8_high',
+\]
+
+silent! execute 'colorscheme ' . s:colorscheme[rand() % (len(s:colorschemes) - 1)]

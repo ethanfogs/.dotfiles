@@ -1,24 +1,68 @@
-let scratch_buf = {
-  \ 'dir': $HOME . '/.cache/' . v:progname . '/scratchbuf'
-\}
+" let scratchbuf = {} let scratchbuf = s:
+let scratchbuf = {}
+let scratchbuf.home = $HOME . '/.cache/' . v:progname . '/scratchbuf'
+call mkdir(scratchbuf.home, 'p')
 
-call mkdir(scratch_buf.dir, 'p')
+let scratchbuf.buffers = []
 
-let scratch_buf.ftype2fextn = {
-  \ 'markdown':        'md',
-  \ 'javascript':      'js',
-  \ 'javascriptreact': 'jsx',
-  \ 'python':          'py',
-  \ 'rust':            'rs',
-  \ 'typescript':      'ts',
-  \ 'typescriptreact': 'tsx',
-\}
+" ----------------------------------------------------------------------------
 
-function scratch_buf.new(...) dict
-  let fname = get(a:, 1, strftime('%m-%d-%y_%H-%M-%S'))
-  let ftype = get(a:, 2, input('FILETYPE: ', '', 'filetype'))
-  let ftype = has_key(self.ftype2fextn, ftype) ? self.ftype2fextn[ftype] : ftype
-  call execute('new ' . self.dir . '/' . fname . (empty(ftype) ? '' : '.' . ftype))
+function! scratchbuf.fmt_ftype(ftype=v:null) dict abort
+
+  let l:ftype = get({
+    \ 'markdown':         'md',
+    \ 'javascript':       'js',
+    \ 'javascriptreact':  'jsx',
+    \ 'python':           'py',
+    \ 'rust':             'rs',
+    \ 'typescript':       'ts',
+    \ 'typescriptcommon': 'tsc',
+    \ 'typescriptreact':  'tsx',
+  \}, a:ftype, a:ftype)
+
+  return empty(l:ftype) ? '' : '.' . l:ftype
+endfunction 
+
+" ----------------------------------------------------------------------------
+
+let scratchbuf.exec = {}
+let scratchbuf.exec.vim = {file -> execute('source ' . file)}
+let scratchbuf.exec.lua  = scratchbuf.exec.vim
+
+let scratchbuf.exec.sh   = {file -> execute('!' . (executable(file) ? '' : '. ') . file)}
+let scratchbuf.exec.bash = scratchbuf.exec.sh
+let scratchbuf.exec.zsh  = scratchbuf.exec.sh
+
+let scratchbuf.exec.js  = {file -> execute('!node ' . file)}
+
+" ----------------------------------------------------------------------------
+
+let scratchbuf.autocmds = {}
+
+" function! s:autocmds.BufWritePost(buf=v:null) dict abort
+"   return s:ft.exec[&l:filetype](a:buf)
+" endfunction!
+
+" ----------------------------------------------------------------------------
+
+" function! s:autocmds.on_attach() dict abort
+"   autocmd! BufWritePost <buffer=0> call self.fn.ftype.exec[&filetype]()
+" endfunction!
+
+" ----------------------------------------------------------------------------
+
+function! scratchbuf.new(name=strftime('%m%d%y_%H%M%S'), ftype=input('FILETYPE: ', '', 'filetype')) dict abort
+  let l:ftype = self.fmt_ftype(empty(a:ftype) ? fnamemodify(a:name, ':e') : a:ftype)
+  let l:fullpath = self.home . '/' . a:name . l:ftype
+
+  silent execute 'new ' . l:fullpath
+
+  " let l:buf_info = getbufinfo(bufnr(l:fullpath))[0]
+  " let l:buf_info.windows = map(l:buf_info.windows, 'getwininfo(v:val)')
+  " let self.buffers = add(self.buffers, l:buf_info)
+  " call setbufvar(bufnr(l:fullpath), 'scratchbuf_nr', bufnr(l:fullpath))
 endfunction
 
-command! -nargs=* ScratchBuf call scratch_buf.new(<f-args>)
+" ----------------------------------------------------------------------------
+
+command! -nargs=* ScratchBuf call scratchbuf.new(<f-args>)

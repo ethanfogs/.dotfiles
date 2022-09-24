@@ -25,12 +25,6 @@ web_devicons.set_icon({
     icon = "",
     name = "GitIgnore",
   },
-  [".gitlab-ci.yml"] = {
-    color = "#e24329",
-    cterm_color = "166",
-    icon = "",
-    name = "GitlabCI",
-  },
   [".gitmodules"] = {
     color = "#e24329",
     cterm_color = "59",

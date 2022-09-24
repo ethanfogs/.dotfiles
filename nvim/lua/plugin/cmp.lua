@@ -3,6 +3,8 @@ local luasnip = require('luasnip')
 
 require('luasnip/loaders/from_vscode').lazy_load()
 
+local icons= require("plugin.icons")
+
 cmp.config_opts = {
   border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
   winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
