@@ -15,7 +15,6 @@ local mode_color = {
   n = "#569cd6",
   i = "#6a9955",
   v = "#c586c0",
-  [""] = "#c586c0",
   V = "#c586c0",
   -- c = '#B5CEA8',
   -- c = '#D7BA7D',
@@ -23,7 +22,6 @@ local mode_color = {
   no = "#569cd6",
   s = "#ce9178",
   S = "#ce9178",
-  [""] = "#ce9178",
   ic = "#dcdcaa",
   R = "#d16969",
   Rv = "#d16969",
@@ -50,7 +48,7 @@ local hide_in_width = function() return vim.fn.winwidth(0) > 80 end
 
 ------------------------------------------------------------------------------
 
-local icons = require("plugin.icons")
+local icons = require("plugins.icons")
 
 local diagnostics = {
   "diagnostics",

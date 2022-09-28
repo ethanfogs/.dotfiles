@@ -1,7 +1,12 @@
 "{ GENERAL HOUSEKEEPING }------------------------------------------------------
 
+let &compatible = 0
+
 syntax on
 filetype on
+
+let &synmaxcol = 500
+let &lazyredraw = 0
 
 let &backup   = 0
 let &swapfile = 0
@@ -23,19 +28,19 @@ endif
 
 "{ [UX, BACKEND] }------------------------------------------------------------
 
-let &autoread = 1   "changes to a file are shown in real-time
+" let &autoread = 1   "changes to a file are shown in real-time
 
 if(has('clipboard'))
   let &clipboard = 'unnamed'
 endif
 
 let &undofile  = 1
-let &undodir   = $HOME . '/.local/state/' . v:progname . '/undo'
+let &undodir   = $HOME . '/.cache/' . v:progname . '/undo'
 
 if(has('shada'))
-  let &shadafile   = $HOME . '/.local/share/' . v:progname . '/shada'
+  let &shadafile   = $HOME . '/.cache/' . v:progname . '/shada'
 elseif(has('viminfo'))
-  let &viminfofile = $HOME . '/.local/share/' . v:progname . '/viminfo'
+  let &viminfofile = $HOME . '/.cache/' . v:progname . '/viminfo'
 endif
 
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }------------------------------------------
@@ -43,7 +48,7 @@ endif
 let &path           .= (&path =~ fnameescape(',.**')) ? '' : '.,**'
 let &ignorecase     = 1
 let &smartcase      = 1
-let &fileignorecase = 1
+let &fileignorecase = 0
 
 "{ VISUAL-UI }-----------------------------------------------------------------
 

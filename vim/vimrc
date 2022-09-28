@@ -1,25 +1,17 @@
-source $HOME/.vim/rc/opt.vim
-source $HOME/.vim/rc/keymap.vim
-source $HOME/.vim/rc/autocmd.vim
-source $HOME/.vim/rc/plugin.vim
-
-" ----------------------------------------------------------------------------
-
 source ~/.vim/rc/opt.vim
 source ~/.vim/rc/keymap.vim
 source ~/.vim/rc/autocmd.vim
-source ~/.vim/rc/plugin.vim
 
 source ~/.vim/plugin/scratchbuf.vim
-source ~/.vim/plugin/nerdtree.vim
-source ~/.vim/plugin/fugitive.vim
-source ~/.vim/plugin/gitgutter.vim
-
-" ----------------------------------------------------------------------------
 
 if(v:progname != 'vim' || v:progname != 'vi')
   finish
 endif
+
+source ~/.vim/rc/plugin.vim
+source ~/.vim/plugin/nerdtree.vim
+source ~/.vim/plugin/fugitive.vim
+source ~/.vim/plugin/gitgutter.vim
 
 " ----------------------------------------------------------------------------
 

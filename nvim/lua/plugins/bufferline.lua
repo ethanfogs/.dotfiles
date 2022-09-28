@@ -1,4 +1,6 @@
-require("bufferline").setup({
+local bufferline = require("bufferline")
+
+bufferline.config = {
   options = {
     numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
     close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
@@ -154,4 +156,6 @@ require("bufferline").setup({
       bg = { attribute = "bg", highlight = "Normal" },
     },
   },
-})
+}
+
+bufferline.setup(bufferline.config)
