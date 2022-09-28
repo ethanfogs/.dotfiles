@@ -2,11 +2,22 @@
 
 #-----------------------------------------------------------------------------
 
-[ -r ~/.shrc ] && . ~/.shrc
+[ -f $HOME/.shrc ] && . $HOME/.shrc
 
 #-----------------------------------------------------------------------------
 
-ZSH_DATA_HOME=~/.local/share/zsh
+plugins=(
+  zsh-users/zsh-autosuggestions
+  zsh-users/zsh-syntax-highlighting
+  hlissner/zsh-autopair
+)
+
+for plugin in $plugins; do
+  PLUGIN_DIR=$HOME/.local/share/zsh/plugins/${plugin#*/}
+  [ ! -d $PLUGIN_DIR ] && git clone --quiet https://github.com/$plugin $PLUGIN_DIR
+  . $PLUGIN_DIR/zsh-*.plugin.zsh
+done
+unset plugins plugin PLUGIN_DIR 
 
 #-----------------------------------------------------------------------------
 
@@ -18,78 +29,63 @@ completions=(
   nilsonholger/osx-zsh-completions
 )
 
-ZSH_COMP_HOME=$ZSH_DATA_HOME/completions
 for completion in $completions; do
-  if [ ! -d $ZSH_COMP_HOME/${completion#*/} ]; then
-    git clone https://github.com/$completion $ZSH_COMP_HOME/${completion#*/}
-    # ln -sfv $ZSH_COMP_HOME/${completion#*/}/**/_* $ZSH_DATA_HOME/site-functions/
-    rsync $ZSH_COMP_HOME/${completion#*/}/**/_* $ZSH_DATA_HOME/site-functions/
+  COMP_DIR=$HOME/.local/share/zsh/completions/${completion#*/}
+  if [ ! -d $COMP_DIR ]; then
+    git clone --quiet https://github.com/$completion $COMP_DIR
+    rsync -aL $HOME/.local/share/zsh/completion/**/_* ${COMP_DIR%/*}/
   fi
 done
-unset completion
-unset completions
-unset ZSH_COMP_HOME
+unset completions completion COMP_DIR
 
 which brew >/dev/null && FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
-FPATH="$ZSH_DATA_HOME/site-functions:$FPATH"
+FPATH="$HOME/.local/share/zsh/site-functions:$FPATH"
 
-FPATH="$(echo "${FPATH//:/"\n"}" | uniq | tr '\n' ':')"
-autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
+autoload -Uz compinit && compinit -d "$HOME/.cache/zsh/compdump"
 
 which mcd 2>&1 >/dev/null && compdef -d mcd
 
 #-----------------------------------------------------------------------------
 
-plugins=(
-  zsh-users/zsh-autosuggestions
-  zsh-users/zsh-syntax-highlighting
-  hlissner/zsh-autopair
-)
+setopt auto_cd
+setopt cd_silent
+setopt chase_links   # go to actual symlink dir rather in cd
 
-ZSH_PLUGIN_HOME=$ZSH_DATA_HOME/plugins
-for plugin in $plugins; do
-  if [ ! -d $ZSH_PLUGIN_HOME/${plugin#*/} ]; then
-    git clone https://github.com/$plugin $ZSH_PLUGIN_HOME/${plugin#*/}
-  fi
-  . $ZSH_PLUGIN_HOME/${plugin#*/}/zsh-*.plugin.zsh
-done
-unset plugin
-unset plugins
-unset ZSH_PLUGIN_HOME
+setopt null_glob
+# setopt dot_glob
+setopt extended_glob
+setopt no_case_glob
+# setopt glob_complete
+setopt complete_in_word
 
-#-----------------------------------------------------------------------------
+setopt no_auto_remove_slash
 
-setopt autocd
-setopt chaselinks   # go to actual symlink dir rather in cd
+setopt menu_complete # tab completion on first tab hit
 
-setopt dotglob
-setopt extendedglob
+setopt extended_history
+setopt share_history
+setopt hist_verify
+setopt hist_append
+setopt inc_append_history
+setopt hist_ignore_space
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_expire_dups_first
+setopt hist_find_no_dups
 
-setopt menucomplete # tab completion on first tab hit
-
-setopt histverify
-setopt sharehistory
-setopt histappend
-setopt incappendhistory
-setopt noextendedhistory #no timestamping prepending history entries
-
-# setopt nobeep
-
-# setopt EXTENDED_HISTORY
-# setopt HIST_EXPIRE_DUPS_FIRST
-# setopt HIST_IGNORE_DUPS
-# setopt HIST_IGNORE_ALL_DUPS
-# setopt HIST_IGNORE_SPACE
-# setopt HIST_FIND_NO_DUPS
-# setopt HIST_SAVE_NO_DUPS
-# setopt HIST_BEEP
+setopt nobeep
 
 #-----------------------------------------------------------------------------
 
 bindkey "^H" vi-cmd-mode
+
+bindkey "^[[Z" .reverse-menu-complete # Shift+Tab
+
+bindkey "^[[A" up-line-or-search   # up arrow
+bindkey "^[[B" down-line-or-search # down arrow
+
+bindkey "^O" autosuggest-accept
+
 bindkey "^K" up-line-or-search
 bindkey "^J" down-line-or-search
-
-#-----------------------------------------------------------------------------
-
-unset ZSH_DATA_HOME

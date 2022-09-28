@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
-# shellcheck disable=SC1090 # disables shellcheck warning for "undefined" `~`
+#!/bin/bash
 
 # RC\SOURCE FILES ------------------------------------------------------------
 
-[ -r ~/.env ]     && . ~/.env
-[ -r ~/.aliases ] && . ~/.aliases
+# shellcheck disable=SC1091
+[ -f "$HOME/.env" ]     && . "$HOME/.env"
+[ -f "$HOME/.aliases" ] && . "$HOME/.aliases"
 
 # ----------------------------------------------------------------------------
 
@@ -14,32 +14,23 @@ CURRENT_SHELL=$(ps -p $$ -oargs= | sed -E "s#.*[-/]##")
 
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=1000
-# export HISTTIMEFORMAT=""
 
-mkdir -p ~/.cache/"$CURRENT_SHELL"
-export HISTFILE=~/.cache/$CURRENT_SHELL/history
+mkdir -p "$HOME/.cache/$CURRENT_SHELL"
+export HISTFILE="$HOME/.cache/$CURRENT_SHELL/history"
 
 export LESSHISTFILE=/dev/null
 
 # PROMPT ---------------------------------------------------------------------
 
-# if ! which starship >/dev/null; then
-#   sh <(curl -sSL https://starship.rs/install.sh 2>/dev/null) \
-#         --force --bin-dir ~/.local/bin >/dev/null
-# fi
+if ! which starship >/dev/null; then
+  sh <(curl -sSL https://starship.rs/install.sh) \
+    --bin-dir "$HOME/.local/bin" --force >/dev/null  
+fi
 
-which starship >/dev/null && eval "$(starship init "$CURRENT_SHELL")"
+eval "$(starship init "$CURRENT_SHELL" 2>/dev/null)"
 
 # ----------------------------------------------------------------------------
 
-if which fzf >/dev/null; then
-  if which fd >/dev/null; then
-    export FZF_DEFAULT_COMMAND="fd --type f --hidden --exclude .git"
-  else
-    export FZF_DEFAULT_COMMAND="find . -type f 2> /dev/null"
-  fi
-  export FZF_DEFAULT_OPTS="--multi --cycle --reverse --border=rounded \
-                            --preview='[ -f {} ] && cat {}'"
-fi
+[ -f "$HOME/.config/fzf/fzf.sh" ] && . "$HOME/.config/fzf/fzf.sh"
 
 # ----------------------------------------------------------------------------

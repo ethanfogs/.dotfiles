@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-[ -r ~/.shrc ] && . ~/.shrc
+[ -f $HOME/.shrc ] && . $HOME/.shrc
 
 # SHELL OPTS -----------------------------------------------------------------
 
-# export MAILCHECK=0
+shopt -u mailwarn
 
-# shopt -s dirspell # attempts to infer misspelled dir on `word-expansion`
+shopt -s dirspell # attempts to infer misspelled dir on `word-expansion`
 shopt -s cdspell # attempts to infer misspelled dir for `cd`
 shopt -s cmdhist # save multi-line commands as a single history entry
 
@@ -22,8 +22,6 @@ shopt -s nullglob
 
 shopt -s hostcomplete
 
-shopt -u sourcepath # `source` uses items in $PATH as arguments
-
 if [ $(($BASH_VERSINFO > 3)) = 0 ]; then
   shopt -s globstar # `**` performs recursive dir searches on filename expansion
   shopt -s autocd
@@ -31,8 +29,6 @@ if [ $(($BASH_VERSINFO > 3)) = 0 ]; then
 fi
 
 # READLINE -------------------------------------------------------------------
-
-# bind 'set editing-mode vi'
 
 bind 'set mark-symlinked-directories on'
 bind 'set colored-completion-prefix on'
@@ -51,10 +47,8 @@ bind 'set completion-ignore-case on'
 
 # KEYBINDS -------------------------------------------------------------------
 
-# bind '"\C-l": clear-screen'
-
 bind '"\C-k": history-substring-search-backward'
 bind '"\C-j": history-substring-search-forward'
 
-bind '"\t": menu-complete'            #\t => <Tab>
-bind '"\e[Z": menu-complete-backward' #\t => <S-Tab>
+bind '"\t": menu-complete'            #\t => Tab
+bind '"\e[Z": menu-complete-backward' #\t => Shift+Tab

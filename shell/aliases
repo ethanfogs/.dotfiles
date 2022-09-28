@@ -1,37 +1,39 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2164
 
 # ----------------------------------------------------------------------------
 
-alias l='/bin/ls  -lFGh'
-alias la='/bin/ls -aFGh'
-alias ll='/bin/ls -laFGh'
+alias l="/bin/ls  -lFGh"
+alias la="/bin/ls -aFGh"
+alias ll="/bin/ls -laFGh"
 
-which bat  >/dev/null && alias cat='bat'
-which tree >/dev/null && alias tree='tree -C' && alias t='tree'
+alias grep="grep --color=auto"
+
+alias ..="cd .."
+
+which bat  >/dev/null && alias bat="bat --color=auto" && alias cat="bat"
+which tree >/dev/null && alias tree="tree -C" && alias t="tree"
 
 # ----------------------------------------------------------------------------
-
-alias ..='cd ..'
 
 cfg(){
-  local CFG_HOME="$HOME/.dotfiles/main"
-  [ -d "$CFG_HOME" ] || local CFG_HOME="$HOME/.config"
-  [ -d "$CFG_HOME" ] && cd "$CFG_HOME/${1:-}" || return 1
+  cd "$HOME/dotfiles/$1" 2>/dev/null || cd "$HOME/.config/$1"
 }
 
 # ----------------------------------------------------------------------------
 
-alias mkdir='/bin/mkdir -p'
+alias mkdir="/bin/mkdir -p"
 
 mcd(){
-  mkdir "$1" && cd "$1" || return 1
+  /bin/mkdir -p "${@[@]}" && cd "${@[1]}"
 }
 
 chx(){
-  if [ -x "$1" ]; then chmod -x "$1"; else chmod +x "$1"; fi
+  echo "${@[@]}" | xargs -n1 -P$# -I{} \
+    bash -c '[ -f {} ] && ([ -x {} ] && chmod -x {} || chmod +x {}) || return'
 }
 
-# TEXT EDITOR -----------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 alias e='${EDITOR:-vim}'
 
@@ -49,16 +51,19 @@ alias gP="git pull"
 
 # ----------------------------------------------------------------------------
 
-which python3 >/dev/null && alias python='python3'
+which python3 >/dev/null && alias python="python3"
 
 # SYSTEM ADMINISTRATION ------------------------------------------------------
 
-which su          >/dev/null && alias su='/usr/bin/su -l'
-which reboot      >/dev/null && alias reboot='sudo reboot'
-which apt         >/dev/null && alias apt='sudo apt -y'
-which apt-get     >/dev/null && alias apt-get='sudo apt-get -y'
-which sysadminctl >/dev/null && alias sysadminctl='sudo sysadminctl'
-which launchctl   >/dev/null && alias launchctl='sudo launchctl'
-which diskuti     >/dev/null && alias diskuti='sudo diskuti'
+alias su="/usr/bin/su -l"
+
+which reboot >/dev/null && alias reboot="sudo reboot"
+
+if [ "$(uname)" = "Linux" ]; then
+  if which apt >/dev/null; then
+    alias apt="apt -y"
+    alias apt-get="apt-get -y"
+  fi
+fi
 
 # ----------------------------------------------------------------------------

@@ -17,11 +17,11 @@ export SHELL_SESSIONS_DISABLE=1
 
 if [ "$(uname)" = "Darwin" ]; then
   PATH="$HOME/.local/homebrew/bin:$PATH"
-  export HOMEBREW_CASK_OPTS='--appdir=$HOME/Applications --no-quarantine --force'
+  export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications --no-quarantine --force"
   if [ ! -x "$HOME/.local/homebrew/bin/brew" ]; then
-    git clone https://github.com/Homebrew/brew "$HOME/.local/homebrew" \
-      && brew update --force --quiet \
-      && brew completions link --quiet
+    git clone --quite https://github.com/homebrew "$HOME/.local/homebrew" \
+      && brew update --quiet --force \
+      && brew completions link >/dev/null
   fi
 fi
 
