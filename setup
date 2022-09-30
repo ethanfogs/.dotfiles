@@ -5,23 +5,23 @@
 
 for rc_dir in *; do
   [ "$rc_dir" == "${0##*/}" ] && continue
-  [ -h ~/.config/"$rc_dir" ]  && unlink ~/.config/"$rc_dir"
-  [ -d ~/.config/"$rc_dir" ]  && rm -rf ~/.config/"$rc_dir"
-  ln -sfv "$(pwd)"/"$rc_dir" ~/.config/"$rc_dir"
+  [ -h "$HOME/.config/$rc_dir" ]  && unlink "$HOME/.config/$rc_dir"
+  [ -d "$HOME/.config/$rc_dir" ]  && rm -rf "$HOME/.config/$rc_dir"
+  ln -sfv "$(pwd)/$rc_dir" "$HOME/.config/$rc_dir"
 done
 
 # ----------------------------------------------------------------------------
 
 dot_links=(
   shell/*
-  x11/*
+  # x11/*
   vim
 )
 
 for dot_link in "${dot_links[@]}"; do
-  [ -h ~/."${dot_link##*/}" ] && unlink ~/."${dot_link##*/}"
-  [ -d ~/."$rc_dir" ] && rm -rf ~/."$rc_dir"
-  ln -sfv ~/.config/"$dot_link" ~/."${dot_link##*/}"
+  [ -h "$HOME/.${dot_link##*/}" ] && unlink "$HOME/.${dot_link##*/}"
+  [ -d "$HOME/.$rc_dir" ] && rm -rf "$HOME/.$rc_dir"
+  ln -sfv "$HOME/.config/$dot_link" "$HOME/.${dot_link##*/}"
 done
 
 # ----------------------------------------------------------------------------

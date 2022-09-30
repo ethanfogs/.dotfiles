@@ -4,25 +4,35 @@
 
 # SHELL OPTS -----------------------------------------------------------------
 
+# MISC
 shopt -u mailwarn
-
-shopt -s dirspell # attempts to infer misspelled dir on `word-expansion`
-shopt -s cdspell # attempts to infer misspelled dir for `cd`
-shopt -s cmdhist # save multi-line commands as a single history entry
-
-shopt -s histappend
-
 shopt -s checkwinsize
 
-shopt -s dotglob
-shopt -s extglob
-shopt -s nocaseglob
-shopt -s nocasematch
-shopt -s nullglob
+# $PATH BEHAVIOR
+# shopt sourcepath
 
+# SPELLING CORRECTION
+shopt -s dirspell # attempts to infer misspelled dir on `word-expansion`
+shopt -s cdspell # attempts to infer misspelled dir for `cd`
+
+# COMPLETION\EXPANSION
 shopt -s hostcomplete
 
-if [ $(($BASH_VERSINFO > 3)) = 0 ]; then
+# GLOBBING
+shopt -s dotglob
+shopt -s nullglob
+# shopt globskipdots
+shopt -s nocaseglob
+shopt -s nocasematch
+shopt -s extglob
+
+# HISTORY
+shopt -s histverify
+shopt -s cmdhist    # save multi-line commands as a single history entry
+shopt -s histappend # save multi-line commands as a single history entry
+# shopt lithist
+
+if [ $((BASH_VERSINFO < 3)) = 1 ]; then
   shopt -s globstar # `**` performs recursive dir searches on filename expansion
   shopt -s autocd
   shopt -s progcomp_alias

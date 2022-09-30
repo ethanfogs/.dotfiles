@@ -3,39 +3,43 @@
 
 # ----------------------------------------------------------------------------
 
-alias l="/bin/ls  -lFGh"
-alias la="/bin/ls -aFGh"
-alias ll="/bin/ls -laFGh"
+alias l="/bin/ls  -slFGh"
+alias la="/bin/ls -saFGh"
+alias ll="/bin/ls -slaFGh"
 
 alias grep="grep --color=auto"
 
 alias ..="cd .."
 
-which bat  >/dev/null && alias bat="bat --color=auto" && alias cat="bat"
+which bat  >/dev/null && alias cat="bat"
 which tree >/dev/null && alias tree="tree -C" && alias t="tree"
 
 # ----------------------------------------------------------------------------
 
-cfg(){
-  cd "$HOME/dotfiles/$1" 2>/dev/null || cd "$HOME/.config/$1"
-}
+alias cfg='cd $HOME/.config'
 
 # ----------------------------------------------------------------------------
 
 alias mkdir="/bin/mkdir -p"
 
 mcd(){
-  /bin/mkdir -p "${@[@]}" && cd "${@[1]}"
-}
-
-chx(){
-  echo "${@[@]}" | xargs -n1 -P$# -I{} \
-    bash -c '[ -f {} ] && ([ -x {} ] && chmod -x {} || chmod +x {}) || return'
+  /bin/mkdir -p "$@" && cd "$1"
 }
 
 # -----------------------------------------------------------------------------
 
 alias e='${EDITOR:-vim}'
+
+if [ "$(uname)" = "Darwin" ]; then
+  FIREFOX="/Applications/Firefox.app/Contents/MacOS/firefox-bin"
+  [ -x "$HOME/$FIREFOX" ] && FIREFOX="$HOME/$FIREFOX"
+  [ -x "$FIREFOX" ] && alias firefox="$FIREFOX"
+  unset FIREFOX
+fi
+
+google(){
+  open "https://search.brave.com/search?q=${*// /+}"
+}
 
 # GIT -------------------------------------------------------------------------
 

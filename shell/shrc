@@ -4,7 +4,7 @@
 
 # shellcheck disable=SC1091
 [ -f "$HOME/.env" ]     && . "$HOME/.env"
-[ -f "$HOME/.aliases" ] && . "$HOME/.aliases"
+[ -f "$HOME/.aliasrc" ] && . "$HOME/.aliasrc"
 
 # ----------------------------------------------------------------------------
 
@@ -28,6 +28,10 @@ if ! which starship >/dev/null; then
 fi
 
 eval "$(starship init "$CURRENT_SHELL" 2>/dev/null)"
+
+# MAN PAGE HIGHLIGHTING ------------------------------------------------------
+
+export LESS_TERMCAP_md=$'\e[1;32m'
 
 # ----------------------------------------------------------------------------
 

@@ -41,32 +41,42 @@ unset completions completion COMP_DIR
 which brew >/dev/null && FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
 FPATH="$HOME/.local/share/zsh/site-functions:$FPATH"
 
-autoload -Uz compinit && compinit -d "$HOME/.cache/zsh/compdump"
+which compdef >/dev/null && compdef -P _cd -N mcd
 
-which mcd 2>&1 >/dev/null && compdef -d mcd
+autoload -Uz compinit && compinit -d "$HOME/.cache/zsh/compdump"
 
 #-----------------------------------------------------------------------------
 
-setopt auto_cd
-setopt cd_silent
+# setopt auto_cd
+# setopt cd_silent
+setopt auto_pushd
+setopt pushd_silent
 setopt chase_links   # go to actual symlink dir rather in cd
 
 setopt null_glob
 # setopt dot_glob
 setopt extended_glob
 setopt no_case_glob
+setopt no_case_match
+
+setopt no_hash_all
+setopt no_hash_list_all
+setopt no_hash_dirs
+
 # setopt glob_complete
 setopt complete_in_word
-
+setopt menu_complete # tab completion on first tab hit
 setopt no_auto_remove_slash
 
-setopt menu_complete # tab completion on first tab hit
-
 setopt extended_history
+
 setopt share_history
-setopt hist_verify
 setopt hist_append
 setopt inc_append_history
+
+setopt hist_verify
+setopt hist_no_store 
+
 setopt hist_ignore_space
 setopt hist_ignore_dups
 setopt hist_ignore_all_dups

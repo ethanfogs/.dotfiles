@@ -120,7 +120,6 @@ installer.config = {
     "sumneko_lua",
     "tsserver",
     "vimls",
-    -- },
   }
 }
 
@@ -175,7 +174,7 @@ servers.jsonls = {
 
 ------------------------------------------------------------------------------
 
-for _, server in pairs(installer.config.ensure_installed) do
+for _, server in pairs(require("mason-lspconfig").get_installed_servers()) do
   require("lspconfig")[server]
       .setup(vim.tbl_deep_extend("keep", servers[server] or {}, {
         on_attach    = on_attach,
