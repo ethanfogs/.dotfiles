@@ -49,7 +49,7 @@ local on_attach = function(client, bufnr)
   for mode, mappings in pairs(mappings) do
     for lhs, rhs in pairs(mappings) do vim.keymap.set(mode, lhs, rhs, opts) end
   end
-  fn.highlight_document(client)
+  -- fn.highlight_document(client)
 end
 
 ------------------------------------------------------------------------------

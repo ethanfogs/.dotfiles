@@ -104,55 +104,67 @@ config.extensions = {}
 
 ------------------------------------------------------------------------------
 
-config.extensions.file_browser = require("telescope").extensions.file_browser
+if (pcall(telescope.load_extension, "file_browser")) then
 
-keymaps.e = config.extensions.file_browser.file_browser
+  config.extensions.file_browser = telescope.extensions.file_browser
 
-local file_browser = config.extensions.file_browser.actions
-config.extensions.file_browser = {
-  mappings = {
-    n = {
-      C = file_browser.change_cwd,
-      D = file_browser.remove,
-      M = file_browser.move,
-      n = file_browser.create,
-      R = file_browser.rename,
-      S = file_browser.create,
-      ["~"] = file_browser.goto_home_dir,
-      ["."] = file_browser.toggle_hidden,
-      -- ["<BS>"] = file_browser.actions.move,
-    },
-    i = {
-      ["<C-a>"] = file_browser.toggle_hidden,
-      ["<C-d>"] = file_browser.remove,
-      ["<C-h>"] = file_browser.goto_home_dir,
-      ["<C-m>"] = file_browser.move,
-      ["<C-r>"] = file_browser.rename,
-      ["<C-y>"] = file_browser.copy,
+  local file_browser = config.extensions.file_browser
+
+  config.extensions.file_browser = {
+    mappings = {
+      n = {
+        C = file_browser.change_cwd,
+        D = file_browser.remove,
+        M = file_browser.move,
+        n = file_browser.create,
+        R = file_browser.rename,
+        S = file_browser.create,
+        ["~"] = file_browser.goto_home_dir,
+        ["."] = file_browser.toggle_hidden,
+        -- ["<BS>"] = file_browser.actions.move,
+      },
+      i = {
+        ["<C-a>"] = file_browser.toggle_hidden,
+        ["<C-d>"] = file_browser.remove,
+        ["<C-h>"] = file_browser.goto_home_dir,
+        ["<C-m>"] = file_browser.move,
+        ["<C-r>"] = file_browser.rename,
+        ["<C-y>"] = file_browser.copy,
+      }
     }
   }
-}
 
+  keymaps.e = config.extensions.file_browser.file_browser
+
+end
 ------------------------------------------------------------------------------
 
-keymaps.p = telescope.extensions.project.project
+if (pcall(telescope.load_extension, "project")) then
 
-config.extensions.project = {
-  vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*)/nvim"), ":~"),
-  vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*/nvim)"), ":~"),
-  base_dirs = {
-    { path = vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*)/nvim"), ":~") },
-  },
-}
+  -- config.extensions.project = telescope.extensions.project
 
--- config.extensions.frecency = {
---   -- db_root = vim.fn.stdpath("cache") .. "/nvim/db",
---   db_root = vim.fn.glob("$HOME/.local/*/opt/sqlite/lib/*.*.dylib"),
---   workspaces = {
---     ["config"] = string.gsub(vim.fn.stdpath("config"), "/nvim/.*", ""),
---     ["data"]   = string.gsub(vim.fn.stdpath("data"), "/nvim/.*", "")
---   }
--- }
+  -- config.extensions.project = {
+  --   vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*)/nvim"), ":~"),
+  --   vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*/nvim)"), ":~"),
+  --   base_dirs = {
+  --     { path = vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*)/nvim"), ":~") },
+  --   },
+  -- }
+
+end
+
+if (pcall(telescope.load_extension, "frecency")) then
+
+  -- config.extensions.frecency = {
+  --   -- db_root = vim.fn.stdpath("cache") .. "/nvim/db",
+  --   db_root = vim.fn.glob("$HOME/.local/*/opt/sqlite/lib/*.*.dylib"),
+  --   workspaces = {
+  --     ["config"] = string.gsub(vim.fn.stdpath("config"), "/nvim/.*", ""),
+  --     ["data"]   = string.gsub(vim.fn.stdpath("data"), "/nvim/.*", "")
+  --   }
+  -- }
+
+end
 
 
 -- pcall(require("telescope").load_extension, "file_browser")

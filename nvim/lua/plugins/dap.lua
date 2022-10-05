@@ -1,5 +1,5 @@
 local dap = require("dap")
--- local ui = require("dapui")
+local ui = require("dapui")
 
 ------------------------------------------------------------------------------
 
@@ -47,5 +47,5 @@ end
 
 ------------------------------------------------------------------------------
 
-dap.configurations = vim.deepcopy(config)
-dap.adapters       = vim.deepcopy(adapters)
+dap.configurations = config
+dap.adapters       = adapters
