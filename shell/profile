@@ -16,11 +16,16 @@ export SHELL_SESSIONS_DISABLE=1
 #-----------------------------------------------------------------------------
 
 if [ "$(uname)" = "Darwin" ]; then
+
   PATH="$HOME/.local/homebrew/bin:$PATH"
+
+  export HOMEBREW_CACHE="$HOME/.cache/Homebrew"
   export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications --no-quarantine --force"
+
   if [ ! -x "$HOME/.local/homebrew/bin/brew" ]; then
     git clone --quite https://github.com/homebrew "$HOME/.local/homebrew" \
-      && brew update --quiet --force \
+      && brew autoupdate start --immediate --upgrade --greedy --cleanup >/dev/null \
+      && brew analytics off \
       && brew completions link >/dev/null
   fi
 fi
@@ -32,5 +37,4 @@ export BROWSER='firefox'
 
 #-----------------------------------------------------------------------------
 
-PATH="$(echo "${PATH//:/"\n"}" | uniq | tr '\n' ':')"
 export PATH

@@ -95,7 +95,7 @@ handlers["textDocument/hover"] = lsp.with(handlers.hover, { border = "rounded" }
 handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, { border = "rounded" })
 
 handlers.capabilities = require("cmp_nvim_lsp")
-    .update_capabilities(handlers.capabilities)
+    .default_capabilities(handlers.capabilities)
 
 ------------------------------------------------------------------------------
 

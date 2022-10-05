@@ -2,7 +2,7 @@
 
 #-----------------------------------------------------------------------------
 
-[ -f $HOME/.shrc ] && . $HOME/.shrc
+[ -r $HOME/.shrc ] && . $HOME/.shrc
 
 #-----------------------------------------------------------------------------
 
@@ -30,25 +30,26 @@ completions=(
 )
 
 for completion in $completions; do
-  COMP_DIR=$HOME/.local/share/zsh/completions/${completion#*/}
-  if [ ! -d $COMP_DIR ]; then
-    git clone --quiet https://github.com/$completion $COMP_DIR
-    rsync -aL $HOME/.local/share/zsh/completion/**/_* ${COMP_DIR%/*}/
-  fi
+  COMP_DIR="$HOME/.local/share/zsh/plugins/${completion#*/}"
+  [ ! -d "$COMP_DIR" ] && git clone -q https://github.com/$completion "$COMP_DIR"
+  FPATH="$FPATH:$(dirname $COMP_DIR/**/_* | head -n1)"
 done
 unset completions completion COMP_DIR
 
-which brew >/dev/null && FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
-FPATH="$HOME/.local/share/zsh/site-functions:$FPATH"
+which brew &>/dev/null && FPATH="$FPATH:$(brew --prefix)/share/zsh/site-functions"
 
-which compdef >/dev/null && compdef -P _cd -N mcd
+FPATH="$HOME/.local/share/zsh/site-functions:${FPATH}"
 
-autoload -Uz compinit && compinit -d "$HOME/.cache/zsh/compdump"
+zstyle ':completion::complete:*' cache-path "$HOME/.cache/zsh/zcompcache"
+
+autoload -Uz compinit && compinit -d "$HOME/.cache/zsh/zcompdump"
+
+compdef -P _cd -N mcd
 
 #-----------------------------------------------------------------------------
 
-# setopt auto_cd
-# setopt cd_silent
+setopt auto_cd
+setopt cd_silent
 setopt auto_pushd
 setopt pushd_silent
 setopt chase_links   # go to actual symlink dir rather in cd
@@ -63,7 +64,7 @@ setopt no_hash_all
 setopt no_hash_list_all
 setopt no_hash_dirs
 
-# setopt glob_complete
+setopt glob_complete
 setopt complete_in_word
 setopt menu_complete # tab completion on first tab hit
 setopt no_auto_remove_slash
@@ -85,6 +86,7 @@ setopt hist_expire_dups_first
 setopt hist_find_no_dups
 
 setopt nobeep
+setopt interactive_comments
 
 #-----------------------------------------------------------------------------
 

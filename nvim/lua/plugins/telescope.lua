@@ -26,7 +26,7 @@ config.defaults = {
   },
   preview = {
     check_mime_type = true,
-    timeout = 100,
+    timeout = 250,
     -- hook
   },
 }
@@ -105,7 +105,6 @@ config.extensions = {}
 ------------------------------------------------------------------------------
 
 if (pcall(telescope.load_extension, "file_browser")) then
-
   config.extensions.file_browser = telescope.extensions.file_browser
 
   local file_browser = config.extensions.file_browser
@@ -135,12 +134,11 @@ if (pcall(telescope.load_extension, "file_browser")) then
   }
 
   keymaps.e = config.extensions.file_browser.file_browser
-
 end
+
 ------------------------------------------------------------------------------
 
 if (pcall(telescope.load_extension, "project")) then
-
   -- config.extensions.project = telescope.extensions.project
 
   -- config.extensions.project = {
@@ -150,11 +148,11 @@ if (pcall(telescope.load_extension, "project")) then
   --     { path = vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*)/nvim"), ":~") },
   --   },
   -- }
-
 end
 
-if (pcall(telescope.load_extension, "frecency")) then
+------------------------------------------------------------------------------
 
+if (pcall(telescope.load_extension, "frecency")) then
   -- config.extensions.frecency = {
   --   -- db_root = vim.fn.stdpath("cache") .. "/nvim/db",
   --   db_root = vim.fn.glob("$HOME/.local/*/opt/sqlite/lib/*.*.dylib"),
@@ -163,9 +161,9 @@ if (pcall(telescope.load_extension, "frecency")) then
   --     ["data"]   = string.gsub(vim.fn.stdpath("data"), "/nvim/.*", "")
   --   }
   -- }
-
 end
 
+------------------------------------------------------------------------------
 
 -- pcall(require("telescope").load_extension, "file_browser")
 -- pcall(require("telescope").load_extension, "frecency")
@@ -182,4 +180,10 @@ for lhs, rhs in pairs(keymaps) do
   vim.keymap.set("n", leader_key .. lhs, rhs, { noremap = true, })
 end
 
+------------------------------------------------------------------------------
+
 telescope.setup(config)
+
+-- if vim.fn.argc() == 0 then
+--   builtin.find_files()
+-- end

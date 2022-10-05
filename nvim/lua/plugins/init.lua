@@ -1,4 +1,4 @@
-local function ensure_installed()
+local bootstrap = (function()
   local install_dir = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
   if (vim.fn.isdirectory(install_dir) == 1) then return false end
   vim.fn.system({
@@ -6,13 +6,9 @@ local function ensure_installed()
     "https://github.com/wbthomason/packer.nvim",
     install_dir
   })
-  vim.cmd('packadd packer.nvim')
+  vim.cmd("packadd packer.nvim")
   return true
-end
-
-------------------------------------------------------------------------------
-
-local bootstrap = ensure_installed()
+end)()
 
 ------------------------------------------------------------------------------
 
@@ -25,9 +21,7 @@ require("packer").init({
   display = {
     non_interactive = true,
     show_all_info = false,
-    open_fn = function()
-      require("packer.util").float({ border = "rounded" })
-    end
+    -- open_fn = function() require("packer.util").float({ border = "rounded" }) end
   },
   preview_updates = false,
 })
@@ -35,7 +29,7 @@ require("packer").init({
 ------------------------------------------------------------------------------
 
 require("packer").startup(function(use)
-  use { "wbthomason/packer.nvim" }
+  use "wbthomason/packer.nvim"
 
   use {
     "nvim-lua/plenary.nvim",
@@ -173,7 +167,7 @@ require("packer").startup(function(use)
     config = function() require("plugins.nvim_tree") end,
   }
 
-  use { -- TEXT-EDITING
+  use {
     "tpope/vim-surround",
     "tpope/vim-repeat",
   }
@@ -215,21 +209,27 @@ require("packer").startup(function(use)
   }
 
   use "euclio/vim-markdown-composer"
+
   use "rhysd/vim-grammarous"
 
+  use "edluffy/hologram.nvim"
+
+  use "hood/popui.nvim"
+
   use { "RRethy/nvim-base16",
+    -- "bluz71/vim-moonfly-colors",
     config = function()
       local colorschemes = {
         "base16-material",
-        -- "base16-onedark",
+        "base16-onedark",
         "base16-solarflare",
         "base16-solarized-dark",
         "base16-da-one-black",
+        "base16-ashes"
       }
 
-      -- `math.random` returns last index, using `os.time % #` as a workaround
-      local random_index = os.time() % #colorschemes
-      vim.cmd('colorscheme ' .. colorschemes[(random_index == 0) and 1 or random_index])
+      -- `math.random()` returns last index, using `os.time() % #` as a temporary workaround
+      vim.cmd('colorscheme ' .. colorschemes[os.time() % #colorschemes + 1])
     end
   }
 

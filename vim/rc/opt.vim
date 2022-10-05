@@ -1,4 +1,4 @@
-"{ GENERAL HOUSEKEEPING }------------------------------------------------------
+"{ GENERAL HOUSEKEEPING }-----------------------------------------------------
 
 let &compatible = 0
 
@@ -28,29 +28,31 @@ endif
 
 "{ [UX, BACKEND] }------------------------------------------------------------
 
-" let &autoread = 1   "changes to a file are shown in real-time
+let &autoread = 1   "changes to a file are shown in real-time
 
 if(has('clipboard'))
   let &clipboard = 'unnamed'
 endif
 
-let &undofile  = 1
-let &undodir   = $HOME . '/.cache/' . v:progname . '/undo'
+let s:VIM_CACHE_HOME = $HOME . '/.cache/' . v:progname
+
+let &undofile = 1
+let &undodir  = s:VIM_CACHE_HOME . '/undo'
 
 if(has('shada'))
-  let &shadafile   = $HOME . '/.cache/' . v:progname . '/shada'
+  let &shadafile   = s:VIM_CACHE_HOME . '/shada'
 elseif(has('viminfo'))
-  let &viminfofile = $HOME . '/.cache/' . v:progname . '/viminfo'
+  let &viminfofile = s:VIM_CACHE_HOME . '/viminfo'
 endif
 
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }------------------------------------------
 
-let &path           .= (&path =~ fnameescape(',.**')) ? '' : '.,**'
+let &path           .= (&path =~ fnameescape('.,**')) ? '' : '.,**'
 let &ignorecase     = 1
 let &smartcase      = 1
 let &fileignorecase = 0
 
-"{ VISUAL-UI }-----------------------------------------------------------------
+"{ VISUAL-UI }----------------------------------------------------------------
 
 let &incsearch   = 1
 let &number      = 1
@@ -74,4 +76,8 @@ let &foldmethod = 'indent'
 
 if exists('&termguicolors')
   let &termguicolors = 1
+endif
+
+if exists('&mouse')
+  let &mouse = ''
 endif
