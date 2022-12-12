@@ -8,78 +8,29 @@
 
 __parse_argv__(){
 
-  local PARAMS=$(cat <<EOF
-    -a --all
-    -c --config-dir
-    -d --dotfiles-dir
-    --dry-run
-    -f --force -y --yes
-    -i --interactive
-    -h --help
-    -l --links --
-    -v --verbose
-  EOF
-  )
-
-  # while [ -n "$*" ]; do
-  #   case "$1" in
-  #     -a | -all)
-  #       SYMLINKS=$1
-  #       shift 1
-  #       ;;
-  #     -c | -cfg | --config-dir)
-  #       CONFIG_DIR="${2}"
-  #       shift 1
-  #       ;;
-  #     -d | --dotfiles-dir)
-  #       DOTFILES_DIR="${2}"
-  #       shift 2
-  #       ;;
-  #     -f | --force | -y | --yes)
-  #       FORCE=1;
-  #       shift 2;
-  #       ;;
-  #     -i | --interactive)
-  #       INTERACTIVE=1
-  #       shift 1
-  #       ;;
-  #     -h | --help)
-  #       usage
-  #       exit
-  #       ;;
-  #     -s | --silent | -q | --quiet)
-  #       SILENT=1
-  #       shift 1
-  #       ;;
-  #     -v | -V | --verbose)
-  #       VERBOSE=1
-  #       shift 1
-  #       ;;
-  #
-  #     -c=* | -cfg=* | --config-dir=*)
-  #       CONFIG_DIR="${1#=*}"
-  #       shift 1
-  #       ;;
-  #     -d=* | --dotfiles-dir=*)
-  #       DOTFILES_DIR="${1#=*}"
-  #       shift 1
-  #       ;;
-  #     -f=* | --force=* | -y=* | --yes=*)
-  #       FORCE="${1#=*}";
-  #       shift 1;
-  #       ;;
-  #     -i=* | --interactive=*)
-  #       INTERACTIVE="${1#=*}"
-  #       shift 1
-  #       ;;
-  #     -v=* | -V=* | --verbose=*)
-  #       VERBOSE="${1*=}"
-  #       shift 1
-  #       ;;
-  #     esac
-    done
+  # local PARAMS 
+  # PARAMS=$(cat <<EOF
+  #   -a --all
+  #   -c --config-dir
+  #   -d --dotfiles-dir
+  #   --dry-run
+  #   -f --force -y --yes
+  #   -i --interactive
+  #   -h --help
+  #   -l --links --
+  #   -v --verbose
+  # EOF
+  # )
 
 }
+
+FORCE="${FORCE:-0}"
+INTERACTIVE="${INTERACTIVE:-1}"
+VERBOSE="${VERBOSE:-0}"
+SILENT="${SILENT:-0}"; [ "$INTERACTIVE" = 1 ] || [ "$VERBOSE" = 1 ] && SILENT=0
+
+CONFIG_DIR="${CONFIG_DIR:-${XDG_CONFIG_DIR:-$HOME/.config}}"
+DOTFILES_DIR="${DOTFILES_DIR:-${DOTFILES:-$(pwd)}}"
 
 FORCE="${FORCE:-0}"
 INTERACTIVE="${INTERACTIVE:-1}"
@@ -96,3 +47,5 @@ DOTFILES_DIR="${DOTFILES_DIR:-${DOTFILES:-$(pwd)}}"
 # for symlink in $SYMLINKS; do
 #    ln -s "$CONFIG_DIR/$symlink" "$HOME/.$(basename $symlink)"
 # done
+
+#-----------------------------------------------------------------------------
