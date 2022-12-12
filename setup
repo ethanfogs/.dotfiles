@@ -8,18 +8,19 @@
 
 __parse_argv__(){
 
-  local PARAMS=$(cat <<EOF
-    -a --all
-    -c --config-dir
-    -d --dotfiles-dir
-    --dry-run
-    -f --force -y --yes
-    -i --interactive
-    -h --help
-    -l --links --
-    -v --verbose
-  EOF
-  )
+  # local PARAMS 
+  # PARAMS=$(cat <<EOF
+  #   -a --all
+  #   -c --config-dir
+  #   -d --dotfiles-dir
+  #   --dry-run
+  #   -f --force -y --yes
+  #   -i --interactive
+  #   -h --help
+  #   -l --links --
+  #   -v --verbose
+  # EOF
+  # )
 
   # while [ -n "$*" ]; do
   #   case "$1" in
@@ -55,7 +56,6 @@ __parse_argv__(){
   #       VERBOSE=1
   #       shift 1
   #       ;;
-  #
   #     -c=* | -cfg=* | --config-dir=*)
   #       CONFIG_DIR="${1#=*}"
   #       shift 1
@@ -77,9 +77,17 @@ __parse_argv__(){
   #       shift 1
   #       ;;
   #     esac
-    done
+  # done
 
 }
+
+FORCE="${FORCE:-0}"
+INTERACTIVE="${INTERACTIVE:-1}"
+VERBOSE="${VERBOSE:-0}"
+SILENT="${SILENT:-0}"; [ "$INTERACTIVE" = 1 ] || [ "$VERBOSE" = 1 ] && SILENT=0
+
+CONFIG_DIR="${CONFIG_DIR:-${XDG_CONFIG_DIR:-$HOME/.config}}"
+DOTFILES_DIR="${DOTFILES_DIR:-${DOTFILES:-$(pwd)}}"
 
 FORCE="${FORCE:-0}"
 INTERACTIVE="${INTERACTIVE:-1}"
@@ -96,3 +104,5 @@ DOTFILES_DIR="${DOTFILES_DIR:-${DOTFILES:-$(pwd)}}"
 # for symlink in $SYMLINKS; do
 #    ln -s "$CONFIG_DIR/$symlink" "$HOME/.$(basename $symlink)"
 # done
+
+#-----------------------------------------------------------------------------
