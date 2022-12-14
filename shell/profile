@@ -1,34 +1,26 @@
-#!/usr/bin/env bash
-
-PATH="$HOME/.local/sbin:$HOME/.local/bin:$PATH"
+#!/bin/bash
 
 #-----------------------------------------------------------------------------
 
-export XDG_CACHE_HOME=$HOME/.cache
-export XDG_CONFIG_HOME=$HOME/.config
-export XDG_DATA_HOME=$HOME/.local/share
-export XDG_STATE_HOME=$HOME/.local/state
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${HOME}/.config"
+export XDG_DATA_HOME="${HOME}/.local/share"
+export XDG_STATE_HOME="${HOME}/.local/state"
+
+#-----------------------------------------------------------------------------
+
+case "$(uname)" in
+  Darwin)
+    [ -x "${HOME}/.config/shell/darwinrc" ] && . "${HOME}/.config/shell/darwinrc"
+  ;;
+  Linux)
+    [ -x "${HOME}/.config/shell/linuxrc" ]  && . "${HOME}/.config/shell/linuxrc"
+  ;;
+esac
 
 #-----------------------------------------------------------------------------
 
 export SHELL_SESSIONS_DISABLE=1
-
-#-----------------------------------------------------------------------------
-
-if [ "$(uname)" = "Darwin" ]; then
-
-  PATH="$HOME/.local/homebrew/bin:$PATH"
-
-  export HOMEBREW_CACHE="$HOME/.cache/Homebrew"
-  export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications --no-quarantine --force"
-
-  if [ ! -x "$HOME/.local/homebrew/bin/brew" ]; then
-    git clone --quite https://github.com/homebrew "$HOME/.local/homebrew" \
-      && brew autoupdate start --immediate --upgrade --greedy --cleanup >/dev/null \
-      && brew analytics off \
-      && brew completions link >/dev/null
-  fi
-fi
 
 #-----------------------------------------------------------------------------
 
@@ -37,4 +29,4 @@ export BROWSER='firefox'
 
 #-----------------------------------------------------------------------------
 
-export PATH
+PATH="${HOME}/.local/sbin:${HOME}/.local/bin:${PATH}"

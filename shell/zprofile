@@ -1,3 +1,3 @@
-#!/usr/bin/env zsh
+#!/bin/zsh
 
-[ -f $HOME/.profile ] && . $HOME/.profile
+[ -x "${HOME}/.profile" ] && . "${HOME}/.profile"

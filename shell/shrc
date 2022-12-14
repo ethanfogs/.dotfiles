@@ -3,8 +3,9 @@
 # RC\SOURCE FILES ------------------------------------------------------------
 
 # shellcheck disable=SC1091
-[ -f "$HOME/.env" ]     && . "$HOME/.env"
-[ -f "$HOME/.aliasrc" ] && . "$HOME/.aliasrc"
+[ -x "${HOME}/.env" ]                   && . "${HOME}/.env"
+[ -x "${HOME}/.config/shell/aliasrc" ]  && . "${HOME}/.config/shell/aliasrc"
+[ -x "${HOME}/.config/fzf/fzf.sh" ]     && . "${HOME}/.config/fzf/fzf.sh"
 
 # ----------------------------------------------------------------------------
 
@@ -15,8 +16,8 @@ CURRENT_SHELL=$(ps -p $$ -oargs= | sed -E "s#.*[-/]##")
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=1000
 
-mkdir -p "$HOME/.cache/$CURRENT_SHELL"
-export HISTFILE="$HOME/.cache/$CURRENT_SHELL/history"
+mkdir -p "${HOME}/.cache/${CURRENT_SHELL}"
+export HISTFILE="${HOME}/.cache/${CURRENT_SHELL}/history"
 
 export LESSHISTFILE=/dev/null
 
@@ -24,17 +25,13 @@ export LESSHISTFILE=/dev/null
 
 if ! which starship >/dev/null; then
   sh <(curl -sSL https://starship.rs/install.sh) \
-    --bin-dir "$HOME/.local/bin" --force >/dev/null  
+    --bin-dir "${HOME}/.local/bin" --force
 fi
 
-eval "$(starship init "$CURRENT_SHELL" 2>/dev/null)"
+eval "$(starship init "${CURRENT_SHELL}" 2>/dev/null)"
 
 # MAN PAGE HIGHLIGHTING ------------------------------------------------------
 
 export LESS_TERMCAP_md=$'\e[1;32m'
-
-# ----------------------------------------------------------------------------
-
-[ -f "$HOME/.config/fzf/fzf.sh" ] && . "$HOME/.config/fzf/fzf.sh"
 
 # ----------------------------------------------------------------------------

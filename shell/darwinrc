@@ -1,0 +1,38 @@
+#!/bin/bash
+
+HOMEBREW_ROOT="${HOME}/.local"
+[ "${CPUTYPE}" = "x86_64" ] && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/usr/local}"
+[ "${CPUTYPE}" = "arm64" ]  && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/opt}"
+
+if [ ! -x "${HOMEBREW_ROOT}/homebrew/bin/brew" ]; then
+
+  export NONINTERACTIVE=1
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  # if [ ! -x "$HOME/.local/homebrew/bin/brew" ]; then
+  #   git clone --quite https://github.com/homebrew "$HOME/.local/homebrew" \
+  #     && brew autoupdate start --immediate --upgrade --greedy --cleanup >/dev/null \
+  #     && brew analytics off \
+  #     && brew completions link >/dev/null
+  # fi
+
+fi
+
+eval "$("${HOMEBREW_ROOT}/homebrew/bin/brew" shellenv)"
+
+# export HOMEBREW_ANALYTICS=0
+# export HOMEBREW_CACHE="$HOME/.cache/Homebrew"
+export HOMEBREW_CASK_OPTS="--force --no-quarantine"
+export HOMEBREW_EVAL_ALL=1
+
+if [ "${HOMEBREW_ROOT}" = "${HOME}/.local" ]; then
+  export HOMEBREW_CASK_OPTS="${HOMEBREW_CASK_OPTS} --appdir=${HOME}/Applications --font-dir=${HOME}/Library/Fonts"
+fi
+
+#------------------------------------------------------------------------------
+
+FIREFOX="/Applications/Firefox.app/Contents/MacOS/firefox-bin"
+[ "${HOMEBREW_ROOT}" = "${HOME}/.local" ] && FIREFOX="${HOME}/${FIREFOX}"
+
+[ -x "${FIREFOX}" ] && alias firefox="${FIREFOX}"
+unset FIREFOX

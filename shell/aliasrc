@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-# shellcheck disable=SC2164
+#!/bin/bash
 
 # ----------------------------------------------------------------------------
 
@@ -16,29 +15,22 @@ which tree >/dev/null && alias tree="tree -C" && alias t="tree"
 
 # ----------------------------------------------------------------------------
 
-alias cfg='cd $HOME/.config'
-
-# ----------------------------------------------------------------------------
+mcd(){
+  /bin/mkdir -p "${*}" && cd "${1}"
+}
 
 alias mkdir="/bin/mkdir -p"
-
-mcd(){
-  /bin/mkdir -p "$@" && cd "$1"
-}
 
 # -----------------------------------------------------------------------------
 
 alias e='${EDITOR:-vim}'
 
-if [ "$(uname)" = "Darwin" ]; then
-  FIREFOX="/Applications/Firefox.app/Contents/MacOS/firefox-bin"
-  [ -x "$HOME/$FIREFOX" ] && FIREFOX="$HOME/$FIREFOX"
-  [ -x "$FIREFOX" ] && alias firefox="$FIREFOX"
-  unset FIREFOX
-fi
+brave(){
+  open "https://search.brave.com/search?q=${*// /+}"
+}
 
 google(){
-  open "https://search.brave.com/search?q=${*// /+}"
+  open "https://search.google.com/search?q=${*// /+}"
 }
 
 # GIT -------------------------------------------------------------------------
@@ -60,18 +52,12 @@ which python3 >/dev/null && alias python="python3"
 # SYSTEM ADMINISTRATION ------------------------------------------------------
 
 alias su="/usr/bin/su -l"
-
-which reboot >/dev/null && alias reboot="sudo reboot"
-
-if [ "$(uname)" = "Linux" ]; then
-  if which apt >/dev/null; then
-    alias apt="apt -y"
-    alias apt-get="apt-get -y"
-  fi
-fi
+alias reboot="sudo reboot"
 
 # ----------------------------------------------------------------------------
 
-alias wtfismyip="curl https://www.wtfismyip.com/json"
+wtfismyip() {
+  curl "https://www.wtfismyip/${1:-json}"
+}
 
 # ----------------------------------------------------------------------------
