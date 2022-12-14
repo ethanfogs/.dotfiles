@@ -1,0 +1,4 @@
+# Run `bat --help` for all configuration options
+
+# values: `bat --list-themes`
+--theme="Dracula"
