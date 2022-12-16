@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+# ----------------------------------------------------------------------------
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# ----------------------------------------------------------------------------
+
+LS_DEFAULT_OTPS=(
+  "-h"   # ~human readable~ file sizes
+  "-l"   # ~long~ format
+  "-s"   # display file sizes in blocks
+  "-F"   # append filetype indicators
+  "-G"   # colorized output
+)
+
+alias l="/bin/ls ${LS_DEFAULT_OTPS}"
+alias ll="l -a"
+
+# ----------------------------------------------------------------------------
+
+alias grep="grep --color=auto"
+
+# ----------------------------------------------------------------------------
+
+mcd(){
+  /bin/mkdir -p "${1}" && cd "${1}"
+}
+
+# -----------------------------------------------------------------------------
+
+alias e='${EDITOR:-vim}'
+
+# -----------------------------------------------------------------------------
+
+alias gss='git status >/dev/null && $EDITOR -c "Git | bd 1"'
+alias gs="git status --short"
+alias gl="git log --oneline --graph"
+alias gb="git branch -a"
+alias gch="git checkout"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gP="git pull"
+
+# ----------------------------------------------------------------------------
+
+alias su="/usr/bin/su -l"
+
+alias reboot="sudo reboot"
+
+which python3 >/dev/null && alias python="python3"
+
+if which tree >/dev/null; then 
+  alias tree="tree -C"
+  alias t="tree"
+fi
+
+wtfismyip() {
+  FORMAT="${1:-json}" # json|yaml|yml|xml
+  curl "https://www.wtfismyip/${FORMAT}"
+}
+
+# ----------------------------------------------------------------------------

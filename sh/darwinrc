@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 HOMEBREW_ROOT="${HOME}/.local"
+
 [ "${CPUTYPE}" = "x86_64" ] && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/usr/local}"
 [ "${CPUTYPE}" = "arm64" ]  && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/opt}"
 
@@ -30,9 +31,3 @@ if [ "${HOMEBREW_ROOT}" = "${HOME}/.local" ]; then
 fi
 
 #------------------------------------------------------------------------------
-
-FIREFOX="/Applications/Firefox.app/Contents/MacOS/firefox-bin"
-[ "${HOMEBREW_ROOT}" = "${HOME}/.local" ] && FIREFOX="${HOME}/${FIREFOX}"
-
-[ -x "${FIREFOX}" ] && alias firefox="${FIREFOX}"
-unset FIREFOX

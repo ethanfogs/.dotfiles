@@ -1,4 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+#-----------------------------------------------------------------------------
+
+PATH="${HOME}/.local/sbin:${HOME}/.local/bin:${PATH}"
 
 #-----------------------------------------------------------------------------
 
@@ -11,22 +15,16 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 
 case "$(uname)" in
   Darwin)
-    [ -x "${HOME}/.config/shell/darwinrc" ] && . "${HOME}/.config/shell/darwinrc"
+    [ -f "${HOME}/.config/sh/darwinrc" ] && . "$HOME/.config/sh/darwinrc"
   ;;
   Linux)
-    [ -x "${HOME}/.config/shell/linuxrc" ]  && . "${HOME}/.config/shell/linuxrc"
+    [ -f "${HOME}/.config/sh/linuxrc" ]  && . "${HOME}/.config/sh/linuxrc"
   ;;
 esac
 
 #-----------------------------------------------------------------------------
 
-export SHELL_SESSIONS_DISABLE=1
-
-#-----------------------------------------------------------------------------
-
 which nvim >/dev/null && export EDITOR=nvim
-export BROWSER='firefox'
+export BROWSER="firefox"
 
 #-----------------------------------------------------------------------------
-
-PATH="${HOME}/.local/sbin:${HOME}/.local/bin:${PATH}"

@@ -2,7 +2,7 @@
 
 #-----------------------------------------------------------------------------
 
-[ -x ~/.config/shell/shrc ] && . ~/.config/shell/shrc
+[ -f $HOME/.config/sh/shrc ] && . $HOME/.config/sh/shrc
 
 #-----------------------------------------------------------------------------
 
@@ -58,7 +58,7 @@ setopt null_glob
 # setopt dot_glob
 setopt extended_glob
 setopt no_case_glob
-setopt no_case_match
+# setopt no_case_match
 
 setopt no_hash_all
 setopt no_hash_list_all

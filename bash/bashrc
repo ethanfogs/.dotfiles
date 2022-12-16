@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 
-[ -f $HOME/.shrc ] && . $HOME/.shrc
+# IMPORTS --------------------------------------------------------------------
 
-# SHELL OPTS -----------------------------------------------------------------
+[ -f "${HOME}/.config/sh/shrc" ] && . "${HOME}/.config/sh/shrc"
 
-# MISC
+# SHELL-OPTS -----------------------------------------------------------------
+
 shopt -u mailwarn
 shopt -s checkwinsize
 
-# $PATH BEHAVIOR
-# shopt sourcepath
-
-# SPELLING CORRECTION
 shopt -s dirspell # attempts to infer misspelled dir on `word-expansion`
-shopt -s cdspell # attempts to infer misspelled dir for `cd`
+shopt -s cdspell  # attempts to infer misspelled dir for `cd`
 
-# COMPLETION\EXPANSION
 shopt -s hostcomplete
 
-# GLOBBING
 shopt -s dotglob
 shopt -s nullglob
 # shopt globskipdots
@@ -26,13 +21,12 @@ shopt -s nocaseglob
 shopt -s nocasematch
 shopt -s extglob
 
-# HISTORY
 shopt -s histverify
-shopt -s cmdhist    # save multi-line commands as a single history entry
-shopt -s histappend # save multi-line commands as a single history entry
+shopt -s cmdhist
+shopt -s histappend
 # shopt lithist
 
-if [ $((BASH_VERSINFO < 3)) = 1 ]; then
+if [ ${BASH_VERSINFO} -gt 3 ]; then
   shopt -s globstar # `**` performs recursive dir searches on filename expansion
   shopt -s autocd
   shopt -s progcomp_alias
@@ -50,6 +44,7 @@ bind 'set colored-stats on'
 bind 'set history-preserve-point on'
 
 # COMPLETION -----------------------------------------------------------------
+
 bind 'set skip-completed-text on'
 bind 'set show-all-if-ambiguous on'
 bind 'set show-all-if-unmodified on'

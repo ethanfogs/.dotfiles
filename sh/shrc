@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# ----------------------------------------------------------------------------
+
+CURRENT_SHELL=$(ps -p $$ -oargs= | sed 's/.*[-/]//')
+
+# IMPORTS --------------------------------------------------------------------
+
+IMPORTS=(
+  "${HOME}/.env"
+  "${HOME}/.config/sh/aliasrc"
+  "${HOME}/.config/fzf/fzf.sh"
+)
+
+for import in "${IMPORTS[@]}"; do
+  [ -f "${import}" ] && . "${import}"
+done
+
+# SHELL-OPT VARIABLES --------------------------------------------------------
+
+mkdir -p "${HOME}/.cache/${CURRENT_SHELL}"
+export HISTFILE="${HOME}/.cache/${CURRENT_SHELL}/history"
+export HISTCONTROL="ignoredups:erasedups"
+export HISTSIZE=1000
+
+export SHELL_SESSIONS_DISABLE=1
+
+export MAILCHECK=-1
+
+export LESSHISTFILE=/dev/null
+
+# PROMPT ---------------------------------------------------------------------
+
+if ! which starship >/dev/null; then
+  sh <(curl -sSL https://starship.rs/install.sh) \
+    --bin-dir "${HOME}/.local/bin" --force
+fi
+
+eval "$(starship init "${CURRENT_SHELL}")"
+
+# MAN PAGE HIGHLIGHTING ------------------------------------------------------
+
+export LESS_TERMCAP_md=$'\e[1;32m'
+
+# ----------------------------------------------------------------------------
