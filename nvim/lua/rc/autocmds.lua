@@ -1,4 +1,4 @@
-vim.cmd("source ~/.vim/rc/autocmd.vim")
+vim.cmd.source("~/.vim/rc/autocmds.vim")
 
 -------------------------------------------------------------------------------
 

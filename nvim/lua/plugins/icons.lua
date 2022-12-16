@@ -1,6 +1,6 @@
-local M = {}
+local icons = {}
 
-M.type = {
+icons.type = {
   Array   = "",
   Boolean = "蘒",
   Number  = "",
@@ -8,7 +8,7 @@ M.type = {
   String  = "",
 }
 
-M.documents = {
+icons.documents = {
   File       = "",
   Files      = "",
   Folder     = "",
@@ -16,7 +16,7 @@ M.documents = {
   Symlink    = "",
 }
 
-M.git = {
+icons.git = {
   Add    = "",
   Diff   = "",
   Ignore = "",
@@ -26,7 +26,7 @@ M.git = {
   Repo   = "",
 }
 
-M.diagnostics = {
+icons.diagnostics = {
   Error       = "",
   Hint        = "",
   Information = "",
@@ -34,14 +34,14 @@ M.diagnostics = {
   Warning     = "",
 }
 
-M.misc = {
+icons.misc = {
   Robot    = "ﮧ",
   Squirrel = "",
   Tag      = "",
   Watch    = "",
 }
 
-M.kind = {
+icons.kind = {
   Class         = "",
   Color         = "",
   Constant      = "",
@@ -69,7 +69,7 @@ M.kind = {
   Variable      = "",
 }
 
-M.ui = {
+icons.ui = {
   ArrowClosed       = "",
   ArrowOpen         = "",
   BigCircle         = "",
@@ -103,4 +103,4 @@ M.ui = {
   Telescope         = "",
 }
 
-return M
+return icons

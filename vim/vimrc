@@ -1,30 +1,20 @@
-source ~/.vim/rc/opt.vim
-source ~/.vim/rc/keymap.vim
-source ~/.vim/rc/autocmd.vim
-
-source ~/.vim/plugin/scratchbuf.vim
-
-if(v:progname != 'vim' || v:progname != 'vi')
-  finish
-endif
-
-source ~/.vim/rc/plugin.vim
-source ~/.vim/plugin/nerdtree.vim
-source ~/.vim/plugin/fugitive.vim
-source ~/.vim/plugin/gitgutter.vim
+source ~/.vim/rc/opts.vim
+source ~/.vim/rc/keymaps.vim
+source ~/.vim/rc/autocmds.vim
+source ~/.vim/rc/plugins.vim
 
 " ----------------------------------------------------------------------------
 
-let s:colorschemes = [
-  \  'atom',
-  \  'base16-flat',
-  \  'base16-materia',
-  \  'base16-material',
-  \  'base16-onedark',
-  \  'base16-solarflare',
-  \  'focuspoint',
-  \  'materialbox',
-  \  'solarized8_high',
-\]
+let s:colorschemes =<< trim END
+  atom
+  base16-flat
+  base16-materia
+  base16-material
+  base16-onedark
+  base16-solarflare
+  focuspoint
+  materialbox
+  solarized8_high
+END
 
-silent! execute 'colorscheme ' . s:colorscheme[rand() % (len(s:colorschemes) - 1)]
+execute 'colorscheme ' . s:colorschemes[rand() % (len(s:colorschemes) - 1)]

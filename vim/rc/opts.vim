@@ -74,10 +74,6 @@ let &wildoptions = 'pum'
 
 let &foldmethod = 'indent'
 
-if exists('&termguicolors')
-  let &termguicolors = 1
-endif
-
 if exists('&mouse')
   let &mouse = ''
 endif
