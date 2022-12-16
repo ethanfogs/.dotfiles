@@ -1,4 +1,2 @@
-# Run `bat --help` for all configuration options
-
-# values: `bat --list-themes`
+# See: `bat --list-themes`
 --theme="Dracula"
