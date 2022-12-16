@@ -1,97 +1,67 @@
 #!/usr/bin/env bash
 
-DESC=(
-  "An interactive script used to deploy dotfile configurations."
-)
-
-PARAMS=(
-  "-h --help              : Display this help message."
-  "-f --force -y --yes    : Overwrite existing targets."
-  "-i --interactive       : Run interactively."
-  "-n --non-interactive   : Run non-interactively."
-  "-q --quiet -s --silent : Output is suppressed."
-  "-v --verbose           : Output is verbose."
-  "--dry-run              : <description>"
-  "-c --config-dir        : Target .config directory. (Default: \$XDG_CONFIG_HOME|\$HOME/.config)"
-  "-d --dotfiles-dir      : Target dotfiles directory. (Default: \$(pwd))"
-  "-a --all               : <description>"
-  "-l --links --          : <description>"
-)
-
-help() {
-  echo "${0}" "${DESC[*]}"
-  for param in "${PARAMS[@]}"; do echo "    ${param}"; done
-}
-
-while [ "$#" -gt 0 ]; do
-
-  case "$1" in
-    -f | --force | -y | --yes)    FORCE=1;              shift 1 ;;
-    -i | --interactive)           INTERACTIVE=1;        shift 1 ;;
-    -n | --non-interactive)       INTERACTIVE=0;        shift 1 ;;
-    -q | --quiet | -s | --silent) SILENT=1;             shift 1 ;;
-    -v | --verbose)               VERBOSE=1;            shift 1 ;;
-    -c   | --config-dir)          CONFIG_DIR="${2}";    shift 2 ;;
-    -c=* | --config-dir=*)        CONFIG_DIR="${1#*=}"; shift 1 ;;
-    -a | --all | all)             DOTFILES=;            shift 1 ;;
-    -l | --links)                                       shift 1 ;;
-    *)                            DOTFILES+=("${1}");   shift 1 ;;
+while [ "${#}" -gt 0 ]; do
+  case "${1}" in
+    -c | --config-dir)  CONFIG_DIR="${2}";  shift 2;;
+    -f | --force)       FORCE=1;            shift 1;;
+    -i | --interactive) INTERACTIVE=1;      shift 1;;
+    -v | --verbose)     VERBOSE=1;          shift 1;;
+    -y | --yes)         INTERACTIVE=0;      shift 1;;
+    *)                  CONFIGS+=("${1}");  shift 1;;
   esac
-
 done
 
-[ "${INTERACTIVE:-1}" -eq 1 ] && ARGV_FLAGS="i${ARGV_FLAGS}"
-[ -n "${FORCE}" ]             && ARGV_FLAGS="f${ARGV_FLAGS}"
-[ -n "${VERBOSE}" ]           && ARGV_FLAGS="v${ARGV_FLAGS}"
+[ ${#CONFIGS} -eq 0 ]       && CONFIGS=(*)
+[ ${#CONFIG_DIR} -eq 0 ]    && CONFIG_DIR=${XDG_CONFIG_DIR:-${HOME}/.config}
+[ ${FORCE} -eq 1 ]          && ARGV_FLAGS+=("-f")
+[ ${INTERACTIVE:-1} -eq 1 ] && ARGV_FLAGS+=("-i")
+[ ${VERBOSE} -eq 1 ]        && ARGV_FLAGS+=("-v")
 
-CONFIG_DIR="${CONFIG_DIR:-${XDG_CONFIG_DIR:-${HOME}/.config}}"
+ln_dotfile() {
+  [ -h "${2}" ] && unlink "${2}"
+  [ -d "${2}" ] && rm -r "${ARGV_FLAGS[@]}" "${2}"
 
-[ ${#DOTFILES[@]} -eq 0 ] && DOTFILES=(*/) && DOTFILES=("${DOTFILES[@]%/}")
-
-ln(){
-  [ ${#} -lt 2 ] && return
-
-  [ -h "${2}" ] && unlink "${2%/}"
-  [ -d "${2}" ] && rm -r -${ARGV_FLAGS} "${2}"
-
-  /bin/ln -s -${ARGV_FLAGS} "${PWD}/${1%/}" "${2%/}"
+  ln -s "${ARGV_FLAGS[@]}" "${1}" "${2}"
 }
 
-while [ "${#DOTFILES[@]}" -gt 0 ]; do
+while [ "${#CONFIGS}" -gt 0 ]; do
 
-  case ${DOTFILES[0]} in
-    nvim)
-      ln "nvim" "${CONFIG_DIR}/nvim"
-      DOTFILES+=(vim)
-    ;;
-    shell)
-      DOTFILES+=(sh bash zsh)
-    ;;
+  #- pop the first item in `${CONFIGS[@]}` and save it as `$config`
+  config="${CONFIGS[0]}" && CONFIGS=("${CONFIGS[@]:1}")
+
+  case ${config} in
+    "${0##*/}") #- skip over this file
+      continue
+      ;;
     bash)
-      LINKS+=(shell/bash{rc,_profile})
-      DOTFILES+=(sh)
-    ;;
+      DOTFILES+=(sh/profile bash/*)
+      ;;
+    curl)
+      DOTFILES+=(curl/curlrc)
+      ;;
+    git)
+      DOTFILES+=(git/ignore)
+      ;;
+    nvim)
+      CONFIGS+=(vim)
+      ;;
+    vim)
+      DOTFILES+=(vim)
+      ;;
+    x11)
+      # DOTFILES+=(x11/*)
+      continue
+      ;;
     zsh)
-      LINKS+=(shell/z{shrc,profile})
-      DOTFILES+=(sh)
-    ;;
-    sh)
-      ln "shell" "${CONFIG_DIR}/shell"
-      LINKS+=(shell/profile)
-    ;;
-    # x11)
-    #   ln "x11" "${CONFIG_DIR}/x11"
-    #   LINKS+=(x11/*)
-    # ;;
-    *)
-      ln "${DOTFILES[0]}" "${CONFIG_DIR}/${DOTFILES[0]}"
-    ;;
+      DOTFILES+=(sh/profile zsh/*)
+      ;;
   esac
 
-  DOTFILES=(${DOTFILES[@]#${DOTFILES/[0]}})
+  ln_dotfile "${PWD}/${config}" "${CONFIG_DIR}/${config}"
 
 done
 
-for link in $(echo "${LINKS[@]}" | xargs -n1 | sort -u); do
-  ln "${link}" "${HOME}/.${link#*/}"
+#- dedup `${DOTFILES[@]}` before looping over it
+for dotfile in $(echo "${DOTFILES[@]}" | sed 's/ /\n/g' | awk '!x[$0]++'); do
+  ln_dotfile "${PWD}/${dotfile}" "${HOME}/.${dotfile##*/}"
 done
