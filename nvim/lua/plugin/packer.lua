@@ -6,19 +6,38 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 
 ------------------------------------------------------------------------------
 
-local bootstrap = (function()
+local M = {}
 
-  local root_dir = vim.fn.stdpath("data") .. "/site/pack"
+------------------------------------------------------------------------------
 
-  if (vim.fn.isdirectory(root_dir) == 1) then return false end
+M.config = {
+  autoremove = true,
+}
+
+M.config.display = {
+  non_interactive = true,
+}
+
+-- M.config.display =  {
+--   compact = true,
+--   open_fn = function() require("packer.util").float({ border = "rounded" }) end
+-- }
+
+require("packer").init(M.config)
+
+------------------------------------------------------------------------------
+
+M.bootstrap = (function()
+
+  if vim.fn.isdirectory(vim.fn.stdpath("data") .. "/site/pack") == 1 then return false end
 
   vim.fn.system({
     "git", "clone", "--depth", "1",
     "https://github.com/wbthomason/packer.nvim",
-    root_dir .. "/packer/start/packer.nvim"
+    vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim",
   })
 
-  vim.cmd("packadd packer.nvim")
+  vim.cmd.packadd("packer.nvim")
 
   return true
 
@@ -26,25 +45,15 @@ end)()
 
 ------------------------------------------------------------------------------
 
-require("packer").init({
-  autoremove = true,
-  display = {
-    non_interactive = true,
-  },
-  -- display = {
-  --   compact = true,
-  --   open_fn = function() require("packer.util").float({ border = "rounded" }) end
-  -- }
-})
+return require("packer").startup(function(use)
 
-------------------------------------------------------------------------------
-
-require("packer").startup(function(use)
   use { "wbthomason/packer.nvim", }
 
   use {
     { "nvim-lua/plenary.nvim", },
     { "nvim-lua/popup.nvim", },
+    { "hood/popui.nvim", }
+
   }
 
   use { -- GIT
@@ -76,7 +85,11 @@ require("packer").startup(function(use)
     { "nvim-treesitter/playground", },
   }
 
-  use { -- DEGUGGING
+  use { "jose-elias-alvarez/null-ls.nvim", -- code formatting\linting
+    config = function() require("plugin.null_ls") end,
+  }
+
+  use { -- degug adapters
     { "mfussenegger/nvim-dap",
       config = function() require("plugin.dap") end,
     },
@@ -98,6 +111,7 @@ require("packer").startup(function(use)
     { "hrsh7th/cmp-path", },
     { "L3MON4D3/LuaSnip", },
     { "saadparwaiz1/cmp_luasnip", },
+    -- { "rafamadriz/friendly-snippets", },
     -- { "rcarriga/cmp-dap",
     --   config = function()
     --     local cmp = require("cmp")
@@ -116,10 +130,6 @@ require("packer").startup(function(use)
     --     })
     --   end,
     -- },
-  }
-
-  use { "jose-elias-alvarez/null-ls.nvim", -- CODE (AUTO-)FORMATTING
-    config = function() require("plugin.null_ls") end,
   }
 
   use {
@@ -149,10 +159,11 @@ require("packer").startup(function(use)
 
   if (vim.fn.has("linux") == 1) then
     use { "nvim-telescope/telescope-media-files.nvim" }
+  else
+    -- use { "edluffy/hologram.nvim", }
   end
 
-  use {
-    "akinsho/toggleterm.nvim",
+  use { "akinsho/toggleterm.nvim",
     config = function() require("plugin.toggleterm") end,
   }
 
@@ -160,7 +171,9 @@ require("packer").startup(function(use)
     config = function() require("plugin.nvim_tree") end,
   }
 
-  use { "kylechui/nvim-surround", }
+  use { "kylechui/nvim-surround",
+    config = function() require("nvim-surround").setup() end
+  }
 
   use { "windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup() end,
@@ -198,13 +211,9 @@ require("packer").startup(function(use)
     config = function() require("colorizer").setup() end
   }
 
-  use { "euclio/vim-markdown-composer", }
+  -- use { "euclio/vim-markdown-composer", }
 
-  use { "rhysd/vim-grammarous", }
-
-  use { "edluffy/hologram.nvim", }
-
-  use { "hood/popui.nvim", }
+  -- use { "rhysd/vim-grammarous", }
 
   use { "RRethy/nvim-base16",
     config = function()
@@ -217,12 +226,10 @@ require("packer").startup(function(use)
         -- "base16-ashes"
       }
 
-      -- `math.random()` returns last index, using `os.time() % #` as a temporary workaround
+      -- `math.random()` returns last index, using `os.time() % #` as a temp workaround
       vim.cmd.colorscheme(colorschemes[os.time() % #colorschemes + 1])
     end
   }
 
-  if (bootstrap == true) then require("packer").sync() end
+  if (M.bootstrap == true) then require("packer").sync() end
 end)
-
-------------------------------------------------------------------------------
