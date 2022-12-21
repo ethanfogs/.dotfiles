@@ -1,1 +1,1 @@
-vim.cmd("source ~/.vim/rc/opt.vim")
+vim.cmd.source("~/.vim/rc/opt.vim")

@@ -1,1 +1,1 @@
-vim.cmd("source ~/.vim/rc/keymap.vim")
+vim.cmd.source("~/.vim/rc/keymap.vim")
