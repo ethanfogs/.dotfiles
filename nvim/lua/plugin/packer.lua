@@ -58,9 +58,7 @@ return require("packer").startup(function(use)
 
   }
 
-  use { "tpope/vim-fugitive", -- git
-    config = function() require("plugin.fugitive") end,
-  }
+  use { "tpope/vim-fugitive", } -- git
 
   use {
     { "neovim/nvim-lspconfig",
