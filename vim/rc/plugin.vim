@@ -66,9 +66,13 @@ call plug#begin(s:plug.data)
       Plug 'puremourning/vimspector'
 call plug#end()
 
-"-----------------------------------------------------------------------------
+" ----------------------------------------------------------------------------
 
-silent! source ~/.vim/plugin/scratchbuf.vim
-silent! source ~/.vim/plugin/nerdtree.vim
-silent! source ~/.vim/plugin/fugitive.vim
-silent! source ~/.vim/plugin/gitgutter.vim
+function s:open_plugin_github_repo(repo=trim(expand('<cWORD>'), '[''"]'))
+  if(a:repo !~ '\w\+\/\w\+') | return | endif
+  if(system('curl https://api.github.com/repos/' . a:repo) !~ "Not Found")
+    call system('open https://github.com/' . a:repo)
+  endif
+endfunction
+
+nnoremap <buffer> <C-]> <Cmd>call <SID>open_plugin_github_repo()<CR>

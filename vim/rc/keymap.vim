@@ -1,7 +1,7 @@
 "[OP-PENDING,NORMAL,VISUAL]-MODE ---------------------------------------------
 
-noremap H 0
-noremap L $
+noremap H g0
+noremap L g$
 noremap S %
 noremap Q <C-v>
 
@@ -17,10 +17,7 @@ noremap <Bar>    <Cmd>vertical resize -4<CR>
 
 noremap !! <Cmd>execute histget('cmd', -1)<CR>
 
-" toggle relativenumber on|off
 noremap <nowait> # <Cmd>set relativenumber!<CR>
-
-" toggle highlight search on|off
 noremap <nowait> ? <Cmd>set hlsearch!<CR>
 
 map , z
@@ -50,9 +47,6 @@ noremap <Tab>k <Cmd>tabnext<CR>
 noremap <Tab>n <Cmd>tabnew<CR>
 noremap <Tab>x <Cmd>tabclose<CR>
 noremap <Tab>t <Cmd>tabnew\|terminal<CR>
-
-" Open current buffer in new tab.
-noremap <Tab>s <Cmd>tab split<CR>
 
 "[OP-PENDING,VISUAL]-MODE ---------------------------------------------
 

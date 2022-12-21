@@ -1,6 +1,5 @@
 augroup on_win_change
   autocmd!
-  autocmd FileType NvimTree :finish
   autocmd WinEnter * set number   "cursorline
   autocmd WinLeave * set nonumber "nocursorline
 augroup END
