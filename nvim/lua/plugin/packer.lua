@@ -56,11 +56,8 @@ return require("packer").startup(function(use)
 
   }
 
-  use { -- GIT
-    { "tpope/vim-fugitive",
-      config = function() require("plugin.fugitive") end
-    },
-    { "tpope/vim-rhubarb", },
+  use { "tpope/vim-fugitive", -- git
+    config = function() require("plugin.fugitive") end,
   }
 
   use {
