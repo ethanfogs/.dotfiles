@@ -54,7 +54,7 @@ alias reboot="sudo reboot"
 which python3 >/dev/null && alias python="python3"
 
 if which tree >/dev/null; then 
-  alias tree="tree -C"
+  alias tree="tree -C --gitignore"
   alias t="tree"
 fi
 
