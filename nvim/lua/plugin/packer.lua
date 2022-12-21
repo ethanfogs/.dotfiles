@@ -162,6 +162,8 @@ return require("packer").startup(function(use)
     -- use { "edluffy/hologram.nvim", }
   end
 
+  use { "RRethy/vim-illuminate", }
+
   use { "akinsho/toggleterm.nvim",
     config = function() require("plugin.toggleterm") end,
   }
