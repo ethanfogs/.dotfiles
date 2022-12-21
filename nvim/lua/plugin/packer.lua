@@ -160,10 +160,7 @@ require("packer").startup(function(use)
     config = function() require("plugin.nvim_tree") end,
   }
 
-  use {
-    "tpope/vim-surround",
-    "tpope/vim-repeat",
-  }
+  use { "kylechui/nvim-surround", }
 
   use { "windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup() end,
