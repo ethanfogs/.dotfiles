@@ -11,22 +11,22 @@ while [ "${#}" -gt 0 ]; do
   esac
 done
 
-[ "${#CONFIGS}" = 0 ]       && CONFIGS=(*)
-[ "${#CONFIG_DIR}" = 0 ]    && CONFIG_DIR=${XDG_CONFIG_DIR:-${HOME}/.config}
-[ "${FORCE}" = 1 ]          && ARGV_FLAGS+=("-f")
-[ "${INTERACTIVE:-1}" = 1 ] && ARGV_FLAGS+=("-i")
-[ "${VERBOSE}" = 1 ]        && ARGV_FLAGS+=("-v")
+[ ${#CONFIGS} -eq 0 ]       && CONFIGS=(*)
+[ ${#CONFIG_DIR} -eq 0 ]    && CONFIG_DIR=${XDG_CONFIG_DIR:-${HOME}/.config}
+[ ${FORCE} -eq 1 ]          && ARGV_FLAGS+=("-f")
+[ ${INTERACTIVE:-1} -eq 1 ] && ARGV_FLAGS+=("-i")
+[ ${VERBOSE} -eq 1 ]        && ARGV_FLAGS+=("-v")
 
-ln() {
+ln_dotfile() {
   [ -h "${2}" ] && unlink "${2}"
   [ -d "${2}" ] && rm -r "${ARGV_FLAGS[@]}" "${2}"
 
-  /bin/ln -s "${ARGV_FLAGS[@]}" "${1}" "${2}"
+  ln -s "${ARGV_FLAGS[@]}" "${1}" "${2}"
 }
 
 while [ "${#CONFIGS}" -gt 0 ]; do
 
-  #- save `${CONFIGS[0]}` && and remove it from `${CONFIGS[@]}`
+  #- pop the first item in `${CONFIGS[@]}` and save it as `$config`
   config="${CONFIGS[0]}" && CONFIGS=("${CONFIGS[@]:1}")
 
   case ${config} in
@@ -57,11 +57,11 @@ while [ "${#CONFIGS}" -gt 0 ]; do
       ;;
   esac
 
-  ln "${PWD}/${config}" "${CONFIG_DIR}/${config}"
+  ln_dotfile "${PWD}/${config}" "${CONFIG_DIR}/${config}"
 
 done
 
 #- dedup `${DOTFILES[@]}` before looping over it
 for dotfile in $(echo "${DOTFILES[@]}" | sed 's/ /\n/g' | awk '!x[$0]++'); do
-  ln "${PWD}/${dotfile}" "${HOME}/.${dotfile/*\/}"
+  ln_dotfile "${PWD}/${dotfile}" "${HOME}/.${dotfile##*/}"
 done
