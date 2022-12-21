@@ -189,7 +189,7 @@ return require("packer").startup(function(use)
   }
 
   use { "lukas-reineke/indent-blankline.nvim",
-    config = function() require("plugin.indentline") end
+    config = function() require("plugin.indent_blankline") end
   }
 
   use { "nvim-lualine/lualine.nvim",
