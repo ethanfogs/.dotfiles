@@ -1,3 +1,5 @@
+if (not pcall(require, "indent_blankline")) then return end
+
 local M = {}
 
 vim.g.indent_blankline_filetype_exclude = {

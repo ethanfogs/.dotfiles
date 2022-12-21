@@ -1,3 +1,5 @@
+if not pcall(require, "null-ls") then return end
+
 local null_ls = require("null-ls")
 
 local completion  = null_ls.builtins.completion

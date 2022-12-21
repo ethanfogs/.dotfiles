@@ -1,13 +1,18 @@
+if (not pcall(require, "lualine")) then return end
+
 local lualine = require("lualine")
 
 ------------------------------------------------------------------------------
 
-local set_hl = vim.api.nvim_set_hl
-set_hl(0, "SLGitIcon", { fg = "#E8AB53", bg = "#303030" })
-set_hl(0, "SLBranchName", { fg = "#D4D4D4", bg = "#303030", bold = false })
-set_hl(0, "SLProgress", { fg = "#D7BA7D", bg = "#252525" })
-set_hl(0, "SLProgress", { fg = "#D4D4D4", bg = "#303030" })
-set_hl(0, "SLSeparator", { fg = "#808080", bg = "#252525" })
+local function set_hl(hl, fg, bg)
+  vim.api.nvim_set_hl(0, hl, { fg = fg, bg = bg })
+end
+
+set_hl("SLGitIcon",    "#E8AB53", "#303030")
+set_hl("SLBranchName", "#D4D4D4", "#303030")
+set_hl("SLProgress",   "#D7BA7D", "#252525")
+set_hl("SLProgress",   "#D4D4D4", "#303030")
+set_hl("SLSeparator",  "#808080", "#252525")
 
 ------------------------------------------------------------------------------
 
@@ -48,7 +53,7 @@ local hide_in_width = function() return vim.fn.winwidth(0) > 80 end
 
 ------------------------------------------------------------------------------
 
-local icons = require("plugin.icons")
+local _, icons = pcall(require, "plugin.icons")
 
 local diagnostics = {
   "diagnostics",
@@ -132,7 +137,7 @@ local location = {
   color = function() return { fg = "#252525", bg = mode_color[vim.fn.mode()] } end,
 }
 
-lualine.config = {
+require("lualine").setup({
   options = {
     globalstatus = false,
     icons_enabled = true,
@@ -169,8 +174,4 @@ lualine.config = {
   },
   tabline = {},
   extensions = {},
-}
-
--- lualine.after = "base16-vim"
-
-lualine.setup(lualine.config)
+})

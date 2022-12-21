@@ -1,3 +1,5 @@
+if (not pcall(require, "toggleterm")) then return end
+
 local toggleterm = setmetatable({}, { __index = require("toggleterm") })
 
 toggleterm.setup({

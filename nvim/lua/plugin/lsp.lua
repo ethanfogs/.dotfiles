@@ -4,9 +4,6 @@ local icons      = require("plugin.icons")
 local lsp        = require("vim.lsp")
 local diagnostic = require("vim.diagnostic")
 
-local augroup = vim.api.nvim_create_augroup
-local autocmd = vim.api.nvim_create_autocmd
-
 ------------------------------------------------------------------------------
 
 local mappings = {
@@ -25,31 +22,21 @@ local mappings = {
   },
 }
 
-------------------------------------------------------------------------------
-
-local fn = {}
-
-augroup("lsp_document_hl", { clear = true })
-
-function fn.highlight_document(client)
-  if (client.resolved_capabilities.document_highlight) then
-    local function au_lsp_hl_document(event, callback)
-      autocmd(event, { group = "lsp_document_hl", buffer = 0, callback = callback })
-    end
-
-    au_lsp_hl_document("CursorHold", lsp.buf.document_highlight)
-    au_lsp_hl_document("CursorMoved", lsp.buf.clear_references)
-  end
-end
-
-------------------------------------------------------------------------------
+vim.api.nvim_create_augroup("lsp_format_on_write", { clear = true })
 
 local on_attach = function(client, bufnr)
+
   local opts = { buffer = bufnr, noremap = true }
   for mode, mappings in pairs(mappings) do
     for lhs, rhs in pairs(mappings) do vim.keymap.set(mode, lhs, rhs, opts) end
   end
-  -- fn.highlight_document(client)
+
+  vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+    group = "lsp_format_on_write",
+    buffer = bufnr,
+    callback = vim.lsp.buf.format
+  })
+
 end
 
 ------------------------------------------------------------------------------
@@ -62,14 +49,10 @@ local signs = {
 }
 
 for name, sign in pairs(signs) do
-  vim.fn.sign_define(name, {
-    texthl = name,
-    text = sign,
-    numhl = "",
-  })
+  vim.fn.sign_define(name, { texthl = name, text = sign, numhl = "", })
 end
 
-diagnostic.config({
+vim.diagnostic.config({
   virtual_text = false,
   signs = { active = signs },
   update_in_insert = true,
@@ -88,51 +71,25 @@ diagnostic.config({
 ------------------------------------------------------------------------------
 
 local handlers = {
-  capabilities = lsp.protocol.make_client_capabilities(),
+  capabilities = require("cmp_nvim_lsp").default_capabilities(),
 }
 
-handlers["textDocument/hover"] = lsp.with(handlers.hover, { border = "rounded" })
-handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, { border = "rounded" })
+-- handlers["textDocument/hover"] = lsp.with(handlers.hover, { border = "rounded" })
+-- handlers["textDocument/signatureHelp"] = lsp.with(handlers.signature_help, { border = "rounded" })
 
-handlers.capabilities = require("cmp_nvim_lsp")
-    .default_capabilities(handlers.capabilities)
+-- handlers.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 ------------------------------------------------------------------------------
 
-local installer = require("mason")
-installer.setup()
-
-vim.api.nvim_create_user_command("LspInstallInfo", "Mason", {})
-
-installer.config = {
-  automatic_installation = true,
-  ensure_installed = {
-    "bashls",
-    "cssls",
-    "gopls",
-    "html",
-    "jsonls",
-    "jsonnet_ls",
-    "marksman",
-    "pylsp",
-    "pyright",
-    "sqlls",
-    "sumneko_lua",
-    "tsserver",
-    "vimls",
-  }
-}
-
-require("mason-lspconfig").setup(installer.config)
-
-------------------------------------------------------------------------------
+require("mason").setup()
+require("mason-lspconfig").setup({ ensure_installed = true, })
 
 local servers = {}
 
 servers.tsserver = {
   filetype = {
-    "typescript", "typescriptcommon", "typescriptreact", "typescript.tsx",
     "javascript", "javascriptreact",
+    "typescript", "typescriptcommon", "typescriptreact", "typescript.tsx",
   },
 }
 
@@ -181,42 +138,3 @@ for _, server in pairs(require("mason-lspconfig").get_installed_servers()) do
         capabilities = handlers.capabilities,
       }))
 end
-
-------------------------------------------------------------------------------
-
-require("lsp_signature").setup({
-  debug = false,
-  log_path = "debug_log_file_path",
-  verbose = false,
-  bind = true,
-  doc_lines = 0,
-  floating_window = false,
-  floating_window_above_cur_line = false,
-  fix_pos = false,
-  hint_enable = true,
-  hint_scheme = "Comment",
-  use_lspsaga = false,
-  hi_parameter = "LspSignatureActiveParameter",
-  max_height = 12,
-  max_width = 120,
-  handler_opts = { border = "rounded", }, -- double, rounded, single, shadow, none
-  always_trigger = false,
-  auto_close_after = nil,
-  extra_trigger_chars = {},
-  zindex = 200,
-  padding = "",
-  transparency = nil,
-  shadow_blend = 36,
-  shadow_guibg = "Black",
-  timer_interval = 200,
-  toggle_key = nil,
-  hint_prefix = icons.diagnostics.Hint,
-})
-
-------------------------------------------------------------------------------
-
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  group = vim.api.nvim_create_augroup("format_on_write", { clear = true }),
-  pattern = "*",
-  callback = lsp.buf.formatting_sync
-})

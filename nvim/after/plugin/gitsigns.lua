@@ -1,3 +1,5 @@
+if (not pcall(require, "gitsigns")) then return end
+
 local config = {}
 
 config.signs = {

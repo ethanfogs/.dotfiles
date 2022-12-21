@@ -1,6 +1,6 @@
-local M = {}
+if (not pcall(require, "treesitter")) then return end
 
-M.config = {
+local config = {
   auto_install = true,
   sync_install = false,
   ensure_installed = {
@@ -13,7 +13,6 @@ M.config = {
     "markdown",
     "python",
     "regex",
-    "sql",
     "toml",
     "typescript",
     "vim",
@@ -42,10 +41,10 @@ M.config = {
   playground = { enable = true, },
 }
 
--- M.ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
--- M.ft_to_parser.motoko = "typescript"
+local ft_to_parser = require("nvim-treesitter.parsers").filetype_to_parsername
+ft_to_parser.motoko = "typescript"
 
-require("nvim-treesitter.configs").setup(M.config)
+require("nvim-treesitter.configs").setup(config)
 
-vim.o.foldmethod = "expr"
-vim.o.foldexpr   = "nvim_treesitter#foldexpr()"
+-- vim.o.foldmethod = "expr"
+-- vim.o.foldexpr   = "nvim_treesitter#foldexpr()"

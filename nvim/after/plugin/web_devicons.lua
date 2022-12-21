@@ -1,6 +1,6 @@
-local web_devicons = require('nvim-web-devicons')
+if not pcall(require, "nvim-web-devicons") then return end
 
-web_devicons.set_icon({
+require('nvim-web-devicons').set_icon({
   sh = {
     color = "#1DC123",
     cterm_color = "59",

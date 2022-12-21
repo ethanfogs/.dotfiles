@@ -1,3 +1,5 @@
+if (not pcall(require, "dap")) then return end
+
 local dap = require("dap")
 local ui = require("dapui")
 

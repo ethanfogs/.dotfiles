@@ -1,4 +1,6 @@
-local bufferline = require("bufferline")
+if not pcall(require, "bufferline") then return end
+
+local bufferline = setmetatable({}, { __index = require("bufferline") })
 
 bufferline.config = {
   options = {

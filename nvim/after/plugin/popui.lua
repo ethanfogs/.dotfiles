@@ -1,4 +1,4 @@
-local M = {}
+if (not pcall(require, "popui.ui-overrider")) then return end
 
 local ui = {
   input  = setmetatable({}, { __index = require("popui.input-overrider") }),

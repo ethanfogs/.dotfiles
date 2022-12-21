@@ -1,18 +1,17 @@
-local nvim_tree = require("nvim-tree")
+if (not pcall(require, "nvim-tree")) then return end
+
+local nvim_tree  = setmetatable({}, { __index = require("nvim-tree") })
 nvim_tree.config = setmetatable({}, { __index = require("nvim-tree.config") })
-nvim_tree.config.cb = nvim_tree.config.nvim_tree_callback
 
-local icons = require("plugin.icons")
+local _, icons = pcall(require, "plugin.icons")
 
-nvim_tree.config = {
+require("nvim-tree").setup({
   hijack_directories = { enable = false, },
   hijack_netrw = true,
-  -- open_on_setup = true,
   filters = {
     custom = { ".git" },
     exclude = { ".gitignore" },
   },
-  -- hijack_cursor = false,
   update_cwd = false,
   renderer = {
     add_trailing = false,
@@ -64,11 +63,6 @@ nvim_tree.config = {
       error   = icons.diagnostics.Error or "",
     },
   },
-  -- update_focused_file = {
-  --   enable = true,
-  --   update_cwd = false,
-  --   ignore_list = {},
-  -- },
   git = {
     enable = true,
     ignore = true,
@@ -88,8 +82,6 @@ nvim_tree.config = {
       -- },
     },
   },
-}
+})
 
-nvim_tree.setup(nvim_tree.config)
-
-vim.keymap.set("n", "<Space>e", nvim_tree.toggle, { noremap = true, })
+vim.keymap.set("n", "<Space>e", nvim_tree.toggle, { noremap = true, silent = true, })

@@ -1,32 +1,33 @@
-local telescope   = setmetatable({}, { __index = require("telescope") })
-telescope.actions = setmetatable({}, { __index = require("telescope.actions") })
-telescope.builtin = setmetatable({}, { __index = require("telescope.builtin") })
-telescope.themes  = setmetatable({}, { __index = require("telescope.themes") })
+if (not pcall(require, "telescope")) then return end
 
-local config = {}
+local telescope = require("telescope")
 
 --- DEFAULT OPTS -------------------------------------------------------------
+
+local config = {}
 
 config.defaults = {
   entry_prefix = "",
   selection_caret = "",
-  path_display = {},
-  sorting_strategy = "ascending",
+  -- path_display = {},
+  -- sorting_strategy = "ascending",
   winblend = 7,
   dynamic_preview_title = true,
-  layout_strategy = "horizontal",
+  -- layout_strategy = "horizontal",
   layout_config = {
-    height = 0.95,
-    width = 0.95,
-    scroll_speed = 10,
-    preview_width = 0.60,
+    horizontal = {
+      height = 0.95,
+      width = 0.95,
+      scroll_speed = 10,
+      preview_width = 0.60,
+    }
   },
   history = {
     path = vim.fn.stdpath('cache') .. '/telescope/history'
   },
   preview = {
     check_mime_type = true,
-    timeout = 250,
+    -- timeout = 250,
     -- hook
   },
 }
@@ -34,6 +35,7 @@ config.defaults = {
 --- MAPPINGS (keymaps used when inside a telescope prompt) -------------------
 
 local actions = setmetatable({}, { __index = require("telescope.actions") })
+
 config.defaults.mappings = {
   n = {
     q           = actions.close,
@@ -63,11 +65,11 @@ config.defaults.mappings = {
 local builtin = setmetatable({}, { __index = require("telescope.builtin") })
 
 function builtin.find_files()
-  telescope.builtin.find_files({ follow = true })
+  require("telescope.builtin").find_files({ follow = true })
 end
 
 function builtin.colorsheme()
-  telescope.builtin.colorscheme({ enable_preview = true })
+  require("telescope.builtin").colorscheme({ enable_preview = true })
 end
 
 local keymaps = {
@@ -100,14 +102,17 @@ local keymaps = {
 
 --- EXTENSIONS ---------------------------------------------------------------
 
-config.extensions = {}
+config.extensions = setmetatable({}, { __index = telescope.extensions })
 
-------------------------------------------------------------------------------
+-- if (pcall(telescope.load_extension, "arecibo")) then
+-- end
+
+-- if (pcall(telescope.load_extension, "frecency")) then
+-- end
 
 if (pcall(telescope.load_extension, "file_browser")) then
-  config.extensions.file_browser = telescope.extensions.file_browser
 
-  local file_browser = config.extensions.file_browser
+  local file_browser = setmetatable({}, { __index = telescope.extensions.file_browser.actions })
 
   config.extensions.file_browser = {
     mappings = {
@@ -133,57 +138,36 @@ if (pcall(telescope.load_extension, "file_browser")) then
     }
   }
 
-  keymaps.e = config.extensions.file_browser.file_browser
+  keymaps.e = telescope.extensions.file_browser.file_browser
+
 end
+
+if (pcall(telescope.load_extension, "packer")) then
+  keymaps.p = telescope.extensions.packer.packer
+end
+
+-- if (pcall(telescope.load_extension, "project")) then
+-- end
+
+-- if (pcall(telescope.load_extension, "smart-history")) then
+-- end
+
+-- if (pcall(telescope.load_extension, "snippets")) then
+-- end
+
+-- if (pcall(telescope.load_extension, "ui-select")) then
+-- end
+
+-- if (pcall(telescope.load_extension, "vimspector")) then
+-- end
 
 ------------------------------------------------------------------------------
 
-if (pcall(telescope.load_extension, "project")) then
-  -- config.extensions.project = telescope.extensions.project
-
-  -- config.extensions.project = {
-  --   vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*)/nvim"), ":~"),
-  --   vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*/nvim)"), ":~"),
-  --   base_dirs = {
-  --     { path = vim.fn.fnamemodify(string.match(vim.env.MYVIMRC, "(.*)/nvim"), ":~") },
-  --   },
-  -- }
-end
-
-------------------------------------------------------------------------------
-
-if (pcall(telescope.load_extension, "frecency")) then
-  -- config.extensions.frecency = {
-  --   -- db_root = vim.fn.stdpath("cache") .. "/nvim/db",
-  --   db_root = vim.fn.glob("$HOME/.local/*/opt/sqlite/lib/*.*.dylib"),
-  --   workspaces = {
-  --     ["config"] = string.gsub(vim.fn.stdpath("config"), "/nvim/.*", ""),
-  --     ["data"]   = string.gsub(vim.fn.stdpath("data"), "/nvim/.*", "")
-  --   }
-  -- }
-end
-
-------------------------------------------------------------------------------
-
--- pcall(require("telescope").load_extension, "file_browser")
--- pcall(require("telescope").load_extension, "frecency")
--- pcall(require("telescope").load_extension, "packer")
--- pcall(require("telescope").load_extension, "project")
--- pcall(require("telescope").load_extension, "ui-select")
--- pcall(require("telescope").load_extension, "vimspector")
--- pcall(require("telescope").load_extension, "snippets")
-
---- SETUP --------------------------------------------------------------------
+require("telescope").setup(config)
 
 local leader_key = "s"
 for lhs, rhs in pairs(keymaps) do
-  vim.keymap.set("n", leader_key .. lhs, rhs, { noremap = true, })
+  vim.keymap.set("n", leader_key .. lhs, rhs, { noremap = true, silent = true, })
 end
 
 ------------------------------------------------------------------------------
-
-telescope.setup(config)
-
--- if vim.fn.argc() == 0 then
---   builtin.find_files()
--- end
