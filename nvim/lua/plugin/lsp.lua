@@ -1,6 +1,6 @@
 require("lspconfig")
 
-local icons      = require("plugins.icons")
+local icons      = require("plugin.icons")
 local lsp        = require("vim.lsp")
 local diagnostic = require("vim.diagnostic")
 

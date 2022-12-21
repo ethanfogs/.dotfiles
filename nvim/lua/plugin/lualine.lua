@@ -48,7 +48,7 @@ local hide_in_width = function() return vim.fn.winwidth(0) > 80 end
 
 ------------------------------------------------------------------------------
 
-local icons = require("plugins.icons")
+local icons = require("plugin.icons")
 
 local diagnostics = {
   "diagnostics",

@@ -10,7 +10,7 @@ if loaded_plugin then
   require("luasnip/loaders/from_vscode").lazy_load()
 end
 
-local _, icons = pcall(require, "plugins.icons")
+local _, icons = pcall(require, "plugin.icons")
 
 ------------------------------------------------------------------------------
 

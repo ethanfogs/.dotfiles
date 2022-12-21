@@ -2,7 +2,7 @@ local nvim_tree = require("nvim-tree")
 nvim_tree.config = setmetatable({}, { __index = require("nvim-tree.config") })
 nvim_tree.config.cb = nvim_tree.config.nvim_tree_callback
 
-local icons = require("plugins.icons")
+local icons = require("plugin.icons")
 
 nvim_tree.config = {
   hijack_directories = { enable = false, },

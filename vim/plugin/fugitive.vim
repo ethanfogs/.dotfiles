@@ -1,1 +1,1 @@
-noremap gs <Cmd>Git<CR>
+nnoremap gs <Cmd>Git<CR>
