@@ -209,6 +209,8 @@ return require("packer").startup(function(use)
     config = function() require("colorizer").setup() end
   }
 
+  use { "gelguy/wilder.nvim", }
+
   -- use { "euclio/vim-markdown-composer", }
 
   -- use { "rhysd/vim-grammarous", }
