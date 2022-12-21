@@ -11,17 +11,17 @@ while [ "${#}" -gt 0 ]; do
   esac
 done
 
-[ ${#CONFIGS} -eq 0 ]       && CONFIGS=(*)
-[ ${#CONFIG_DIR} -eq 0 ]    && CONFIG_DIR=${XDG_CONFIG_DIR:-${HOME}/.config}
-[ ${FORCE} -eq 1 ]          && ARGV_FLAGS+=("-f")
-[ ${INTERACTIVE:-1} -eq 1 ] && ARGV_FLAGS+=("-i")
-[ ${VERBOSE} -eq 1 ]        && ARGV_FLAGS+=("-v")
+[ "${#CONFIGS}" = 0 ]       && CONFIGS=(*)
+[ "${#CONFIG_DIR}" = 0 ]    && CONFIG_DIR="${XDG_CONFIG_DIR:-$HOME/.config}"
+[ "${FORCE}" = 1 ]          && ARGV_FLAGS+=("-f")
+[ "${INTERACTIVE:-1}" = 1 ] && ARGV_FLAGS+=("-i")
+[ "${VERBOSE}" = 1 ]        && ARGV_FLAGS+=("-v")
 
-ln_dotfile() {
+ln() {
   [ -h "${2}" ] && unlink "${2}"
   [ -d "${2}" ] && rm -r "${ARGV_FLAGS[@]}" "${2}"
 
-  ln -s "${ARGV_FLAGS[@]}" "${1}" "${2}"
+  /bin/ln -s "${ARGV_FLAGS[@]}" "${1}" "${2}"
 }
 
 while [ "${#CONFIGS}" -gt 0 ]; do
@@ -40,7 +40,7 @@ while [ "${#CONFIGS}" -gt 0 ]; do
       DOTFILES+=(curl/curlrc)
       ;;
     git)
-      DOTFILES+=(git/ignore)
+      DOTFILES+=(git/gitignore)
       ;;
     nvim)
       CONFIGS+=(vim)
@@ -57,11 +57,11 @@ while [ "${#CONFIGS}" -gt 0 ]; do
       ;;
   esac
 
-  ln_dotfile "${PWD}/${config}" "${CONFIG_DIR}/${config}"
+  ln "${PWD}/${config}" "${CONFIG_DIR}/${config}"
 
 done
 
 #- dedup `${DOTFILES[@]}` before looping over it
 for dotfile in $(echo "${DOTFILES[@]}" | sed 's/ /\n/g' | awk '!x[$0]++'); do
-  ln_dotfile "${PWD}/${dotfile}" "${HOME}/.${dotfile##*/}"
+  ln "${PWD}/${dotfile}" "${HOME}/.${dotfile/*\/}"
 done
