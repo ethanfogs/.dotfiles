@@ -189,9 +189,9 @@ require("packer").startup(function(use)
     config = function() require("plugin.lualine") end
   }
 
-  use { "akinsho/bufferline.nvim",
-    config = function() require("plugin.bufferline") end
-  }
+  -- use { "akinsho/bufferline.nvim",
+  --   config = function() require("plugin.bufferline") end
+  -- }
 
   use { "glepnir/dashboard-nvim",
     config = function() require("plugin.dashboard") end
