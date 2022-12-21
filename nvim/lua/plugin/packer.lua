@@ -94,9 +94,6 @@ return require("packer").startup(function(use)
     },
     { "rcarriga/nvim-dap-ui", },
     { "theHamsta/nvim-dap-virtual-text", },
-    -- { "awto/effectfuljs", }, -- javascript debug adapter
-    -- { "jbyuki/one-small-step-for-vimkind", }, -- lua debug adapter
-    -- { "leoluz/nvim-dap-go", },
   }
 
   use { -- (AUTO-)COMPLETION \ CODE-SNIPPETS
