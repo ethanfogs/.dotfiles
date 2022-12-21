@@ -43,6 +43,12 @@ export FZF_DEFAULT_OPTS=(
 
 export FZF_COMPLETION_TRIGGER="~~"
 
+export FZF_CTRL_T_OPTS=${FZF_CTRL_T_OPTS:-${FZF_DEFAULT_OPTS[@]}}
+export FZF_CTRL_T_COMMAND=${FZF_CTRL_T_COMMAND:-${FZF_DEFAULT_COMMAND[@]}}
+
+export FZF_CTRL_R_OPTS=${FZF_CTRL_R_OPTS:-${FZF_DEFAULT_OPTS[@]:0:-1}}
+export FZF_CTRL_R_COMMAND=${FZF_CTRL_R_COMMAND:-${FZF_DEFAULT_COMMAND[@]}}
+
 # ----------------------------------------------------------------------------
 
 if [ "${CURRENT_SHELL}" = "zsh" ]; then

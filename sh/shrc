@@ -7,7 +7,7 @@ CURRENT_SHELL=$(ps -p $$ -oargs= | sed 's/.*[-/]//')
 # IMPORTS --------------------------------------------------------------------
 
 IMPORTS=(
-  "${HOME}/.env"
+  # "${HOME}/.env"
   "${HOME}/.config/sh/aliasrc"
   "${HOME}/.config/fzf/fzf.sh"
 )
@@ -32,7 +32,7 @@ export LESSHISTFILE=/dev/null
 # PROMPT ---------------------------------------------------------------------
 
 if ! which starship >/dev/null; then
-  sh <(curl -sSL https://starship.rs/install.sh) \
+  sh <(curl -fqsSL "https://starship.rs/install.sh") \
     --bin-dir "${HOME}/.local/bin" --force
 fi
 
