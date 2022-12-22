@@ -28,9 +28,6 @@ local cmp_mappings = lsp_zero.defaults.cmp_mappings({
   ["<Up>"]    = mapping.select_prev_item,
   ["<Down>"]  = mapping.select_next_item,
 
-  ["<Left>"]  = mapping.select_prev_item,
-  ["<Right>"] = mapping.select_next_item,
-
   ["<S-Tab>"] = mapping.select_prev_item,
   ["<Tab>"]   = mapping.select_next_item,
 })
