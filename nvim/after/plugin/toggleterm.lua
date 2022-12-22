@@ -4,9 +4,10 @@ local toggleterm = setmetatable({}, { __index = require("toggleterm") })
 
 toggleterm.setup({
   size = 20,
-  open_mapping = "<C-\\>",
+  open_mapping = "<C-BSlash>",
   start_in_insert = true,
   direction = "float",
+  autochdir = true,
   close_on_exit = true,
   float_opts = {
     border = "curved",
@@ -15,4 +16,3 @@ toggleterm.setup({
 })
 
 vim.o.hidden = true -- required for persisting terminal sessions
-vim.keymap.set("n", "<Space>t", toggleterm.toggle_all, { noremap = true, })
