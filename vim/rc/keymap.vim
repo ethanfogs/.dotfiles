@@ -1,8 +1,8 @@
 "[OP-PENDING,NORMAL,VISUAL]-MODE ---------------------------------------------
 
-map H 0
-map L $
-map S %
+noremap H 0
+noremap L $
+noremap S %
 
 noremap Q <C-v>
 
@@ -21,10 +21,9 @@ noremap !! <Cmd>execute histget('cmd', -1)<CR>
 noremap <nowait> # <Cmd>set relativenumber!<CR>
 noremap <nowait> ? <Cmd>set hlsearch!<CR>
 
-noremap zz za
-noremap ,, za
-noremap <Space>z zA
-noremap <Space>, zA
+noremap zz za|noremap <Space>z zA
+noremap ,, za|noremap <Space>, zA
+noremap <nowait> <C-f> za
 
 "[NORMAL]-MODE ---------------------------------------------------------------
 
@@ -41,7 +40,7 @@ nmap <Space> <C-w>
 nnoremap <Space>/ <Cmd>let @/=""<CR>
 nnoremap <Space>T <Cmd>vsplit\|terminal<CR>
 nnoremap <Space>e <Cmd>Lexplore<CR>
-nnoremap <Space>w <Cmd>write<CR>
+nnoremap <Space>w <Cmd>silent write<CR>
 
 noremap <Tab><Tab> <Cmd>tabprevious<CR>
 noremap <Tab>j <Cmd>tabprevious<CR>

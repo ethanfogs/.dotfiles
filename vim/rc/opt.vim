@@ -34,15 +34,13 @@ if(has('clipboard'))
   let &clipboard = 'unnamed'
 endif
 
-let s:VIM_CACHE_HOME = $HOME . '/.cache/' . v:progname
-
 let &undofile = 1
-let &undodir  = s:VIM_CACHE_HOME . '/undo'
+let &undodir  = $HOME . '/.cache/' . v:progname . '/undo'
 
 if(has('shada'))
-  let &shadafile   = s:VIM_CACHE_HOME . '/shada'
+  let &shadafile   = $HOME . '/.cache/' . v:progname . '/shada'
 elseif(has('viminfo'))
-  let &viminfofile = s:VIM_CACHE_HOME . '/viminfo'
+  let &viminfofile = $HOME . '/.cache/' . v:progname . '/viminfo'
 endif
 
 "{ [FILE, PATTERN]-SEARCH BEHAVIOR }------------------------------------------
@@ -57,11 +55,12 @@ let &fileignorecase = 0
 let &incsearch   = 1
 let &number      = 1
 let &showtabline = 2
-let &colorcolumn = 79
+let &colorcolumn = 80
 let &cursorline  = 1
 let &scroll      = 5
 let &scrolloff   = 7
 let &showmode    = 0
+let &showtabline = 1
 
 let &splitbelow  = 1
 let &splitright  = 1
@@ -73,11 +72,3 @@ let &wildmode    = 'longest:full,full'
 let &wildoptions = 'pum'
 
 let &foldmethod = 'indent'
-
-if exists('&termguicolors')
-  let &termguicolors = 1
-endif
-
-if exists('&mouse')
-  let &mouse = ''
-endif
