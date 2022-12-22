@@ -42,8 +42,9 @@ return require("packer").startup(function(use)
   use {
     { "nvim-lua/plenary.nvim", },
     { "nvim-lua/popup.nvim", },
-    { "hood/popui.nvim", },
   }
+
+  -- use { "hood/popui.nvim", }
 
   use { "tpope/vim-fugitive", } -- git
 
@@ -52,10 +53,11 @@ return require("packer").startup(function(use)
     { "VonHeikemen/lsp-zero.nvim", },
     { "williamboman/mason.nvim", },
     { "williamboman/mason-lspconfig.nvim", },
-    -- { "onsails/lspkind-nvim", },
-    -- { "ray-x/lsp_signature.nvim", },
-    -- { "folke/lsp-colors.nvim", },
-    -- { "nvim-pack/nvim-spectre", },
+    { "folke/lsp-colors.nvim", },
+    { "j-hui/fidget.nvim", config = function() require("fidget").setup() end, },
+    -- { "ray-x/lsp_signature.nvim", config = function () require("lsp_signature").setup() end, },
+    { "onsails/lspkind-nvim", config = function() require("lspkind").init() end, },
+    -- { "nvim-pack/nvim-spectre",  config = function () require("spectre").setup() end, },
     -- { "jose-elias-alvarez/null-ls.nvim", }
   }
 
@@ -84,17 +86,12 @@ return require("packer").startup(function(use)
 
   use {
     { "nvim-telescope/telescope.nvim", },
-    -- { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" }, },
     { "nvim-telescope/telescope-file-browser.nvim", },
-    -- { "nvim-telescope/telescope-frecency.nvim", requires = "kkharji/sqlite.lua", },
     { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', },
     { "nvim-telescope/telescope-fzy-native.nvim", },
     { "nvim-telescope/telescope-packer.nvim", },
     -- { "nvim-telescope/telescope-project.nvim", },
     -- { "nvim-telescope/telescope-smart-history.nvim", },
-    -- { "nvim-telescope/telescope-snippets.nvim", requires = "norcalli/snippets.nvim" },
-    -- { "nvim-telescope/telescope-ui-select.nvim", },
-    -- { "nvim-telescope/telescope-vimspector.nvim", },
   }
 
   -- if (vim.fn.has("linux") == 1) then
@@ -106,9 +103,11 @@ return require("packer").startup(function(use)
   -- use { -- degug adapters
   --   { "mfussenegger/nvim-dap", },
   --   { "rcarriga/nvim-dap-ui", },
+  --   { "leoluz/nvim-dap-go", },
   --   { "theHamsta/nvim-dap-virtual-text", },
   --   { "rcarriga/cmp-dap", },
   --   { "nvim-telescope/telescope-dap.nvim", },
+  --   { "jbyuki/one-small-step-for-vimkind", }, -- nvim lua debug adapter
   -- }
 
   use { "RRethy/nvim-base16", }
@@ -117,9 +116,11 @@ return require("packer").startup(function(use)
 
   use { "lukas-reineke/indent-blankline.nvim", }
 
-  -- use { "gelguy/wilder.nvim", }
+  -- use { "gelguy/wilder.nvim", } -- extended wildmenu
 
-  -- use { "euclio/vim-markdown-composer", }
+  -- use { "euclio/vim-markdown-composer", } -- markdown previewer
+
+  -- use { "ellisonleao/glow.nvim", } -- markdown previewer
 
   -- use { "rhysd/vim-grammarous", }
 
@@ -129,13 +130,28 @@ return require("packer").startup(function(use)
 
   use { "nvim-lualine/lualine.nvim", }
 
+  -- use { "bennypowers/nvim-regexplainer", 
+  --   requires = { "MunifTanjim/nui.nvim", },
+  --   config = function() require("regexplainer").setup() end,
+  -- }
+
   -- use { "akinsho/bufferline.nvim", }
 
   use { "akinsho/toggleterm.nvim", }
 
+  -- use { "sindrets/diffview.nvim", }
+
   use { "kyazdani42/nvim-tree.lua", }
 
-  use { "glepnir/dashboard-nvim", }
+  use { "glepnir/dashboard-nvim", } -- TODO: finish configuration
+
+  -- use { "RishabhRD/nvim-cheat.sh", requires = { "RishabhRD/popfix", }, }
+
+  -- use { "folke/neodev.nvim", } -- signature-help\docs\completion for nvim lua api
+
+  -- use { "rest-nvim/rest.nvim", } -- nvim rest api client
+
+  -- use { "folke/which-key.nvim", } -- TODO: setup configuration
 
   use { "windwp/nvim-autopairs", config = function() require("nvim-autopairs").setup() end, }
 
@@ -143,7 +159,7 @@ return require("packer").startup(function(use)
 
   use { "norcalli/nvim-colorizer.lua", config = function() require("colorizer").setup() end, }
 
-  -- use { "kylechui/nvim-surround", config = function() require("nvim-surround").setup() end, }
+  use { "kylechui/nvim-surround", config = function() require("nvim-surround").setup() end, }
 
   if (bootstrap == true) then require("packer").sync() end
 
