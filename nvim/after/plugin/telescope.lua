@@ -9,27 +9,20 @@ local config = {}
 config.defaults = {
   entry_prefix = "",
   selection_caret = "",
-  -- path_display = {},
-  -- sorting_strategy = "ascending",
+  sorting_strategy = "ascending",
   winblend = 7,
-  dynamic_preview_title = true,
-  -- layout_strategy = "horizontal",
-  layout_config = {
-    horizontal = {
-      height = 0.95,
-      width = 0.95,
-      scroll_speed = 10,
-      preview_width = 0.60,
-    }
-  },
-  history = {
-    path = vim.fn.stdpath('cache') .. '/telescope/history'
-  },
-  preview = {
-    check_mime_type = true,
-    -- timeout = 250,
-    -- hook
-  },
+  -- dynamic_preview_title = true,
+  -- layout_config = {
+  --   horizontal = {
+  --     height = 0.95,
+  --     width = 0.95,
+  --     scroll_speed = 10,
+  --     preview_width = 0.60,
+  --   },
+  -- },
+  -- preview = {
+  --   check_mime_type = true,
+  -- },
 }
 
 --- MAPPINGS (keymaps used when inside a telescope prompt) -------------------
@@ -102,72 +95,23 @@ local keymaps = {
 
 --- EXTENSIONS ---------------------------------------------------------------
 
-config.extensions = setmetatable({}, { __index = telescope.extensions })
+local extensions = require("telescope").extensions
 
--- if (pcall(telescope.load_extension, "arecibo")) then
--- end
-
--- if (pcall(telescope.load_extension, "frecency")) then
--- end
-
-if (pcall(telescope.load_extension, "file_browser")) then
-
-  local file_browser = setmetatable({}, { __index = telescope.extensions.file_browser.actions })
-
-  config.extensions.file_browser = {
-    mappings = {
-      n = {
-        C = file_browser.change_cwd,
-        D = file_browser.remove,
-        M = file_browser.move,
-        n = file_browser.create,
-        R = file_browser.rename,
-        S = file_browser.create,
-        ["~"] = file_browser.goto_home_dir,
-        ["."] = file_browser.toggle_hidden,
-        -- ["<BS>"] = file_browser.actions.move,
-      },
-      i = {
-        ["<C-a>"] = file_browser.toggle_hidden,
-        ["<C-d>"] = file_browser.remove,
-        ["<C-h>"] = file_browser.goto_home_dir,
-        ["<C-m>"] = file_browser.move,
-        ["<C-r>"] = file_browser.rename,
-        ["<C-y>"] = file_browser.copy,
-      }
-    }
-  }
-
-  keymaps.e = telescope.extensions.file_browser.file_browser
-
+if (telescope.extensions.file_browser ~= nil) then
+  local file_browser = extensions.file_browser.actions
+  keymaps.e = extensions.file_browser.file_browser
 end
 
 if (pcall(telescope.load_extension, "packer")) then
   keymaps.p = telescope.extensions.packer.packer
 end
 
--- if (pcall(telescope.load_extension, "project")) then
--- end
-
--- if (pcall(telescope.load_extension, "smart-history")) then
--- end
-
--- if (pcall(telescope.load_extension, "snippets")) then
--- end
-
--- if (pcall(telescope.load_extension, "ui-select")) then
--- end
-
--- if (pcall(telescope.load_extension, "vimspector")) then
--- end
-
 ------------------------------------------------------------------------------
-
-require("telescope").setup(config)
 
 local leader_key = "s"
 for lhs, rhs in pairs(keymaps) do
   vim.keymap.set("n", leader_key .. lhs, rhs, { noremap = true, silent = true, })
 end
 
-------------------------------------------------------------------------------
+
+require("telescope").setup(config)
