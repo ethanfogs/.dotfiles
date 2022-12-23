@@ -1,61 +1,58 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC1090 # SUPPRESS: `Shellcheck can't follow non-constant source. Use a directive to specify location.`
-
-# ----------------------------------------------------------------------------
 
 FZF_BIN=$(which fzf) || return 1
-CURRENT_SHELL=$(ps -p $$ -oargs= | sed -E "s#.*[-/]##")
+__SHELL__=$(ps $$ -oargs= | sed "s/.*[-/]//")
 
-eval "$(cat "${FZF_BIN/bin/opt}/shell/"*".${CURRENT_SHELL}")"
+eval "$(cat "${FZF_BIN/bin/opt}/shell/"*".${__SHELL__}" 2>/dev/null)"
 
-# ----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
-which fd >/dev/null && export FZF_DEFAULT_COMMAND=(
-  "fd"
-  "--type=file"
-  "--follow"
+FZF_BASE_OPTS=(
+  "--multi"
+  "--cycle"
+  "--sort"
 )
 
-[ "${#FZF_DEFAULT_COMMAND}" -eq 0 ] && export FZF_DEFAULT_COMMAND=(
+FZF_LAYOUT_OPTS=(
+  "${FZF_BASE_OPTS[@]}"
+  "--layout=reverse-list"
+  "--border=rounded"
+  "--height=100%"
+)
+
+FZF_PREVIEW_OPTS=(
+  "${FZF_LAYOUT_OPTS[@]}"
+  "--preview='"
+  "[ -f {} ] && ${FZF_CAT[@]:-cat}  {} && return;"
+  "[ -d {} ] && ${FZF_LS[@]:-ls -l} {} && return;'"
+)
+
+FZF_FIND=(
   "find ."
   "-not -type d"
   "2>/dev/null"
 )
 
-# ----------------------------------------------------------------------------
+which fd >/dev/null && export FZF_FIND=(
+  "fd"
+  "--type=file"
+  "--follow"
+)
 
-which bat >/dev/null && BAT_COMMAND=(
+which bat >/dev/null && FZF_CAT=(
   "bat"
   "--color=always"
-  "--line-range :\$LINES"
 )
 
-export FZF_DEFAULT_OPTS=(
-  "--multi"
-  "--cycle"
-  "--reverse"
-  "--border rounded"
-  "--height=100%"
-  "--preview '[[ \$(file --mime-type {}) =~ text ]] && ${BAT_COMMAND:-cat} {}'"
-)
+export FZF_CTRL_R_OPTS=("${FZF_LAYOUT_OPTS[@]}")
+export FZF_CTRL_T_OPTS=("${FZF_PREVIEW_OPTS[@]}")
 
-# ----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 
-export FZF_COMPLETION_TRIGGER="~~"
-
-export FZF_CTRL_T_OPTS=${FZF_CTRL_T_OPTS:-${FZF_DEFAULT_OPTS[@]}}
-export FZF_CTRL_T_COMMAND=${FZF_CTRL_T_COMMAND:-${FZF_DEFAULT_COMMAND[@]}}
-
-export FZF_CTRL_R_OPTS=${FZF_CTRL_R_OPTS:-${FZF_DEFAULT_OPTS[@]:0:-1}}
-export FZF_CTRL_R_COMMAND=${FZF_CTRL_R_COMMAND:-${FZF_DEFAULT_COMMAND[@]}}
-
-# ----------------------------------------------------------------------------
-
-if [ "${CURRENT_SHELL}" = "zsh" ]; then
-    bindkey "^F" fzf-file-widget 
-fi
-
-# if [ "${CURRENT_SHELL}" = "bash" ]; then
-# fi
-
-unset FZF_BIN BAT_COMMAND
+case "${__SHELL__}" in
+  zsh)
+    bindkey "^F" fzf-file-widget
+    ;;
+  bash)
+    ;;
+esac
