@@ -40,7 +40,7 @@ while [ "${#CONFIGS}" -gt 0 ]; do
       DOTFILES+=(curl/curlrc)
       ;;
     git)
-      DOTFILES+=(git/gitignore)
+      DOTFILES+=(git/*)
       ;;
     nvim)
       CONFIGS+=(vim)
@@ -48,10 +48,9 @@ while [ "${#CONFIGS}" -gt 0 ]; do
     vim)
       DOTFILES+=(vim)
       ;;
-    x11)
-      # DOTFILES+=(x11/*)
-      continue
-      ;;
+    # x11)
+    #   DOTFILES+=(x11/*)
+    #   ;;
     zsh)
       DOTFILES+=(sh/profile zsh/*)
       ;;
