@@ -32,21 +32,15 @@ completions=(
 for comp in $completions; do
   comp_dir=$HOME/.local/share/zsh/plugins/${comp#*/}
   [ ! -d $comp_dir ] && git clone -q https://github.com/$comp $comp_dir
-  fpath=($(dirname $comp_dir/**/_* | sort -u)  $fpath)
+  fpath=($fpath $(dirname $comp_dir/**/_*))
 done
 unset completions comp comp_dir
 
-which brew &>/dev/null && fpath=($fpath $(brew --prefix)/share/zsh/site-functions)
+which brew &>/dev/null && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
-fpath=($HOME/.local/share/zsh/site-functions $fpath)
+fpath=($(echo "${FPATH//:/\n}" | awk '!x[$0]++')) # remove duplicate entries
 
-zstyle ":completion::complete:*" cache-path $HOME/.cache/zsh/zcompcache
-
-autoload -Uz compinit && compinit -d $HOME/.cache/zsh/zcompdump
-
-compdef -P _cd -N mcd
-
-#-----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 setopt auto_cd
 setopt cd_silent
