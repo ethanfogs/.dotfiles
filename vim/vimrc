@@ -27,4 +27,4 @@ let s:colorschemes = [
   \  'solarized8_high',
 \]
 
-silent! execute 'colorscheme ' . s:colorscheme[rand() % (len(s:colorschemes) - 1)]
+execute 'colorscheme ' . s:colorscheme[rand() % (len(s:colorschemes) - 1)]

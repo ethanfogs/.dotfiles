@@ -84,4 +84,4 @@ require("nvim-tree").setup({
   },
 })
 
-vim.keymap.set("n", "<Space>e", nvim_tree.toggle, { noremap = true, silent = true, })
+vim.keymap.set("n", "<Space>e", nvim_tree.toggle, { noremap = true, })

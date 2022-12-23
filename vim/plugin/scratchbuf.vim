@@ -55,7 +55,7 @@ function! scratchbuf.new(name=strftime('%m%d%y_%H%M%S'), ftype=input('FILETYPE: 
   let l:ftype = self.fmt_ftype(empty(a:ftype) ? fnamemodify(a:name, ':e') : a:ftype)
   let l:fullpath = self.home . '/' . a:name . l:ftype
 
-  silent execute 'new ' . l:fullpath
+  execute 'new ' . l:fullpath
 
   " let l:buf_info = getbufinfo(bufnr(l:fullpath))[0]
   " let l:buf_info.windows = map(l:buf_info.windows, 'getwininfo(v:val)')
