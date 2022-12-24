@@ -15,10 +15,10 @@ export XDG_STATE_HOME="${HOME}/.local/state"
 
 case "$(uname)" in
   Darwin)
-    [ -f "${HOME}/.config/sh/darwinrc" ] && . "$HOME/.config/sh/darwinrc"
+    test -f "${HOME}/.config/sh/darwinrc" && . "${_}"
   ;;
   Linux)
-    [ -f "${HOME}/.config/sh/linuxrc" ]  && . "${HOME}/.config/sh/linuxrc"
+    test -f "${HOME}/.config/sh/linuxrc" && . "${_}"
   ;;
 esac
 
