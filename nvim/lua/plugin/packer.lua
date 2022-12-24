@@ -28,7 +28,7 @@ local bootstrap = (function()
     vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim",
   })
 
-  vim.cmd.packadd("packer.nvim")
+  vim.cmd("packadd packer.nvim")
 
   return true
 end)()
@@ -44,7 +44,7 @@ return require("packer").startup(function(use)
     { "nvim-lua/popup.nvim", },
   }
 
-  -- use { "hood/popui.nvim", }
+  use { "hood/popui.nvim", }
 
   use { "tpope/vim-fugitive", } -- git
 
@@ -57,7 +57,7 @@ return require("packer").startup(function(use)
     { "j-hui/fidget.nvim", config = function() require("fidget").setup() end, },
     -- { "ray-x/lsp_signature.nvim", config = function () require("lsp_signature").setup() end, },
     { "onsails/lspkind-nvim", config = function() require("lspkind").init() end, },
-    -- { "nvim-pack/nvim-spectre",  config = function () require("spectre").setup() end, },
+    { "nvim-pack/nvim-spectre",  config = function () require("spectre").setup() end, },
     -- { "jose-elias-alvarez/null-ls.nvim", }
   }
 
@@ -90,7 +90,8 @@ return require("packer").startup(function(use)
     { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', },
     { "nvim-telescope/telescope-fzy-native.nvim", },
     { "nvim-telescope/telescope-packer.nvim", },
-    -- { "nvim-telescope/telescope-project.nvim", },
+    { "nvim-telescope/telescope-project.nvim", },
+    { "nvim-telescope/telescope-symbols.nvim", },
     -- { "nvim-telescope/telescope-smart-history.nvim", },
   }
 
