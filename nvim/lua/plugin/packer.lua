@@ -86,13 +86,14 @@ return require("packer").startup(function(use)
 
   use {
     { "nvim-telescope/telescope.nvim", },
+    -- { "nvim-telescope/telescope-arecibo.nvim", rocks = { "openssl", "lua-http-parser" }, },
     { "nvim-telescope/telescope-file-browser.nvim", },
-    { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', },
+    { "nvim-telescope/telescope-fzf-native.nvim", run = "make", },
     { "nvim-telescope/telescope-fzy-native.nvim", },
-    { "nvim-telescope/telescope-packer.nvim", },
+    { "nvim-telescope/telescope-packer.nvim",  },
     { "nvim-telescope/telescope-project.nvim", },
     { "nvim-telescope/telescope-symbols.nvim", },
-    -- { "nvim-telescope/telescope-smart-history.nvim", },
+    -- { "nvim-telescope/telescope-smart-history.nvim", requires = { "kkharji/sqlite.lua" }},
   }
 
   -- if (vim.fn.has("linux") == 1) then
