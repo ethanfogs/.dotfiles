@@ -24,7 +24,11 @@ esac
 
 #-----------------------------------------------------------------------------
 
-which nvim >/dev/null && export EDITOR=nvim
-export BROWSER="firefox"
+if which nvim >/dev/null; then
+  export EDITOR="nvim"
+  export MANPAGER="nvim +Man!"
+fi
 
 #-----------------------------------------------------------------------------
+
+export BROWSER="firefox"

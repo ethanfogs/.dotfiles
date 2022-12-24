@@ -29,6 +29,8 @@ export MAILCHECK=-1
 
 export LESSHISTFILE=/dev/null
 
+which nvim >/dev/null && MANPAGER="nvim +:Man!"
+
 # PROMPT ---------------------------------------------------------------------
 
 if ! which starship >/dev/null; then
