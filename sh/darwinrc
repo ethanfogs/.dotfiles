@@ -1,41 +1,31 @@
 #!/usr/bin/env bash
 
-# HOMEBREW_ROOT="${HOME}/.local"
-
 [ "${CPUTYPE}" = "x86_64" ] && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/usr/local}"
 [ "${CPUTYPE}" = "arm64" ]  && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/opt}"
+[ "$(uname)"   = "Linux" ]  && HOMEBREW_ROOT="/home/linuxbrew/.linuxbrew"
 
-export PATH="${HOMEBREW_ROOT}/homebrew/bin:${PATH}"
+eval "$("${HOMEBREW_ROOT}/homebrew/bin/brew" shellenv)"
 
-if ! eval "$("${HOMEBREW_ROOT}/homebrew/bin/brew" shellenv)" >/dev/null; then
+if ! which brew >/dev/null; then
+
+# TODO: Get user privledges and setup install path\method.
 
   URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-  bash <(export NONINTERACTIVE=1; curl -fqsSL ${URL}) \
-    && brew autoupdate start --immediate --upgrade --greedy --cleanup >/dev/null \
-    && brew analytics off \
-    && brew completions link >/dev/null
+  bash <(export NONINTERACTIVE=1; curl -fqsSL "${URL}")
 
-  # if [ ! -x "$HOME/.local/homebrew/bin/brew" ]; then
-  #   git clone --quite https://github.com/homebrew "$HOME/.local/homebrew" \
-  #     && brew autoupdate start --immediate --upgrade --greedy --cleanup >/dev/null \
-  #     && brew analytics off \
-  #     && brew completions link >/dev/null
-  # fi
+  # git clone --quite https://github.com/homebrew "${HOMEBREW_ROOT}/homebrew"
 
+  brew autoupdate start --immediate --upgrade --greedy --cleanup >/dev/null
+  brew completions link >/dev/null
 fi
-
-export HOMEBREW_ANALYTICS=0
-# export HOMEBREW_CACHE="$HOME/.cache/Homebrew"
-export HOMEBREW_CASK_OPTS="--force --no-quarantine"
-export HOMEBREW_EVAL_ALL=1
-# export HOMEBREW_BUNDLE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/homebrew/Brewfile"
-# export HOMEBREW_TEMP=/tmp
 
 if [ "${HOMEBREW_ROOT}" = "${HOME}/.local" ]; then
-  export HOMEBREW_CASK_OPTS="\
-          ${HOMEBREW_CASK_OPTS} \
-          --appdir=${HOME}/Applications \
-          --font-dir=${HOME}/Library/Fonts"
+  HOMEBREW_CASK_OPTS=(
+    "--font-dir=${HOME}/Library/Fonts" 
+    "--appdir${HOME}/Applications"
+  )
 fi
 
-#------------------------------------------------------------------------------
+export HOMEBREW_CASK_OPTS=("--force --no-quarantine" "${HOMEBREW_CASK_OPTS[@]}")
+export HOMEBREW_ANALYTICS=0
+export HOMEBREW_EVAL_ALL=1
