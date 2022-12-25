@@ -34,16 +34,23 @@ while [ "${#CONFIGS}" -gt 0 ]; do
       continue
       ;;
     bash)
-      DOTFILES+=(sh/profile bash/*)
+      CONFIGS+=(sh)
+      DOTFILES+=(bash/*)
       ;;
     curl)
       DOTFILES+=(curl/curlrc)
+      ;;
+    fzf)
+      DOTFILES+=(fzf/fzf.sh)
       ;;
     git)
       DOTFILES+=(git/*)
       ;;
     nvim)
       CONFIGS+=(vim)
+      ;;
+    sh)
+      DOTFILES+=(sh/{profile,shrc,aliasrc})
       ;;
     vim)
       DOTFILES+=(vim)
@@ -52,7 +59,8 @@ while [ "${#CONFIGS}" -gt 0 ]; do
     #   DOTFILES+=(x11/*)
     #   ;;
     zsh)
-      DOTFILES+=(sh/profile zsh/*)
+      CONFIGS+=(sh)
+      DOTFILES+=(zsh/*)
       ;;
   esac
 
