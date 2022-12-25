@@ -7,6 +7,14 @@ alias ll="l -a"
 
 alias grep="grep --color=auto"
 
+#------------------------------------------------------------------------------
+
+if which bat >/dev/null; then
+  alias cat="bat --theme=Dracula"
+fi
+
+#------------------------------------------------------------------------------
+
 alias e='${EDITOR:-vim}'
 
 alias reboot="sudo reboot"
