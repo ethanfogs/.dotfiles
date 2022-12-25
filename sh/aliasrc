@@ -1,9 +1,20 @@
 #!/usr/bin/env bash
 
-alias ..="cd ..;"
 
-alias l="/bin/ls -FGhlos"
-alias ll="l -a"
+LS_CMD="ls -F"
+LS_LIST="-l -h -o -s"
+
+if which lsd >/dev/null; then 
+  LS_CMD="lsd -F"
+  LS_LIST="-l"
+fi
+
+alias ls="$LS_CMD"
+alias la="$LS_CMD -A"
+alias  l="$LS_CMD    $LS_LIST"
+alias ll="$LS_CMD -A $LS_LIST"
+
+#------------------------------------------------------------------------------
 
 alias grep="grep --color=auto"
 
@@ -17,11 +28,25 @@ fi
 
 alias e='${EDITOR:-vim}'
 
+#------------------------------------------------------------------------------
+
+alias gs="git status"
+alias ga="git add"
+alias gp="git push"
+alias gP="git pull"
+alias gl="git log --oneline --color"
+
+#------------------------------------------------------------------------------
+
 alias reboot="sudo reboot"
+
+#------------------------------------------------------------------------------
 
 if which tree >/dev/null; then 
   alias tree="tree -C --gitignore"
   alias t="tree"
 fi
+
+#------------------------------------------------------------------------------
 
 alias dedup='awk "!x[\$0]++"'
