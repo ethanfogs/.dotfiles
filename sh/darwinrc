@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
-[ "${CPUTYPE}" = "x86_64" ] && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/usr/local}"
-[ "${CPUTYPE}" = "arm64" ]  && HOMEBREW_ROOT="${HOMEBREW_ROOT:-/opt}"
-[ "$(uname)"   = "Linux" ]  && HOMEBREW_ROOT="/home/linuxbrew/.linuxbrew"
+[ "$CPUTYPE" = "x86_64" ] && HOMEBREW_PREFIX="/usr/local"
+[ "$CPUTYPE" = "arm64" ]  && HOMEBREW_PREFIX="/opt"
 
-eval "$("${HOMEBREW_ROOT}/homebrew/bin/brew" shellenv)"
+export PATH="$HOMEBREW_PREFIX/homebrew/bin:$PATH"
 
 if ! which brew >/dev/null; then
 
-# TODO: Get user privledges and setup install path\method.
+  # TODO: Get user privledges and setup install path\method.
 
-  URL="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
-  bash <(export NONINTERACTIVE=1; curl -fqsSL "${URL}")
+  HOMEBREW_INSTALLSH="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
+  /bin/bash -c "$(export NONINTERACTIVE=1; curl -fqsSL "$HOMEBREW_INSTALLSH")"
 
   # git clone --quite https://github.com/homebrew "${HOMEBREW_ROOT}/homebrew"
 
@@ -19,13 +18,10 @@ if ! which brew >/dev/null; then
   brew completions link >/dev/null
 fi
 
-if [ "${HOMEBREW_ROOT}" = "${HOME}/.local" ]; then
-  HOMEBREW_CASK_OPTS=(
-    "--font-dir=${HOME}/Library/Fonts" 
-    "--appdir${HOME}/Applications"
-  )
+if [ "$(brew --prefix)" = "$HOME/.local" ]; then
+  HOMEBREW_CASK_OPTS="--font-dir=$HOME/Library/Fonts --appdir$HOME/Applications"
 fi
 
-export HOMEBREW_CASK_OPTS=("--force --no-quarantine" "${HOMEBREW_CASK_OPTS[@]}")
+export HOMEBREW_CASK_OPTS="--force --no-quarantine $HOMEBREW_CASK_OPTS"
 export HOMEBREW_ANALYTICS=0
 export HOMEBREW_EVAL_ALL=1
