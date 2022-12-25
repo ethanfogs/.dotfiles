@@ -1,29 +1,11 @@
 local M = {}
 
-M.type = {
-  Array   = "",
-  Boolean = "蘒",
-  Number  = "",
-  Object  = "",
-  String  = "",
-}
-
 M.documents = {
   File       = "",
   Files      = "",
   Folder     = "",
   OpenFolder = "",
   Symlink    = "",
-}
-
-M.git = {
-  Add    = "",
-  Diff   = "",
-  Ignore = "",
-  Mod    = "",
-  Remove = "",
-  Rename = "",
-  Repo   = "",
 }
 
 M.diagnostics = {
@@ -39,6 +21,31 @@ M.misc = {
   Squirrel = "",
   Tag      = "",
   Watch    = "",
+}
+
+M.git = {
+  Add       = "",
+  Deleted   = "",
+  Diff      = "",
+  Ignore    = "",
+  Ignored   = "◌",
+  Mod       = "",
+  Remove    = "",
+  Rename    = "",
+  Renamed   = "➜",
+  Repo      = "",
+  Staged    = "S",
+  Unmerged  = "",
+  Unstaged  = "",
+  Untracked = "U",
+}
+
+M.type = {
+  Array   = "",
+  Boolean = "蘒",
+  Number  = "",
+  Object  = "",
+  String  = "",
 }
 
 M.kind = {
