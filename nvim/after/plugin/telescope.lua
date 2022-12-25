@@ -153,6 +153,7 @@ if (pcall(require("telescope").load_extension, "project")) then
   keymap.set("sp", extensions.project.project)
 end
 
+-- TODO: Figure out why these plugins aren't being loaded in.
 require("telescope").load_extension("fzf")
 require("telescope").load_extension("fzy_native")
 require("telescope").load_extension("packer")
