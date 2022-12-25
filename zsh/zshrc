@@ -6,92 +6,82 @@
 
 #-----------------------------------------------------------------------------
 
-plugins=(
+zsh_plugins=(
+  hlissner/zsh-autopair
+  # zdharma-continuum/fast-syntax-highlighting
   zsh-users/zsh-autosuggestions
   zsh-users/zsh-syntax-highlighting
-  hlissner/zsh-autopair
 )
 
-for plugin in $plugins; do
+for plugin in $zsh_plugins; do
   plugin_dir=$HOME/.local/share/zsh/plugins/${plugin#*/}
   [ ! -d $plugin_dir ] && git clone https://github.com/$plugin $plugin_dir
   . $plugin_dir/zsh-*.plugin.zsh
 done
-unset plugins plugin plugin_dir 
 
 #-----------------------------------------------------------------------------
 
-completions=(
+zsh_completions=(
   zsh-users/zsh-completions
 )
 
-[ $(uname) = Darwin ] && completions+=(
+[ $(uname) = Darwin ] && zsh_completions+=(
   nilsonholger/osx-zsh-completions
 )
 
-for comp in $completions; do
+for comp in $zsh_completions; do
   comp_dir=$HOME/.local/share/zsh/plugins/${comp#*/}
   [ ! -d $comp_dir ] && git clone -q https://github.com/$comp $comp_dir
   fpath=($fpath $(dirname $comp_dir/**/_*))
 done
-unset completions comp comp_dir
 
 which brew &>/dev/null && fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
 fpath=($(echo "${FPATH//:/\n}" | awk '!x[$0]++')) # remove duplicate entries
 
-#------------------------------------------------------------------------------
+zstyle ":completion::complete:*" cache-path $HOME/.cache/.zsh/zcompcache
 
-setopt auto_cd
-setopt cd_silent
-setopt auto_pushd
-setopt pushd_silent
-setopt chase_links   # go to actual symlink dir rather in cd
+autoload -Uz compinit && compinit -d $HOME/.cache/.zsh/zcompdump
 
-setopt null_glob
-# setopt dot_glob
-setopt extended_glob
-setopt no_case_glob
-# setopt no_case_match
-
-setopt no_hash_all
-setopt no_hash_list_all
-setopt no_hash_dirs
-
-setopt glob_complete
-setopt complete_in_word
-setopt menu_complete # tab completion on first tab hit
-setopt no_auto_remove_slash
-
-setopt extended_history
-
-setopt share_history
-setopt hist_append
-setopt inc_append_history
-
-setopt hist_verify
-setopt hist_no_store 
-
-setopt hist_ignore_space
-setopt hist_ignore_dups
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_expire_dups_first
-setopt hist_find_no_dups
+#-----------------------------------------------------------------------------
 
 setopt nobeep
 setopt interactive_comments
+
+setopt auto_cd
+# setopt chase_links   # go to actual symlink dir rather in cd
+
+# setopt null_glob
+# setopt dot_glob
+# setopt no_extended_glob
+# setopt no_case_glob
+
+setopt no_complete_in_word # completion evaluation includes chars past the cursor
+setopt glob_complete # evaluate glob pattern for completion options
+# setopt menu_complete # tab completion on first tab hit
+
+setopt no_auto_remove_slash # dont remove trailing '/' produced from completion
+
+setopt share_history hist_append inc_append_history
+setopt extended_history
+
+# setopt hist_verify
+# setopt hist_no_store 
+# setopt hist_ignore_space
+# setopt hist_ignore_dups
+# setopt hist_ignore_all_dups
+# setopt hist_save_no_dups
+# setopt hist_expire_dups_first
+# setopt hist_find_no_dups
 
 #-----------------------------------------------------------------------------
 
 bindkey "^H" vi-cmd-mode
 
-bindkey "^[[Z" .reverse-menu-complete # Shift+Tab
+bindkey "^[[Z" .reverse-menu-complete #- Shift+Tab
 
-bindkey "^[[A" up-line-or-search   # up arrow
-bindkey "^[[B" down-line-or-search # down arrow
-
-bindkey "^O" autosuggest-accept
+bindkey "^[[A" up-line-or-search      #- Up arrow
+bindkey "^[[B" down-line-or-search    #- Down arrow
 
 bindkey "^K" up-line-or-search
 bindkey "^J" down-line-or-search
