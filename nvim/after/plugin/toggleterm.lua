@@ -7,7 +7,6 @@ toggleterm.setup({
   open_mapping = "<C-BSlash>",
   start_in_insert = true,
   direction = "float",
-  autochdir = true,
   close_on_exit = true,
   float_opts = {
     border = "curved",
