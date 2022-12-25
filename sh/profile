@@ -2,23 +2,23 @@
 
 #-----------------------------------------------------------------------------
 
-export PATH="${HOME}/.local/sbin:${HOME}/.local/bin:${PATH}"
+export PATH="$HOME/.local/sbin:$HOME/.local/bin:$PATH"
 
 #-----------------------------------------------------------------------------
 
-export XDG_CACHE_HOME="${HOME}/.cache"
-export XDG_CONFIG_HOME="${HOME}/.config"
-export XDG_DATA_HOME="${HOME}/.local/share"
-export XDG_STATE_HOME="${HOME}/.local/state"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_STATE_HOME="$HOME/.local/state"
 
 #-----------------------------------------------------------------------------
 
 case "$(uname)" in
   Darwin)
-    test -f "${HOME}/.config/sh/darwinrc" && . "${_}"
+    [ -f "$HOME/.config/sh/darwinrc" ] && . "$HOME/.config/sh/darwinrc"
   ;;
   Linux)
-    test -f "${HOME}/.config/sh/linuxrc" && . "${_}"
+    [ -f "$HOME/.config/sh/linuxrc" ]  && . "$HOME/.config/sh/linuxrc"
   ;;
 esac
 
@@ -26,8 +26,9 @@ esac
 
 if which nvim >/dev/null; then
   export EDITOR="nvim"
-  export MANPAGER="nvim +Man!"
 fi
+
+export EDITOR="${EDITOR:-vim}"
 
 #-----------------------------------------------------------------------------
 
