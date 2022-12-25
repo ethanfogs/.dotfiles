@@ -1,47 +1,35 @@
 #!/usr/bin/env bash
 
-# ----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
 CURRENT_SHELL=$(ps -p $$ -oargs= | sed 's/.*[-/]//')
 
-# IMPORTS --------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
-IMPORTS=(
-  # "${HOME}/.env"
-  "${HOME}/.config/sh/aliasrc"
-  "${HOME}/.config/fzf/fzf.sh"
-)
+ [ -z "$TMUX" ] && which tmux >/dev/null && tmux
 
-for import in "${IMPORTS[@]}"; do
-  [ -f "${import}" ] && . "${import}"
-done
+# IMPORTS ---------------------------------------------------------------------
 
-# SHELL-OPT VARIABLES --------------------------------------------------------
+[ -f "$HOME/.env" ]     && . "$HOME/.env"     
+[ -f "$HOME/.aliasrc" ] && . "$HOME/.aliasrc" 
+[ -f "$HOME/.fzf.sh" ]  && . "$HOME/.fzf.sh"  
 
-mkdir -p "${HOME}/.cache/${CURRENT_SHELL}"
-export HISTFILE="${HOME}/.cache/${CURRENT_SHELL}/history"
+# SHELL-OPT VARIABLES ---------------------------------------------------------
+
 export HISTCONTROL="ignoredups:erasedups"
-export HISTSIZE=1000
+export HISTFILE="$HOME/.cache/$CURRENT_SHELL/${CURRENT_SHELL}_history"
+mkdir -p "${HISTFILE%/*}"
 
-export SHELL_SESSIONS_DISABLE=1
+export LESSHISTFILE="/dev/null"
 
-export MAILCHECK=-1
+# PROMPT ----------------------------------------------------------------------
 
-export LESSHISTFILE=/dev/null
+which starship >/dev/null && eval "$(starship init "${CURRENT_SHELL}")"
 
-which nvim >/dev/null && MANPAGER="nvim +:Man!"
+# MAN PAGE --------------------------------------------------------------------
 
-# PROMPT ---------------------------------------------------------------------
-
-if ! which starship >/dev/null; then
-  sh <(curl -fqsSL "https://starship.rs/install.sh") \
-    --bin-dir "${HOME}/.local/bin" --force
+if which nvim >/dev/null; then
+  export MANPAGER="nvim +Man!"
+else
+  export LESS_TERMCAP_md=$'\e[1;32m'
 fi
-
-eval "$(starship init "${CURRENT_SHELL}")"
-
-# MAN PAGE HIGHLIGHTING ------------------------------------------------------
-
-export LESS_TERMCAP_md=$'\e[1;32m'
-
-# ----------------------------------------------------------------------------
